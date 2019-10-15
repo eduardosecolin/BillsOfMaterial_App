@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29230.47
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillsOfMaterial_App", "BillsOfMaterial_App\BillsOfMaterial_App.csproj", "{691DB7A8-55C3-4EBC-8FD4-41748F886638}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{691DB7A8-55C3-4EBC-8FD4-41748F886638}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{691DB7A8-55C3-4EBC-8FD4-41748F886638}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{691DB7A8-55C3-4EBC-8FD4-41748F886638}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{691DB7A8-55C3-4EBC-8FD4-41748F886638}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3D884B55-F4C4-4F8C-8547-45FD96F6AB3D}
+	EndGlobalSection
+EndGlobal
