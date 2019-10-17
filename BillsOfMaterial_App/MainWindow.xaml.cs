@@ -128,7 +128,8 @@ namespace BillsOfMaterial_App
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message + "\n" + "Reinicie o aplicativo!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Environment.Exit(0);
             }
         }
 
@@ -229,17 +230,49 @@ namespace BillsOfMaterial_App
 
                                     }
                                     comp.UoM = itemService.GetUoMItem(comp.Component);
-                                    string[] vet3 = vetItem[2].Split(':');
-                                    if (vet3 != null)
-                                    {
-                                        comp.Qty = double.Parse(vet3[1]);
-                                    }
 
                                     if (vetItem.Length > 3)
                                     {
-                                        string[] vetObs = vetItem[3].Split(':');                                      
-                                        comp.Obs = vetObs[1];
-
+                                        foreach (var o in vetItem)
+                                        {
+                                            if (o.Contains("Quantidade:"))
+                                            {
+                                                string[] vetQty = o.Split(':');
+                                                if (vetQty.Length > 1)
+                                                {
+                                                    comp.Qty = Convert.ToDouble(vetQty[1]);
+                                                }
+                                            }
+                                            if (o.Contains("OBS:"))
+                                            {
+                                                string[] vetObs = o.Split(':');
+                                                if (vetObs.Length > 1)
+                                                {
+                                                    comp.Obs = vetObs[1];
+                                                }
+                                            }
+                                            if (o.Contains("Desenho:"))
+                                            {
+                                                string[] vetDraw = o.Split(':');
+                                                if (vetDraw.Length > 1)
+                                                {
+                                                    comp.Drawing = vetDraw[1];
+                                                }
+                                            }
+                                            if (o.Contains("Custo R1:"))
+                                            {
+                                                string[] vetR1 = o.Split(':');
+                                                if (vetR1.Length > 1)
+                                                {
+                                                    string vet1 = vetR1[0];
+                                                    string vet2 = vetR1[1];
+                                                    if (vet2 != "")
+                                                    {
+                                                        comp.R1Costvalue = Convert.ToDouble(vetR1[1]);
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                     else
                                     {
@@ -264,16 +297,49 @@ namespace BillsOfMaterial_App
 
                         }
                         comp.UoM = itemService.GetUoMItem(comp.Component);
-                        string[] vet3 = vetItem[2].Split(':');
-                        if (vet3 != null)
-                        {
-                            comp.Qty = double.Parse(vet3[1]);
-                        }
 
-                        if (vetItem.Length > 3)
+                        if (vetItem.Length > 0)
                         {
-                            string[] vetObs = vetItem[3].Split(':');
-                            comp.Obs = vetObs[1];
+                            foreach (var o in vetItem)
+                            {
+                                if (o.Contains("Quantidade:"))
+                                {
+                                    string[] vetQty = o.Split(':');
+                                    if (vetQty.Length > 1)
+                                    {
+                                        comp.Qty = Convert.ToDouble(vetQty[1]);
+                                    }
+                                }
+                                if (o.Contains("OBS:"))
+                                {
+                                    string[] vetObs = o.Split(':');
+                                    if (vetObs.Length > 1)
+                                    {
+                                        comp.Obs = vetObs[1];
+                                    }
+                                }
+                                if (o.Contains("Desenho:"))
+                                {
+                                    string[] vetDraw = o.Split(':');
+                                    if (vetDraw.Length > 1)
+                                    {
+                                        comp.Drawing = vetDraw[1];
+                                    }
+                                }
+                                if (o.Contains("Custo R1:"))
+                                {
+                                    string[] vetR1 = o.Split(':');
+                                    if (vetR1.Length > 1)
+                                    {
+                                        string vet1 = vetR1[0];
+                                        string vet2 = vetR1[1].Trim();
+                                        if (vet2 != "")
+                                        {
+                                            comp.R1Costvalue = Convert.ToDouble(vetR1[1]);
+                                        }
+                                    }
+                                }
+                            }
                         }
                         else
                         {
@@ -410,16 +476,49 @@ namespace BillsOfMaterial_App
                                                                         comp.Description = vetItem[1];
                                                                     }
                                                                     comp.UoM = itemService.GetUoMItem(comp.Component);
-                                                                    string[] vet3 = vetItem[2].Split(':');
-                                                                    if (vet3 != null)
-                                                                    {
-                                                                        comp.Qty = double.Parse(vet3[1]);
-                                                                    }
 
                                                                     if (vetItem.Length > 3)
                                                                     {
-                                                                        string[] vetObs = vetItem[3].Split(':');
-                                                                        comp.Obs = vetObs[1];
+                                                                        foreach (var o in vetItem)
+                                                                        {
+                                                                            if (o.Contains("Quantidade:"))
+                                                                            {
+                                                                                string[] vetQty = o.Split(':');
+                                                                                if (vetQty.Length > 1)
+                                                                                {
+                                                                                    comp.Qty = Convert.ToDouble(vetQty[1]);
+                                                                                }
+                                                                            }
+                                                                            if (o.Contains("OBS:"))
+                                                                            {
+                                                                                string[] vetObs = o.Split(':');
+                                                                                if (vetObs.Length > 1)
+                                                                                {
+                                                                                    comp.Obs = vetObs[1];
+                                                                                }
+                                                                            }
+                                                                            if (o.Contains("Desenho:"))
+                                                                            {
+                                                                                string[] vetDraw = o.Split(':');
+                                                                                if (vetDraw.Length > 1)
+                                                                                {
+                                                                                    comp.Drawing = vetDraw[1];
+                                                                                }
+                                                                            }
+                                                                            if (o.Contains("Custo R1:"))
+                                                                            {
+                                                                                string[] vetR1 = o.Split(':');
+                                                                                if (vetR1.Length > 1)
+                                                                                {
+                                                                                    string vet1 = vetR1[0];
+                                                                                    string vet2 = vetR1[1].Trim();
+                                                                                    if (vet2 != "")
+                                                                                    {
+                                                                                        comp.R1Costvalue = Convert.ToDouble(vetR1[1]);
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
                                                                     }
                                                                     else
                                                                     {
@@ -438,16 +537,49 @@ namespace BillsOfMaterial_App
                                                                     comp.Description = vetItem[1];
                                                                 }
                                                                 comp.UoM = itemService.GetUoMItem(comp.Component);
-                                                                string[] vet3 = vetItem[2].Split(':');
-                                                                if (vet3 != null)
-                                                                {
-                                                                    comp.Qty = double.Parse(vet3[1]);
-                                                                }
 
                                                                 if (vetItem.Length > 3)
                                                                 {
-                                                                    string[] vetObs = vetItem[3].Split(':');
-                                                                    comp.Obs = vetObs[1];
+                                                                    foreach (var o in vetItem)
+                                                                    {
+                                                                        if (o.Contains("Quantidade:"))
+                                                                        {
+                                                                            string[] vetQty = o.Split(':');
+                                                                            if (vetQty.Length > 1)
+                                                                            {
+                                                                                comp.Qty = Convert.ToDouble(vetQty[1]);
+                                                                            }
+                                                                        }
+                                                                        if (o.Contains("OBS:"))
+                                                                        {
+                                                                            string[] vetObs = o.Split(':');
+                                                                            if (vetObs.Length > 1)
+                                                                            {
+                                                                                comp.Obs = vetObs[1];
+                                                                            }
+                                                                        }
+                                                                        if (o.Contains("Desenho:"))
+                                                                        {
+                                                                            string[] vetDraw = o.Split(':');
+                                                                            if (vetDraw.Length > 1)
+                                                                            {
+                                                                                comp.Drawing = vetDraw[1];
+                                                                            }
+                                                                        }
+                                                                        if (o.Contains("Custo R1:"))
+                                                                        {
+                                                                            string[] vetR1 = o.Split(':');
+                                                                            if (vetR1.Length > 1)
+                                                                            {
+                                                                                string vet1 = vetR1[0];
+                                                                                string vet2 = vetR1[1];
+                                                                                if (vet2 != "")
+                                                                                {
+                                                                                    comp.R1Costvalue = Convert.ToDouble(vetR1[1]);
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
                                                                 }
                                                                 else
                                                                 {
@@ -580,16 +712,49 @@ namespace BillsOfMaterial_App
                                                             comp.Description = vetItem[1];
                                                         }
                                                         comp.UoM = itemService.GetUoMItem(comp.Component);
-                                                        string[] vet3 = vetItem[2].Split(':');
-                                                        if (vet3 != null)
-                                                        {
-                                                            comp.Qty = double.Parse(vet3[1]);
-                                                        }
 
                                                         if (vetItem.Length > 3)
                                                         {
-                                                            string[] vetObs = vetItem[3].Split(':');
-                                                            comp.Obs = vetObs[1];
+                                                            foreach (var o in vetItem)
+                                                            {
+                                                                if (o.Contains("Quantidade:"))
+                                                                {
+                                                                    string[] vetQty = o.Split(':');
+                                                                    if (vetQty.Length > 1)
+                                                                    {
+                                                                        comp.Qty = Convert.ToDouble(vetQty[1]);
+                                                                    }
+                                                                }
+                                                                if (o.Contains("OBS:"))
+                                                                {
+                                                                    string[] vetObs = o.Split(':');
+                                                                    if (vetObs.Length > 1)
+                                                                    {
+                                                                        comp.Obs = vetObs[1];
+                                                                    }
+                                                                }
+                                                                if (o.Contains("Desenho:"))
+                                                                {
+                                                                    string[] vetDraw = o.Split(':');
+                                                                    if (vetDraw.Length > 1)
+                                                                    {
+                                                                        comp.Drawing = vetDraw[1];
+                                                                    }
+                                                                }
+                                                                if (o.Contains("Custo R1:"))
+                                                                {
+                                                                    string[] vetR1 = o.Split(':');
+                                                                    if (vetR1.Length > 1)
+                                                                    {
+                                                                        string vet1 = vetR1[0];
+                                                                        string vet2 = vetR1[1].Trim();
+                                                                        if (vet2 != "")
+                                                                        {
+                                                                            comp.R1Costvalue = Convert.ToDouble(vetR1[1]);
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
                                                         }
                                                         else
                                                         {
@@ -607,16 +772,49 @@ namespace BillsOfMaterial_App
                                                     comp.Description = vetItem[1];
                                                 }
                                                 comp.UoM = itemService.GetUoMItem(comp.Component);
-                                                string[] vet3 = vetItem[2].Split(':');
-                                                if (vet3 != null)
-                                                {
-                                                    comp.Qty = double.Parse(vet3[1]);
-                                                }
 
                                                 if (vetItem.Length > 3)
                                                 {
-                                                    string[] vetObs = vetItem[3].Split(':');
-                                                    comp.Obs = vetObs[1];
+                                                    foreach (var o in vetItem)
+                                                    {
+                                                        if (o.Contains("Quantidade:"))
+                                                        {
+                                                            string[] vetQty = o.Split(':');
+                                                            if (vetQty.Length > 1)
+                                                            {
+                                                                comp.Qty = Convert.ToDouble(vetQty[1]);
+                                                            }
+                                                        }
+                                                        if (o.Contains("OBS:"))
+                                                        {
+                                                            string[] vetObs = o.Split(':');
+                                                            if (vetObs.Length > 1)
+                                                            {
+                                                                comp.Obs = vetObs[1];
+                                                            }
+                                                        }
+                                                        if (o.Contains("Desenho:"))
+                                                        {
+                                                            string[] vetDraw = o.Split(':');
+                                                            if (vetDraw.Length > 1)
+                                                            {
+                                                                comp.Drawing = vetDraw[1];
+                                                            }
+                                                        }
+                                                        if (o.Contains("Custo R1:"))
+                                                        {
+                                                            string[] vetR1 = o.Split(':');
+                                                            if (vetR1.Length > 1)
+                                                            {
+                                                                string vet1 = vetR1[0];
+                                                                string vet2 = vetR1[1].Trim();
+                                                                if (vet2 != "")
+                                                                {
+                                                                    comp.R1Costvalue = Convert.ToDouble(vetR1[1]);
+                                                                }
+                                                            }
+                                                        }
+                                                    }
                                                 }
                                                 else
                                                 {
@@ -750,8 +948,7 @@ namespace BillsOfMaterial_App
         private void BtnNext_Click(object sender, RoutedEventArgs e)
         {
             tvBOM.IsEnabled = false;
-            btnNext.Visibility = Visibility.Hidden;
-            btnCalcSave.Visibility = Visibility.Visible;
+            // chamar janela de formação de custo
         }
 
         private void BtnClear_Click(object sender, RoutedEventArgs e)
@@ -765,6 +962,10 @@ namespace BillsOfMaterial_App
             tvBOM.Visibility = Visibility.Hidden;
             btnNext.IsEnabled = false;
             btnClear.IsEnabled = false;
+            if(tvBOM.IsEnabled == false)
+            {
+                tvBOM.IsEnabled = true;
+            }
         }
 
         private void BtnImport_Click(object sender, RoutedEventArgs e)
@@ -816,83 +1017,161 @@ namespace BillsOfMaterial_App
 
         public void EditCurrentItemTreeView(object sender, RoutedEventArgs e)
         {
-            var treeview = tvBOM.SelectedItem as TreeViewItem;
-            if (treeview.Name == "treeViewLv1" || treeview.Name == "tvLevel2" || treeview.Name == "tvLevel3")
+            try
             {
-                ItemsView window = new ItemsView(this);
-                if (treeview.Header is StackPanel)
-                {
-                    StackPanel panel = treeview.Header as StackPanel;
-                    if (panel.Children.Count > 0)
-                    {
-                        foreach (var item in panel.Children)
-                        {
-                            if (item is TextBlock)
-                            {
-                                TextBlock txt = item as TextBlock;
-                                string[] vet = txt.Text.Split('-');
-                                if (vet != null)
-                                {
-                                    window.isEditmode = true;
-                                    window.txtItem.Text = vet[0];
-                                    if (vet.Length > 3)
-                                    {
-                                        string[] vetobs = vet[3].Split(':');
-                                        window.txtObs.Text = vetobs[1];
-                                    }
-                                    string[] vet2 = vet[2].Split(':');
-                                    if (vet2 != null)
-                                    {
-                                        window.txtQty.Text = vet2[1];
-                                        window.Show();
-                                    }
 
+                var treeview = tvBOM.SelectedItem as TreeViewItem;
+                if (treeview.Name == "treeViewLv1" || treeview.Name == "tvLevel2" || treeview.Name == "tvLevel3")
+                {
+                    ItemsView window = new ItemsView(this);
+                    if (treeview.Header is StackPanel)
+                    {
+                        StackPanel panel = treeview.Header as StackPanel;
+                        if (panel.Children.Count > 0)
+                        {
+                            foreach (var item in panel.Children)
+                            {
+                                if (item is TextBlock)
+                                {
+                                    TextBlock txt = item as TextBlock;
+                                    string[] vet = txt.Text.Split('-');
+                                    if (vet != null)
+                                    {
+                                        window.isEditmode = true;
+                                        window.txtItem.Text = vet[0];
+                                        if (vet.Length > 0)
+                                        {
+                                            foreach (var item2 in vet)
+                                            {
+                                                if (item2.Contains("Quantidade:"))
+                                                {
+                                                    string[] vetQty = item2.Split(':');
+                                                    if (vetQty.Length > 1)
+                                                    {
+                                                        window.txtQty.Text = vetQty[1];
+                                                    }
+                                                }
+                                                if (item2.Contains("OBS:"))
+                                                {
+                                                    string[] vetObs = item2.Split(':');
+                                                    if (vetObs.Length > 1)
+                                                    {
+                                                        window.txtObs.Text = vetObs[1];
+                                                    }
+                                                }
+                                                if (item2.Contains("Desenho:"))
+                                                {
+                                                    string[] vetDraw = item2.Split(':');
+                                                    if (vetDraw.Length > 1)
+                                                    {
+                                                        window.txtDrawing.Text = vetDraw[1];
+                                                    }
+                                                }
+                                                if (item2.Contains("Custo R1:"))
+                                                {
+                                                    string[] vetR1 = item2.Split(':');
+                                                    if (vetR1.Length > 1)
+                                                    {
+                                                        window.txtResultValue.Text = vetR1[1];
+                                                    }
+                                                }
+
+                                                window.Show();
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
+                    else
+                    {
+                        string[] vet = treeview.Header.ToString().Split('-');
+                        if (vet != null)
+                        {
+                            window.isEditmode = true;
+                            window.txtItem.Text = vet[0];
+                            if (vet.Length > 0)
+                            {
+                                foreach (var item in vet)
+                                {
+                                    if (item.Contains("Quantidade:"))
+                                    {
+                                        string[] vetQty = item.Split(':');
+                                        if(vetQty.Length > 1)
+                                        {
+                                            window.txtQty.Text = vetQty[1];
+                                        }
+                                    }
+                                    if (item.Contains("OBS:"))
+                                    {
+                                        string[] vetObs= item.Split(':');
+                                        if (vetObs.Length > 1)
+                                        {
+                                            window.txtObs.Text = vetObs[1];
+                                        }
+                                    }
+                                    if (item.Contains("Desenho:"))
+                                    {
+                                        string[] vetDraw = item.Split(':');
+                                        if (vetDraw.Length > 1)
+                                        {
+                                            window.txtDrawing.Text = vetDraw[1];
+                                        }
+                                    }
+                                    if (item.Contains("Custo R1:"))
+                                    {
+                                        string[] vetR1 = item.Split(':');
+                                        if (vetR1.Length > 1)
+                                        {
+                                            window.txtResultValue.Text = vetR1[1];
+                                        }
+                                    }
+
+                                    window.Show();
+                                }
+                            }                                                    
+                        }
+                    }
                 }
-                else
+                else if (treeview.Name == "tvOpLevel1" || treeview.Name == "tvOpLevel2")
                 {
+                    OperationView window = new OperationView(this);
                     string[] vet = treeview.Header.ToString().Split('-');
                     if (vet != null)
                     {
                         window.isEditmode = true;
-                        window.txtItem.Text = vet[0];
-                        if (vet.Length > 3)
+                        window.txtOperation.Text = vet[0];
+                        foreach (var item in vet)
                         {
-                            string[] vetobs = vet[3].Split(':');
-                            window.txtObs.Text = vetobs[1];
+                            if (vet.Length > 0)
+                            {
+                                if (item.Contains("Tempo de Processamento ="))
+                                {
+                                    string[] vetP = item.Split('=');
+                                    if (vetP.Length > 1)
+                                    {
+                                        window.dpTimeProcess.Text = vetP[1];
+                                    }
+                                }
+                                if (item.Contains("OBS:"))
+                                {
+                                    string[] vetObs = item.Split(':');
+                                    if (vetObs.Length > 1)
+                                    {
+                                        window.txtObs.Text = vetObs[1];
+                                    }
+                                }
+                            }
                         }
-                        string[] vet2 = vet[2].Split(':');
-                        if (vet2 != null)
-                        {
-                            window.txtQty.Text = vet2[1];
-                            window.Show();
-                        }
-                    }
-                }
-            }
-            else if (treeview.Name == "tvOpLevel1" || treeview.Name == "tvOpLevel2")
-            {
-                OperationView window = new OperationView(this);
-                string[] vet = treeview.Header.ToString().Split('-');
-                if (vet != null)
-                {
-                    window.isEditmode = true;
-                    window.txtOperation.Text = vet[0];
-                    if (vet.Length > 3)
-                    {
-                        string[] vetobs = vet[3].Split(':');
-                        window.txtObs.Text = vetobs[1];
-                    }
-                    string[] vet2 = vet[2].Split('=');
-                    if (vet2 != null)
-                    {
-                        window.dpTimeProcess.Text = vet2[1];
+
                         window.Show();
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 

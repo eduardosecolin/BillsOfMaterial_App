@@ -261,6 +261,22 @@ namespace BillsOfMaterial_App.Model
                 .Property(e => e.Obs)
                 .IsFixedLength();
 
+            modelBuilder.Entity<CS_CustQuotasComponent>()
+                .Property(e => e.Drawing)
+                .IsFixedLength();
+
+            modelBuilder.Entity<CS_CustQuotasComponent>()
+                .Property(e => e.PathFile1)
+                .IsFixedLength();
+
+            modelBuilder.Entity<CS_CustQuotasComponent>()
+                .Property(e => e.PathFile2)
+                .IsFixedLength();
+
+            modelBuilder.Entity<CS_CustQuotasComponent>()
+                .Property(e => e.PathFile3)
+                .IsFixedLength();
+
             modelBuilder.Entity<CS_CustQuotasOperation>()
                 .Property(e => e.BOM)
                 .IsFixedLength();

@@ -40,6 +40,20 @@ namespace BillsOfMaterial_App.Model
         [StringLength(1000)]
         public string Obs { get; set; }
 
+        [StringLength(21)]
+        public string Drawing { get; set; }
+
+        public double? R1Costvalue { get; set; }
+
+        [StringLength(1000)]
+        public string PathFile1 { get; set; }
+
+        [StringLength(1000)]
+        public string PathFile2 { get; set; }
+
+        [StringLength(1000)]
+        public string PathFile3 { get; set; }
+
         public DateTime TBCreated { get; set; }
 
         public DateTime TBModified { get; set; }

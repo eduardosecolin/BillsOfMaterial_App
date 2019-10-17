@@ -107,6 +107,9 @@
     <Compile Include="View\CalculatorR1View.xaml.cs">
       <DependentUpon>CalculatorR1View.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\CostFormationView.xaml.cs">
+      <DependentUpon>CostFormationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DrawingView.xaml.cs">
       <DependentUpon>DrawingView.xaml</DependentUpon>
     </Compile>
@@ -139,6 +142,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\CalculatorR1View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CostFormationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
