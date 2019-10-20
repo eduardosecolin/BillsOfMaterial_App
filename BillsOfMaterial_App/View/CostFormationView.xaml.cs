@@ -101,7 +101,7 @@ namespace BillsOfMaterial_App.View
             dialog.Title = "Selecione um arquivo";
 
             Nullable<bool> result = dialog.ShowDialog();
-            if(result == true)
+            if (result == true)
             {
                 txtPathFile1.Text = System.IO.Path.GetFileName(dialog.FileName);
                 pathFile1 = dialog.FileName;
@@ -156,21 +156,22 @@ namespace BillsOfMaterial_App.View
         {
             try
             {
-                //if (_window.SaveSimulation())
-                //{
-                // calculo da formação de custo               
-                int id = Convert.ToInt32(_window.lblCustQuotaId.Content.ToString());
-                string item = _window.cbItemGrid.Text;
-                double? unitValue = serviceCQ.GetUnitValueItem(id, _window.positionLine);
-                double?[] vet = CalculateOperations(id, item);
-                unitValue += CalculateComponents(id, item) + vet[0] + vet[1];
-                MessageBox.Show("Resiltado: " + unitValue);
-                //}
-                //else
-                //{
-                //    Environment.Exit(0);
-                //}
-            }catch(Exception ex)
+                if (_window.SaveSimulation())
+                {
+                    // calculo da formação de custo               
+                    int id = Convert.ToInt32(_window.lblCustQuotaId.Content.ToString());
+                    string item = _window.cbItemGrid.Text;
+                    double? unitValue = serviceCQ.GetUnitValueItem(id, _window.positionLine);
+                    double?[] vet = CalculateOperations(id, item);
+                    unitValue += CalculateComponents(id, item) + vet[0] + vet[1];
+                    MessageBox.Show("Resultado: " + CalculateFieldsView(Convert.ToDouble(unitValue)));
+                }
+                else
+                {
+                    Environment.Exit(0);
+                }
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message + " - " + ex.StackTrace, "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
 
@@ -183,15 +184,15 @@ namespace BillsOfMaterial_App.View
             {
                 double? result = 0;
                 List<CS_CustQuotasComponent> listComp = serviceCompOp.GetSimulationComponents(id, itemParam);
-                if(listComp.Count > 0)
+                if (listComp.Count > 0)
                 {
                     foreach (var item in listComp)
                     {
-                        result += serviceItem.GetStandardCost(item.Component);
+                        result += (serviceItem.GetStandardCost(item.Component) * item.Qty);
                     }
                 }
 
-                return result;
+                return result ?? 0;
             }
             catch (Exception ex)
             {
@@ -207,7 +208,7 @@ namespace BillsOfMaterial_App.View
                 double? resultFamily = 0;
                 double? resultWorkers = 0;
                 List<CS_CustQuotasOperation> listOp = serviceCompOp.GetSimulationOperations(id, itemParam);
-                if(listOp.Count > 0)
+                if (listOp.Count > 0)
                 {
                     foreach (var item in listOp)
                     {
@@ -258,8 +259,13 @@ namespace BillsOfMaterial_App.View
                 timeDouble = Convert.ToDouble(timeStringFormat);
                 totalWHourlyCost = (GetHourlyCostWorkers(op));
 
+                if (double.IsNaN(Convert.ToDouble(totalWHourlyCost)))
+                {
+                    return 0;
+                }
+
                 return totalWHourlyCost;
-                
+
             }
             catch (Exception ex)
             {
@@ -300,6 +306,11 @@ namespace BillsOfMaterial_App.View
 
                 timeDouble = Convert.ToDouble(timeStringFormat);
                 totalWCHourlyCost = (GetHourlyCostFamily(op) * timeDouble);
+
+                if (double.IsNaN(Convert.ToDouble(totalWCHourlyCost)))
+                {
+                    return 0;
+                }
 
                 return totalWCHourlyCost;
 
@@ -343,6 +354,35 @@ namespace BillsOfMaterial_App.View
                 {
                     return 0;
                 }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        private double CalculateFieldsView(double costValue)
+        {
+            try
+            {
+                double freight = (!string.IsNullOrEmpty(txtFreightValue.Text)) ? Convert.ToDouble(txtFreightValue.Text) : 0;
+                double pis = (!string.IsNullOrEmpty(txtPis.Text)) ? (costValue / 100) * Convert.ToDouble(txtPis.Text) : 0;
+                double cofins = (!string.IsNullOrEmpty(txtCofins.Text)) ? (costValue / 100) * Convert.ToDouble(txtCofins.Text) : 0;
+                double icms = (!string.IsNullOrEmpty(txtIcms.Text)) ? (costValue / 100) * Convert.ToDouble(txtIcms.Text) : 0;
+                double ipi = (!string.IsNullOrEmpty(txtIpi.Text)) ? (costValue / 100) * Convert.ToDouble(txtIpi.Text) : 0;
+                double df = (!string.IsNullOrEmpty(txtFixedExpenses.Text)) ? (costValue / 100) * Convert.ToDouble(txtFixedExpenses.Text) : 0;
+                double dv = (!string.IsNullOrEmpty(txtVariableExpenses.Text)) ? (costValue / 100) * Convert.ToDouble(txtVariableExpenses.Text) : 0;
+
+                return costValue + (
+                    freight +
+                    pis +
+                    cofins +
+                    icms +
+                    ipi +
+                    df +
+                    dv
+                    );
             }
             catch (Exception ex)
             {

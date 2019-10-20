@@ -11,10 +11,12 @@ namespace BillsOfMaterial_App.Service
     public class CustQuotaCompOpService
     {
         private readonly DBContext _context;
+        SqlConnection conn;
 
         public CustQuotaCompOpService()
         {
             _context = new DBContext();
+            conn = new SqlConnection(_context.Database.Connection.ConnectionString);
         }
 
         public void SaveComp(CS_CustQuotasComponent comp)
@@ -29,13 +31,24 @@ namespace BillsOfMaterial_App.Service
             _context.SaveChanges();
         }
 
-        public short? GetMaxLineComp()
+        public int GetMaxLineComp()
         {
             try
             {
-                Nullable<short> line = _context.Database.SqlQuery<short>(
-                    "SELECT ISNULL(MAX(Line), 0) + 1 FROM CS_CustQuotasComponent"
-                    ).FirstOrDefault();
+                conn.Open();
+                string sql = @"SELECT ISNULL(MAX(Line), 0) + 1 FROM CS_CustQuotasComponent";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                var result = cmd.ExecuteScalar();
+                int line = 0;
+                if(result != null)
+                {
+                    line = Convert.ToInt32(result.ToString());
+                }
+                else
+                {
+                    line = 0 + 1;
+                }
+                conn.Close();
                 return line;
             }
             catch (Exception)
@@ -44,12 +57,30 @@ namespace BillsOfMaterial_App.Service
             }
         }
 
-        public short? GetMaxLineOp()
+        public int GetMaxLineOp()
         {
-            Nullable<short> line = _context.Database.SqlQuery<short>(
-                   "SELECT ISNULL(MAX(Line), 0) + 1 FROM CS_CustQuotasOperation"
-                   ).FirstOrDefault();
-            return line;
+            try
+            {
+                conn.Open();
+                string sql = @"SELECT ISNULL(MAX(Line), 0) + 1 FROM CS_CustQuotasOperation";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                var result = cmd.ExecuteScalar();
+                int line = 0;
+                if (result != null)
+                {
+                    line = Convert.ToInt32(result.ToString());
+                }
+                else
+                {
+                    line = 0 + 1;
+                }
+                conn.Close();
+                return line;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public List<CS_CustQuotasComponent> GetSimulationComponents(int id, string item)
@@ -63,5 +94,23 @@ namespace BillsOfMaterial_App.Service
         {
             return _context.CS_CustQuotasOperation.Where(x => x.Id == id && x.Item == item).ToList();
         }
+
+        public void Delete(int id, string item)
+        {
+            List<CS_CustQuotasComponent> listComp = GetSimulationComponents(id, item);
+            List<CS_CustQuotasOperation> listOp = GetSimulationOperations(id, item);
+
+            foreach (var comp in listComp)
+            {
+                _context.CS_CustQuotasComponent.Remove(comp);
+            }
+
+            foreach (var op in listOp)
+            {
+                _context.CS_CustQuotasOperation.Remove(op);
+            }
+        }
+
+
     }
 }

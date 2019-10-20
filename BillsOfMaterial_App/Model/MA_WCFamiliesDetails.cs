@@ -38,8 +38,6 @@ namespace BillsOfMaterial_App.Model
 
         public int TBModifiedID { get; set; }
 
-        public Guid TBGuid { get; set; }
-
         public virtual MA_WCFamilies MA_WCFamilies { get; set; }
     }
 }

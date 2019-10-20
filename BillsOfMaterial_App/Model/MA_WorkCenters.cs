@@ -42,7 +42,7 @@ namespace BillsOfMaterial_App.Model
 
         public int? AverageCapacity { get; set; }
 
-        public int? ResourceNo { get; set; }
+        public short? ResourceNo { get; set; }
 
         [StringLength(64)]
         public string Notes { get; set; }

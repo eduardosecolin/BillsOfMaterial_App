@@ -170,7 +170,7 @@ namespace BillsOfMaterial_App
                 {
                     TreeViewItem selectedNode = (TreeViewItem)item;
                     CS_CustQuotasComponent comp = new CS_CustQuotasComponent();
-                    comp.Line = compOpService.GetMaxLineComp() ?? 0;
+                    comp.Line = compOpService.GetMaxLineComp();
                     comp.Id = int.Parse(lblCustQuotaId.Content.ToString());
                     comp.BOM = cbItemGrid.Text;
                     comp.Item = cbItemGrid.Text;
@@ -331,7 +331,7 @@ namespace BillsOfMaterial_App
                 {
                     TreeViewItem selectedNode = (TreeViewItem)item;
                     CS_CustQuotasOperation op = new CS_CustQuotasOperation();
-                    op.Line = compOpService.GetMaxLineOp() ?? 0;
+                    op.Line = compOpService.GetMaxLineOp();
                     op.Id = int.Parse(lblCustQuotaId.Content.ToString());
                     op.BOM = cbItemGrid.Text;
                     op.Item = cbItemGrid.Text;
@@ -427,7 +427,7 @@ namespace BillsOfMaterial_App
                                                                     break;
                                                                 }
                                                             }                                                  
-                                                            comp.Line = compOpService.GetMaxLineComp() ?? 0;
+                                                            comp.Line = compOpService.GetMaxLineComp();
                                                             comp.Id = int.Parse(lblCustQuotaId.Content.ToString());
                                                             comp.Item = cbItemGrid.Text;
 
@@ -582,7 +582,7 @@ namespace BillsOfMaterial_App
                                                             }
                                                         }
 
-                                                        op.Line = compOpService.GetMaxLineOp() ?? 0;
+                                                        op.Line = compOpService.GetMaxLineOp();
                                                         op.Id = int.Parse(lblCustQuotaId.Content.ToString());
                                                         op.Item = cbItemGrid.Text;
 
@@ -676,7 +676,7 @@ namespace BillsOfMaterial_App
                                             {
                                                 comp.BOM = vet[0];
                                             }
-                                            comp.Line = compOpService.GetMaxLineComp() ?? 0;
+                                            comp.Line = compOpService.GetMaxLineComp();
                                             comp.Id = int.Parse(lblCustQuotaId.Content.ToString());
                                             comp.Item = cbItemGrid.Text;
 
@@ -873,7 +873,7 @@ namespace BillsOfMaterial_App
                                                 {
                                                     op.BOM = vet[0];
                                                 }
-                                                op.Line = compOpService.GetMaxLineOp() ?? 0;
+                                                op.Line = compOpService.GetMaxLineOp();
                                                 op.Id = int.Parse(lblCustQuotaId.Content.ToString());
                                                 op.Item = cbItemGrid.Text;
 
@@ -1262,6 +1262,7 @@ namespace BillsOfMaterial_App
                                 , MessageBoxImage.Information
                                 );
 
+                            compOpService.Delete(Convert.ToInt32(lblCustQuotaId.Content.ToString()), cbItemGrid.Text);
                             return false;
                         }
                     }
@@ -1274,6 +1275,7 @@ namespace BillsOfMaterial_App
                                , MessageBoxImage.Information
                                );
 
+                        compOpService.Delete(Convert.ToInt32(lblCustQuotaId.Content.ToString()), cbItemGrid.Text);
                         return false;
                     }
                 }
@@ -1286,6 +1288,7 @@ namespace BillsOfMaterial_App
                                , MessageBoxImage.Information
                                );
 
+                    compOpService.Delete(Convert.ToInt32(lblCustQuotaId.Content.ToString()), cbItemGrid.Text);
                     return false;
                 }
             }

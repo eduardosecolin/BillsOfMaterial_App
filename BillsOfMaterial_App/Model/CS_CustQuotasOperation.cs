@@ -13,7 +13,7 @@ namespace BillsOfMaterial_App.Model
         [Key]
         [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public short Line { get; set; }
+        public int Line { get; set; }
 
         [Key]
         [Column(Order = 1)]
@@ -31,6 +31,8 @@ namespace BillsOfMaterial_App.Model
 
         [StringLength(128)]
         public string DescriptionOperation { get; set; }
+
+        public short? TimeProcessInt { get; set; }
 
         [StringLength(1000)]
         public string Obs { get; set; }

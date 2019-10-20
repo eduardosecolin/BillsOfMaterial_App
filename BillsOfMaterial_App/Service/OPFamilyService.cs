@@ -35,7 +35,7 @@ namespace BillsOfMaterial_App.Service
             {
                 double? result = 0;
                 int cont = 0;
-                var sql = _context.MA_WCFamiliesDetails.Where(x => x.WC == WC).ToList();
+                var sql = _context.MA_WCFamiliesDetails.Where(x => x.WCFamily == WC).ToList();
                 if (sql.Count > 0)
                 {
                     foreach (var item in sql)
