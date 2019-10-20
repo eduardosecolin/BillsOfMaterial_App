@@ -49,6 +49,9 @@ namespace BillsOfMaterial_App.Model
         public virtual DbSet<RM_WorkersFields> RM_WorkersFields { get; set; }
         public virtual DbSet<CS_CustQuotasComponent> CS_CustQuotasComponent { get; set; }
         public virtual DbSet<CS_CustQuotasOperation> CS_CustQuotasOperation { get; set; }
+        public virtual DbSet<MA_WorkCenters> MA_WorkCenters { get; set; }
+        public virtual DbSet<MA_WCFamilies> MA_WCFamilies { get; set; }
+        public virtual DbSet<MA_WCFamiliesDetails> MA_WCFamiliesDetails { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -220,6 +223,18 @@ namespace BillsOfMaterial_App.Model
             modelBuilder.Entity<MA_CustQuotas>()
                 .HasOptional(e => e.MA_CustQuotasShipping)
                 .WithRequired(e => e.MA_CustQuotas);
+
+            modelBuilder.Entity<MA_CustQuotas>()
+               .Property(e => e.PathFile1)
+               .IsFixedLength();
+
+            modelBuilder.Entity<MA_CustQuotas>()
+                .Property(e => e.PathFile2)
+                .IsFixedLength();
+
+            modelBuilder.Entity<MA_CustQuotas>()
+                .Property(e => e.PathFile3)
+                .IsFixedLength();
 
             modelBuilder.Entity<MA_CustQuotasDetail>()
                 .Property(e => e.NoPrint)
@@ -605,6 +620,51 @@ namespace BillsOfMaterial_App.Model
             modelBuilder.Entity<MA_PriceLists>()
                 .Property(e => e.AlwaysShow)
                 .IsFixedLength();
+
+            modelBuilder.Entity<MA_WorkCenters>()
+               .Property(e => e.Description)
+               .IsFixedLength();
+
+            modelBuilder.Entity<MA_WorkCenters>()
+               .Property(e => e.Supplier)
+               .IsFixedLength();
+
+            modelBuilder.Entity<MA_WorkCenters>()
+               .Property(e => e.Outsourced)
+               .IsFixedLength();
+
+            modelBuilder.Entity<MA_WorkCenters>()
+               .Property(e => e.Template)
+               .IsFixedLength();
+
+            modelBuilder.Entity<MA_WorkCenters>()
+               .Property(e => e.Make)
+               .IsFixedLength();
+
+            modelBuilder.Entity<MA_WorkCenters>()
+               .Property(e => e.Notes)
+               .IsFixedLength();
+
+            modelBuilder.Entity<MA_WorkCenters>()
+               .Property(e => e.Calendar)
+               .IsFixedLength();
+
+            modelBuilder.Entity<MA_WCFamilies>()
+               .Property(e => e.Description)
+               .IsFixedLength();
+
+            modelBuilder.Entity<MA_WCFamilies>()
+               .Property(e => e.Notes)
+               .IsFixedLength();
+
+            modelBuilder.Entity<MA_WCFamilies>()
+                .HasMany(e => e.MA_WCFamiliesDetails)
+                .WithRequired(e => e.MA_WCFamilies)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<MA_WCFamiliesDetails>()
+              .Property(e => e.Notes)
+              .IsFixedLength();
 
             modelBuilder.Entity<RM_Workers>()
                 .Property(e => e.PasswordMustBeChanged)

@@ -37,5 +37,24 @@ namespace BillsOfMaterial_App.Service
             var sql = _context.MA_Operations.Where(x => x.Operation == op).FirstOrDefault();
             return sql.Description;
         }
+
+        public int? GetWorkTimeOperation(string op)
+        {
+            var sql = _context.MA_OperationsLabour.Where(x => x.Operation == op).FirstOrDefault();
+            if(sql != null)
+            {
+                return sql.WorkingTime;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public List<MA_OperationsLabour> GetWorkersOperation(string op)
+        {
+            return _context.MA_OperationsLabour.Where(x => x.Operation == op).ToList();
+ 
+        }
     }
 }

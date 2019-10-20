@@ -143,7 +143,7 @@ namespace BillsOfMaterial_App.View
         {
             TreeViewItem chilItem = new TreeViewItem();
             chilItem.Name = "tvOpLevel1";
-            chilItem.Header = txtOperation.Text + " - " + description.Replace("-", "") + "- " + "Tempo de Processamento = " + Convert.ToDateTime(dpTimeProcess.SelectedTime.ToString()).ToString("HH:mm") + "- OBS: " + txtObs.Text;
+            chilItem.Header = txtOperation.Text + " - " + description.Replace("-", "") + "- " + "Tempo de Processamento = " + Convert.ToDateTime(dpTimeProcess.SelectedTime.ToString()).ToString("HH:mm") + " - OBS: " + txtObs.Text;
             _mainWindow.tvOperation.Items.Add(chilItem);
             this.Close();
         }
@@ -153,7 +153,7 @@ namespace BillsOfMaterial_App.View
             TreeViewItem viewItem = _mainWindow.tvBOM.SelectedItem as TreeViewItem;
             TreeViewItem chilItem = new TreeViewItem();
             chilItem.Name = "tvOpLevel2";
-            chilItem.Header = txtOperation.Text + " - " + description.Replace("-", "") + "- " + "Tempo de Processamento = " + Convert.ToDateTime(dpTimeProcess.SelectedTime.ToString()).ToString("HH:mm") + "- OBS: " + txtObs.Text;
+            chilItem.Header = txtOperation.Text + " - " + description.Replace("-", "") + "- " + "Tempo de Processamento = " + Convert.ToDateTime(dpTimeProcess.SelectedTime.ToString()).ToString("HH:mm") + " - OBS: " + txtObs.Text;
             viewItem.Items.Add(chilItem);
             this.Close();
         }

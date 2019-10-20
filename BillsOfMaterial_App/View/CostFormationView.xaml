@@ -6,8 +6,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BillsOfMaterial_App.View"
         mc:Ignorable="d"
-        Title="Formação de Custo" Height="550" Width="900" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen">
-    <Grid>
+        Title="Formação de Custo" Height="550" Width="700" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen">
+    <Grid Margin="0,0,-196,0">
         <TextBox 
             x:Name="txtFreightValue"
             HorizontalAlignment="Left"
@@ -43,7 +43,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="2" Margin="66,121,0,0" PreviewTextInput="TxtCofins_PreviewTextInput"/>
+            MaxLength="10" TabIndex="2" Margin="66,126,0,0" PreviewTextInput="TxtCofins_PreviewTextInput"/>
         <TextBox 
             x:Name="txtIcms"
             HorizontalAlignment="Left"
@@ -55,7 +55,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="3" Margin="66,168,0,0" PreviewTextInput="TxtIcms_PreviewTextInput" />
+            MaxLength="10" TabIndex="3" Margin="66,172,0,0" PreviewTextInput="TxtIcms_PreviewTextInput" />
         <TextBox 
             x:Name="txtIpi"
             HorizontalAlignment="Left"
@@ -67,7 +67,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="4" Margin="66,215,0,0" PreviewTextInput="TxtIpi_PreviewTextInput"/>
+            MaxLength="10" TabIndex="4" Margin="66,220,0,0" PreviewTextInput="TxtIpi_PreviewTextInput"/>
         <TextBox 
             x:Name="txtFixedExpenses"
             HorizontalAlignment="Left"
@@ -79,7 +79,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="5" Margin="66,262,0,0" PreviewTextInput="TxtFixedExpenses_PreviewTextInput"/>
+            MaxLength="10" TabIndex="5" Margin="66,266,0,0" PreviewTextInput="TxtFixedExpenses_PreviewTextInput"/>
         <TextBox 
             x:Name="txtVariableExpenses"
             HorizontalAlignment="Left"
@@ -91,7 +91,67 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="6" Margin="66,309,0,0" PreviewTextInput="TxtVariableExpenses_PreviewTextInput"/>
+            MaxLength="10" TabIndex="6" Margin="66,314,0,0" PreviewTextInput="TxtVariableExpenses_PreviewTextInput"/>
+        <TextBox 
+            x:Name="txtPathFile1"
+            HorizontalAlignment="Left"
+            Height="42"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="339"
+            materialDesign:HintAssist.Hint="Anexar arquivo" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            TabIndex="0" Margin="249,126,0,0" IsEnabled="False"/>
+        <TextBox 
+            x:Name="txtPathFile2"
+            HorizontalAlignment="Left"
+            Height="42"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="339"
+            materialDesign:HintAssist.Hint="Anexar arquivo" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            TabIndex="8" Margin="249,220,0,0" IsEnabled="False"/>
+        <TextBox 
+            x:Name="txtPathFile3"
+            HorizontalAlignment="Left"
+            Height="42"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="339"
+            materialDesign:HintAssist.Hint="Anexar arquivo" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            TabIndex="9" Margin="249,314,0,0" IsEnabled="False"/>
+        <Button 
+            x:Name="btnFile1" 
+            Cursor="Hand" Margin="560,115,252,352" 
+            Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnFile1_Click">
+            <materialDesign:PackIcon Foreground="#FF00BCD4" Height="29" Width="27" Kind="FileImport"/>
+        </Button>
+        <Button 
+            x:Name="btnSFile2" 
+            Cursor="Hand" Margin="560,214,252,253" 
+            Height="53" Background="{x:Null}" Width="80" BorderBrush="{x:Null}" Click="BtnSFile2_Click">
+            <materialDesign:PackIcon Foreground="#FF00BCD4" Height="29" Width="27" Kind="FileImport"/>
+        </Button>
+        <Button 
+            x:Name="btnFile3" 
+            Cursor="Hand" Margin="560,307,252,160" 
+            Height="53" Width="80" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnFile3_Click">
+            <materialDesign:PackIcon Foreground="#FF00BCD4" Height="29" Width="27" Kind="FileImport"/>
+        </Button>
+        <Button x:Name="btnSaveAll" Cursor="Hand" HorizontalAlignment="Left" Margin="66,412,0,0" VerticalAlignment="Top" Width="522" Height="40" Click="BtnSaveAll_Click">
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="ContentSave" />
+                <TextBlock Margin="8 0 0 0"><Run Text="Salvar simulação e formação de custo"/></TextBlock>
+            </StackPanel>
+        </Button>
 
     </Grid>
 </Window>

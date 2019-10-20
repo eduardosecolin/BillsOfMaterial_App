@@ -35,6 +35,8 @@ namespace BillsOfMaterial_App
         public bool level2 = false;
         public bool level3 = false;
 
+        public int positionLine;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -89,47 +91,6 @@ namespace BillsOfMaterial_App
                 tvBOM.Visibility = Visibility.Visible;
                 btnNext.IsEnabled = true;
                 btnClear.IsEnabled = true;
-            }
-        }
-
-        private void BtnCalcSave_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                //Eng Level 1
-                if (AddComplevel1() && AddOplevel1())
-                {
-                    // Eng Level 2
-                    if (AddComplevel2())
-                    {
-                        if (AddComplevel3() && AddOplevel3())
-                        {
-                            MessageBox.Show(
-                                "Simulação de Engenharia de Produtos salvo com sucesso!"
-                                , "Mensagem"
-                                , MessageBoxButton.OK
-                                , MessageBoxImage.Information
-                                );
-                        }
-                        else
-                        {
-                            throw new Exception("Erro ao gravar engenharia de nivel 3");
-                        }
-                    }
-                    else
-                    {
-                        throw new Exception("Erro ao gravar engenharia de nivel 2");
-                    }
-                }
-                else
-                {
-                    throw new Exception("Erro ao gravar engenharia de nivel 1");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + "\n" + "Reinicie o aplicativo!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                Environment.Exit(0);
             }
         }
 
@@ -212,6 +173,7 @@ namespace BillsOfMaterial_App
                     comp.Line = compOpService.GetMaxLineComp() ?? 0;
                     comp.Id = int.Parse(lblCustQuotaId.Content.ToString());
                     comp.BOM = cbItemGrid.Text;
+                    comp.Item = cbItemGrid.Text;
                     if (selectedNode.Items.Count > 1)
                     {
                         foreach (var item2 in selectedNode.Items)
@@ -372,6 +334,7 @@ namespace BillsOfMaterial_App
                     op.Line = compOpService.GetMaxLineOp() ?? 0;
                     op.Id = int.Parse(lblCustQuotaId.Content.ToString());
                     op.BOM = cbItemGrid.Text;
+                    op.Item = cbItemGrid.Text;
                     string[] vetItem = selectedNode.Header.ToString().Split('-');
                     if (vetItem != null)
                     {
@@ -379,20 +342,28 @@ namespace BillsOfMaterial_App
                         op.DescriptionOperation = vetItem[1];
                     }
 
-                    string[] vet3 = vetItem[2].Split('=');
-                    if (vet3 != null)
+                    if (vetItem.Length > 0)
                     {
-                        op.TimeProcess = Convert.ToDateTime(vet3[1]);
-                    }
+                        foreach (var o in vetItem)
+                        {
+                            if (o.Contains("OBS:"))
+                            {
+                                string[] vetObs = o.Split(':');
+                                if (vetObs.Length > 1)
+                                {
+                                    op.Obs = vetObs[1];
+                                }
+                            }
 
-                    if (vetItem.Length > 3)
-                    {
-                        string[] vetObs = vetItem[3].Split(':');
-                        op.Obs = vetObs[1];
-                    }
-                    else
-                    {
-                        op.Obs = string.Empty;
+                            if (o.Contains("Tempo de Processamento"))
+                            {
+                                string[] vetObs = o.Split('=');
+                                if (vetObs.Length > 1)
+                                {
+                                    op.TimeProcess = Convert.ToDateTime(vetObs[1]);
+                                }
+                            }
+                        }
                     }
 
                     op.TBCreated = DateTime.Now;
@@ -455,9 +426,10 @@ namespace BillsOfMaterial_App
                                                                     comp.BOM = vet[0];
                                                                     break;
                                                                 }
-                                                            }
+                                                            }                                                  
                                                             comp.Line = compOpService.GetMaxLineComp() ?? 0;
                                                             comp.Id = int.Parse(lblCustQuotaId.Content.ToString());
+                                                            comp.Item = cbItemGrid.Text;
 
                                                             TreeViewItem components = comps as TreeViewItem;
 
@@ -612,6 +584,7 @@ namespace BillsOfMaterial_App
 
                                                         op.Line = compOpService.GetMaxLineOp() ?? 0;
                                                         op.Id = int.Parse(lblCustQuotaId.Content.ToString());
+                                                        op.Item = cbItemGrid.Text;
 
                                                         foreach (var ops in compNode.Items)
                                                         {
@@ -623,20 +596,28 @@ namespace BillsOfMaterial_App
                                                                 op.DescriptionOperation = vetItem2[1];
                                                             }
 
-                                                            string[] vet3 = vetItem2[2].Split('=');
-                                                            if (vet3 != null)
+                                                            if (vetItem2.Length > 0)
                                                             {
-                                                                op.TimeProcess = Convert.ToDateTime(vet3[1]);
-                                                            }
+                                                                foreach (var o in vetItem2)
+                                                                {
+                                                                    if (o.Contains("OBS:"))
+                                                                    {
+                                                                        string[] vetObs = o.Split(':');
+                                                                        if (vetObs.Length > 1)
+                                                                        {
+                                                                            op.Obs = vetObs[1];
+                                                                        }
+                                                                    }
 
-                                                            if (vetItem2.Length > 3)
-                                                            {
-                                                                string[] vetObs = vetItem2[3].Split(':');
-                                                                op.Obs = vetObs[1];
-                                                            }
-                                                            else
-                                                            {
-                                                                op.Obs = string.Empty;
+                                                                    if (o.Contains("Tempo de Processamento"))
+                                                                    {
+                                                                        string[] vetObs = o.Split('=');
+                                                                        if (vetObs.Length > 1)
+                                                                        {
+                                                                            op.TimeProcess = Convert.ToDateTime(vetObs[1]);
+                                                                        }
+                                                                    }
+                                                                }
                                                             }
 
                                                             op.TBCreated = DateTime.Now;
@@ -697,6 +678,8 @@ namespace BillsOfMaterial_App
                                             }
                                             comp.Line = compOpService.GetMaxLineComp() ?? 0;
                                             comp.Id = int.Parse(lblCustQuotaId.Content.ToString());
+                                            comp.Item = cbItemGrid.Text;
+
                                             if (item3.Header is StackPanel)
                                             {
                                                 StackPanel st1 = item3.Header as StackPanel;
@@ -892,6 +875,7 @@ namespace BillsOfMaterial_App
                                                 }
                                                 op.Line = compOpService.GetMaxLineOp() ?? 0;
                                                 op.Id = int.Parse(lblCustQuotaId.Content.ToString());
+                                                op.Item = cbItemGrid.Text;
 
                                                 string[] vetItem = item3.Header.ToString().Split('-');
                                                 if (vetItem != null)
@@ -899,20 +883,29 @@ namespace BillsOfMaterial_App
                                                     op.Operation = vetItem[0].Trim();
                                                     op.DescriptionOperation = vetItem[1];
                                                 }
-                                                string[] vet3 = vetItem[2].Split('=');
-                                                if (vet3 != null)
-                                                {
-                                                    op.TimeProcess = Convert.ToDateTime(vet3[1]);
-                                                }
 
-                                                if (vetItem.Length > 3)
+                                                if (vetItem.Length > 0)
                                                 {
-                                                    string[] vetObs = vetItem[3].Split(':');
-                                                    op.Obs = vetObs[1];
-                                                }
-                                                else
-                                                {
-                                                    op.Obs = string.Empty;
+                                                    foreach (var o in vetItem)
+                                                    {
+                                                        if (o.Contains("OBS:"))
+                                                        {
+                                                            string[] vetObs = o.Split(':');
+                                                            if (vetObs.Length > 1)
+                                                            {
+                                                                op.Obs = vetObs[1];
+                                                            }
+                                                        }
+
+                                                        if (o.Contains("Tempo de Processamento"))
+                                                        {
+                                                            string[] vetObs = o.Split('=');
+                                                            if (vetObs.Length > 1)
+                                                            {
+                                                                op.TimeProcess = Convert.ToDateTime(vetObs[1]);
+                                                            }
+                                                        }
+                                                    }
                                                 }
 
                                                 op.TBCreated = DateTime.Now;
@@ -948,7 +941,8 @@ namespace BillsOfMaterial_App
         private void BtnNext_Click(object sender, RoutedEventArgs e)
         {
             tvBOM.IsEnabled = false;
-            // chamar janela de formação de custo
+            CostFormationView window = new CostFormationView(this);
+            window.Show();
         }
 
         private void BtnClear_Click(object sender, RoutedEventArgs e)
@@ -958,7 +952,6 @@ namespace BillsOfMaterial_App
             lblCustQuotaId.Content = string.Empty;
             lblNoCustQuota.Content = "Selecione a Oferta";
             cbItemGrid.Text = string.Empty;
-            btnCalcSave.Visibility = Visibility.Hidden;
             tvBOM.Visibility = Visibility.Hidden;
             btnNext.IsEnabled = false;
             btnClear.IsEnabled = false;
@@ -1237,6 +1230,76 @@ namespace BillsOfMaterial_App
         {
             OfferSearchView window = new OfferSearchView(this);
             window.Show();
+        }
+
+        public bool SaveSimulation()
+        {
+            try
+            {
+                //Eng Level 1
+                if (AddComplevel1() && AddOplevel1())
+                {
+                    // Eng Level 2
+                    if (AddComplevel2())
+                    {
+                        if (AddComplevel3() && AddOplevel3())
+                        {
+                            MessageBox.Show(
+                                "Simulação de Engenharia de Produtos salvo com sucesso!"
+                                , "Mensagem"
+                                , MessageBoxButton.OK
+                                , MessageBoxImage.Information
+                                );
+
+                            return true;
+                        }
+                        else
+                        {
+                            MessageBox.Show(
+                                "Erro ao gravar engenharia de nivel 3"
+                                , "Mensagem"
+                                , MessageBoxButton.OK
+                                , MessageBoxImage.Information
+                                );
+
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(
+                               "Erro ao gravar engenharia de nivel 2"
+                               , "Mensagem"
+                               , MessageBoxButton.OK
+                               , MessageBoxImage.Information
+                               );
+
+                        return false;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(
+                               "Erro ao gravar engenharia de nivel 1"
+                               , "Mensagem"
+                               , MessageBoxButton.OK
+                               , MessageBoxImage.Information
+                               );
+
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n" + "Reinicie o aplicativo!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Environment.Exit(0);
+                return false;
+            }
+        }
+
+        private void CbItemGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            positionLine = cbItemGrid.SelectedIndex + 1;
         }
     }
 }

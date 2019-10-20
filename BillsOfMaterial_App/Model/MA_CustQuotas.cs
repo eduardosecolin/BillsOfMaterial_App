@@ -81,6 +81,15 @@ namespace BillsOfMaterial_App.Model
         [Column(TypeName = "ntext")]
         public string Notes { get; set; }
 
+        [StringLength(1000)]
+        public string PathFile1 { get; set; }
+
+        [StringLength(1000)]
+        public string PathFile2 { get; set; }
+
+        [StringLength(1000)]
+        public string PathFile3 { get; set; }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CustQuotaId { get; set; }

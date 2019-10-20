@@ -23,7 +23,7 @@ namespace BillsOfMaterial_App.Service
 
         public List<MA_CustQuotasDetail> GetAll(int id)
         {
-            return _context.MA_CustQuotasDetail.Where(x => x.CustQuotaId == id).ToList();
+            return _context.MA_CustQuotasDetail.Where(x => x.CustQuotaId == id).OrderBy(x => x.Position).ToList();
         }
 
         public List<MA_CustQuotas> GetCustQuota()
@@ -34,6 +34,19 @@ namespace BillsOfMaterial_App.Service
         public List<MA_CustQuotas> GetByQuotationNo(string no)
         {
             return _context.MA_CustQuotas.Where(x => x.QuotationNo.Contains(no)).ToList();
+        }
+
+        public double? GetUnitValueItem(int id, int position)
+        {
+            var sql = _context.MA_CustQuotasDetail.Where(x => x.CustQuotaId == id && x.Position == position).FirstOrDefault();
+            if(sql != null)
+            {
+                return sql.UnitValue;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

@@ -89,6 +89,9 @@
     <Compile Include="Model\MA_OperationsLabour.cs" />
     <Compile Include="Model\MA_OperationsTools.cs" />
     <Compile Include="Model\MA_PriceLists.cs" />
+    <Compile Include="Model\MA_WCFamilies.cs" />
+    <Compile Include="Model\MA_WCFamiliesDetails.cs" />
+    <Compile Include="Model\MA_WorkCenters.cs" />
     <Compile Include="Model\RM_Workers.cs" />
     <Compile Include="Model\RM_WorkersAbsences.cs" />
     <Compile Include="Model\RM_WorkersArrangements.cs" />
@@ -100,6 +103,8 @@
     <Compile Include="Service\CustQuotasService.cs" />
     <Compile Include="Service\ItemsService.cs" />
     <Compile Include="Service\OperationService.cs" />
+    <Compile Include="Service\OPFamilyService.cs" />
+    <Compile Include="Service\WorkersService.cs" />
     <Compile Include="SplashScreen.xaml.cs">
       <DependentUpon>SplashScreen.xaml</DependentUpon>
     </Compile>

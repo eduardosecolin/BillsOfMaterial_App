@@ -13,7 +13,7 @@ namespace BillsOfMaterial_App.Model
         [Key]
         [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Line { get; set; }
+        public short Line { get; set; }
 
         [Key]
         [Column(Order = 1)]

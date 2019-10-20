@@ -8,34 +8,27 @@ using System.Threading.Tasks;
 
 namespace BillsOfMaterial_App.Model
 {
-    public partial class CS_CustQuotasOperation
+    public partial class MA_WCFamiliesDetails
     {
         [Key]
         [Column(Order = 0)]
+        [StringLength(8)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public short Line { get; set; }
+        public string WC { get; set; }
 
         [Key]
         [Column(Order = 1)]
+        [StringLength(8)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Id { get; set; }
+        public string WCFamily { get; set; }
 
-        [StringLength(21)]
-        public string BOM { get; set; }
+        [StringLength(1)]
+        public string Preferential { get; set; }
 
-        [StringLength(21)]
-        public string Item { get; set; }
+        [StringLength(64)]
+        public string Notes { get; set; }
 
-        [StringLength(21)]
-        public string Operation { get; set; }
-
-        [StringLength(128)]
-        public string DescriptionOperation { get; set; }
-
-        [StringLength(1000)]
-        public string Obs { get; set; }
-
-        public DateTime? TimeProcess { get; set; }
+        public int? Priority { get; set; }
 
         public DateTime TBCreated { get; set; }
 
@@ -44,5 +37,9 @@ namespace BillsOfMaterial_App.Model
         public int TBCreatedID { get; set; }
 
         public int TBModifiedID { get; set; }
+
+        public Guid TBGuid { get; set; }
+
+        public virtual MA_WCFamilies MA_WCFamilies { get; set; }
     }
 }

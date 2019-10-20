@@ -1,6 +1,7 @@
 ﻿using BillsOfMaterial_App.Model;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,11 +29,11 @@ namespace BillsOfMaterial_App.Service
             _context.SaveChanges();
         }
 
-        public int? GetMaxLineComp()
+        public short? GetMaxLineComp()
         {
             try
             {
-                Nullable<int> line = _context.Database.SqlQuery<int>(
+                Nullable<short> line = _context.Database.SqlQuery<short>(
                     "SELECT ISNULL(MAX(Line), 0) + 1 FROM CS_CustQuotasComponent"
                     ).FirstOrDefault();
                 return line;
@@ -43,12 +44,24 @@ namespace BillsOfMaterial_App.Service
             }
         }
 
-        public int? GetMaxLineOp()
+        public short? GetMaxLineOp()
         {
-            Nullable<int> line = _context.Database.SqlQuery<int>(
+            Nullable<short> line = _context.Database.SqlQuery<short>(
                    "SELECT ISNULL(MAX(Line), 0) + 1 FROM CS_CustQuotasOperation"
                    ).FirstOrDefault();
             return line;
+        }
+
+        public List<CS_CustQuotasComponent> GetSimulationComponents(int id, string item)
+        {
+
+            return _context.CS_CustQuotasComponent.Where(x => x.Id == id && x.Item == item).ToList(); ;
+
+        }
+
+        public List<CS_CustQuotasOperation> GetSimulationOperations(int id, string item)
+        {
+            return _context.CS_CustQuotasOperation.Where(x => x.Id == id && x.Item == item).ToList();
         }
     }
 }

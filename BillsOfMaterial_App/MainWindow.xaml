@@ -27,7 +27,7 @@
             VerticalAlignment="Top"
             IsReadOnly="True"
             TabIndex="1"
-            Width="210" Height="39" LostFocus="CbItemGrid_LostFocus"/>
+            Width="210" Height="39" LostFocus="CbItemGrid_LostFocus" SelectionChanged="CbItemGrid_SelectionChanged"/>
         <TreeView HorizontalAlignment="Left" Visibility="Hidden" BorderBrush="DarkCyan" BorderThickness="1,1,1,1" x:Name="tvBOM" Height="472" Margin="10,120,0,0" VerticalAlignment="Top" Width="1245" MouseDoubleClick="TvBOM_MouseDoubleClick" MouseRightButtonDown="TvBOM_MouseRightButtonDown">
             <TreeViewItem IsExpanded="True">
                 <TreeViewItem.Header>
@@ -57,12 +57,6 @@
                 </TreeViewItem>
             </TreeViewItem>
         </TreeView>
-        <Button x:Name="btnCalcSave" Cursor="Hand" Visibility="Hidden" Margin="1046,624,19,0" VerticalAlignment="Top" Width="209" Height="38" Click="BtnCalcSave_Click">
-            <StackPanel Orientation="Horizontal">
-                <materialDesign:PackIcon Kind="ContentSave" />
-                <TextBlock Margin="8 0 0 0">Salvar</TextBlock>
-            </StackPanel>
-        </Button>
         <Button x:Name="btnNext" Cursor="Hand" IsEnabled="False" Margin="1046,624,19,0" VerticalAlignment="Top" Height="38" Click="BtnNext_Click">
             <StackPanel Orientation="Horizontal">
                 <materialDesign:PackIcon Kind="SkipNext" />

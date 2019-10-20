@@ -19,12 +19,12 @@ namespace BillsOfMaterial_App.Service
 
         public List<MA_Items> GetAll()
         {
-            return _context.MA_Items.Where(x => x.Disabled == "0").ToList();
+            return _context.MA_Items.Where(x => x.Disabled == "0").OrderBy(x => x.Item).ToList();
         }
 
         public List<MA_Items> GetAll(string item)
         {
-            return _context.MA_Items.Where(x => x.Item.Contains(item) && x.Disabled == "0").ToList();
+            return _context.MA_Items.Where(x => x.Item.Contains(item) && x.Disabled == "0").OrderBy(x => x.Item).ToList();
         }
 
         public string GetUoMItem(string item)
@@ -74,6 +74,19 @@ namespace BillsOfMaterial_App.Service
             if(sql != null)
             {
                 return sql.BasePrice;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public double? GetStandardCost(string item)
+        {
+            var sql = _context.MA_ItemsFiscalYearData.Where(x => x.Item == item && x.FiscalYear == DateTime.Now.Year).FirstOrDefault();
+            if(sql != null)
+            {
+                return sql.StandardCost;
             }
             else
             {
