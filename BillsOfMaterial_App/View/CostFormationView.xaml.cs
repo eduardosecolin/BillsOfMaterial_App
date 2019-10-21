@@ -30,9 +30,9 @@ namespace BillsOfMaterial_App.View
         ItemsService serviceItem;
         WorkersService serviceWorkers;
         OPFamilyService familyService;
-        private string pathFile1;
-        private string pathFile2;
-        private string pathFile3;
+        private string pathFile1 = string.Empty;
+        private string pathFile2 = string.Empty;
+        private string pathFile3 = string.Empty;
 
         public CostFormationView(MainWindow mainWindow)
         {
@@ -165,6 +165,8 @@ namespace BillsOfMaterial_App.View
                     double?[] vet = CalculateOperations(id, item);
                     unitValue += CalculateComponents(id, item) + vet[0] + vet[1];
                     MessageBox.Show("Resultado: " + CalculateFieldsView(Convert.ToDouble(unitValue)));
+                    double? costValue = CalculateFieldsView(Convert.ToDouble(unitValue));
+                    serviceCQ.UpdateCostFormationCustQuatas(id, _window.positionLine, costValue, pathFile1, pathFile2, pathFile3);
                 }
                 else
                 {
@@ -173,7 +175,8 @@ namespace BillsOfMaterial_App.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message + " - " + ex.StackTrace, "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message + " - " + ex.StackTrace, 
+                    "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
 
             }
         }

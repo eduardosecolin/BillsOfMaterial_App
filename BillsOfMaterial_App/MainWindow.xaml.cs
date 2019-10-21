@@ -1236,6 +1236,25 @@ namespace BillsOfMaterial_App
         {
             try
             {
+                if(compOpService.ExistData(Convert.ToInt32(lblCustQuotaId.Content.ToString()), cbItemGrid.Text))
+                {
+                    MessageBoxResult resultDialog = MessageBox.Show($"Já existe simulação para a oferta nº: { lblNoCustQuota.Content.ToString() } para o item nº: { cbItemGrid.Text }" +
+                        $"\n(SIM) Deletar a simulaçao existente e salvar a nova" +
+                        $"\n(Não) Fazer o calculo de formação de custo para a simulação existente",
+                        "Pergunta",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Question
+                        );
+
+                    if (resultDialog == MessageBoxResult.Yes)
+                    {
+                        compOpService.Delete(Convert.ToInt32(lblCustQuotaId.Content.ToString()), cbItemGrid.Text);
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
                 //Eng Level 1
                 if (AddComplevel1() && AddOplevel1())
                 {

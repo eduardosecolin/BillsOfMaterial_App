@@ -111,6 +111,19 @@ namespace BillsOfMaterial_App.Service
             }
         }
 
+        public bool ExistData(int id, string item)
+        {
+            var sql = _context.CS_CustQuotasComponent.Any(x => x.Id == id && x.Item == item);
+            if(sql)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
 
     }
 }

@@ -99,6 +99,8 @@ namespace BillsOfMaterial_App.Model
 
         public short? DaysForDelivery { get; set; }
 
+        public double? FinalCostFormation { get; set; }
+
         public double? BookedQty { get; set; }
 
         public DateTime? ExpectedDeliveryDate { get; set; }
