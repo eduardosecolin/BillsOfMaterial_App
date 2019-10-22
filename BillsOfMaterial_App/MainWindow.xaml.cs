@@ -227,7 +227,7 @@ namespace BillsOfMaterial_App
                                                 if (vetR1.Length > 1)
                                                 {
                                                     string vet1 = vetR1[0];
-                                                    string vet2 = vetR1[1];
+                                                    string vet2 = vetR1[1].Trim();
                                                     if (vet2 != "")
                                                     {
                                                         comp.R1Costvalue = Convert.ToDouble(vetR1[1]);
@@ -310,6 +310,7 @@ namespace BillsOfMaterial_App
                     }
                     comp.TBCreated = DateTime.Now;
                     comp.TBModified = DateTime.Now;
+                    comp.TBCreatedID = 1;
 
                     compOpService.SaveComp(comp);
                 }
@@ -544,7 +545,7 @@ namespace BillsOfMaterial_App
                                                                             if (vetR1.Length > 1)
                                                                             {
                                                                                 string vet1 = vetR1[0];
-                                                                                string vet2 = vetR1[1];
+                                                                                string vet2 = vetR1[1].Trim();
                                                                                 if (vet2 != "")
                                                                                 {
                                                                                     comp.R1Costvalue = Convert.ToDouble(vetR1[1]);
@@ -560,6 +561,7 @@ namespace BillsOfMaterial_App
                                                             }
                                                             comp.TBCreated = DateTime.Now;
                                                             comp.TBModified = DateTime.Now;
+                                                            comp.TBCreatedID = 2;
 
                                                             compOpService.SaveComp(comp);
 
@@ -806,6 +808,7 @@ namespace BillsOfMaterial_App
                                             }
                                             comp.TBCreated = DateTime.Now;
                                             comp.TBModified = DateTime.Now;
+                                            comp.TBCreatedID = 3;
 
                                             compOpService.SaveComp(comp);
                                         }
@@ -945,7 +948,7 @@ namespace BillsOfMaterial_App
             window.Show();
         }
 
-        private void BtnClear_Click(object sender, RoutedEventArgs e)
+        public void BtnClear_Click(object sender, RoutedEventArgs e)
         {
             tvComponent.Items.Clear();
             tvOperation.Items.Clear();
@@ -1263,12 +1266,6 @@ namespace BillsOfMaterial_App
                     {
                         if (AddComplevel3() && AddOplevel3())
                         {
-                            MessageBox.Show(
-                                "Simulação de Engenharia de Produtos salvo com sucesso!"
-                                , "Mensagem"
-                                , MessageBoxButton.OK
-                                , MessageBoxImage.Information
-                                );
 
                             return true;
                         }

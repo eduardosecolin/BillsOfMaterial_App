@@ -164,9 +164,22 @@ namespace BillsOfMaterial_App.View
                     double? unitValue = serviceCQ.GetUnitValueItem(id, _window.positionLine);
                     double?[] vet = CalculateOperations(id, item);
                     unitValue += CalculateComponents(id, item) + vet[0] + vet[1];
-                    MessageBox.Show("Resultado: " + CalculateFieldsView(Convert.ToDouble(unitValue)));
                     double? costValue = CalculateFieldsView(Convert.ToDouble(unitValue));
                     serviceCQ.UpdateCostFormationCustQuatas(id, _window.positionLine, costValue, pathFile1, pathFile2, pathFile3);
+                    MessageBox.Show($"Formação de Custo (R$ { costValue }) e Simulação de Engenharia de Produtos salva com sucesso!",
+                        "Informação", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBoxResult resultDialog = MessageBox.Show("Deseja realizar outra simulação?", "Pergunta",
+                        MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if(resultDialog == MessageBoxResult.Yes)
+                    {
+                        ClearFields();
+                        _window.BtnClear_Click(sender, e);
+                        this.Close();
+                    }
+                    else
+                    {
+                        //Environment.Exit(0);
+                    }
                 }
                 else
                 {
