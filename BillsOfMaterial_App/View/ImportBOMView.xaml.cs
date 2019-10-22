@@ -92,7 +92,7 @@ namespace BillsOfMaterial_App.View
                     // Components Level 1
                     foreach (var item in bomService.GetComponentsBOM(txtItem.Text))
                     {
-                        TreeViewItem tvItem1 = FillLevel1(item.Component, item.Description.Replace("-","").Replace(",",""), item.Qty.ToString().Replace(",","."), item.Notes);
+                        TreeViewItem tvItem1 = FillLevel1(item.Component, item.Description.Replace(",",""), item.Qty.ToString().Replace(",","."), item.Notes);
 
                         #region Level 2
 
@@ -121,7 +121,7 @@ namespace BillsOfMaterial_App.View
                                                     {
                                                         foreach (var comp2 in listComp)
                                                         {
-                                                            TreeViewItem tvItem2 = FillLevel2(comp2.Component, comp2.Description.Replace("-", "").Replace(",", ""), comp2.Qty.ToString().Replace(",","."), item.Notes, isComp);
+                                                            TreeViewItem tvItem2 = FillLevel2(comp2.Component, comp2.Description.Replace(",", ""), comp2.Qty.ToString().Replace(",","."), item.Notes, isComp);
 
                                                             #region Level 3
 
@@ -149,7 +149,7 @@ namespace BillsOfMaterial_App.View
                                                                                         {
                                                                                             foreach (var comp3 in listComp2)
                                                                                             {
-                                                                                                FillLevel3(comp3.Component, comp3.Description.Replace("-", "").Replace(",", ""), comp3.Qty.ToString().Replace(",","."), item.Notes, isComp2);
+                                                                                                FillLevel3(comp3.Component, comp3.Description.Replace(",", ""), comp3.Qty.ToString().Replace(",","."), item.Notes, isComp2);
                                                                                             }                             
                                                                                         }
                                                                                         else if(lbl2.Content.ToString().Equals("Operação nv.3"))
@@ -158,7 +158,7 @@ namespace BillsOfMaterial_App.View
                                                                                             {
                                                                                                 foreach (var comp3 in listOp2)
                                                                                                 {
-                                                                                                    FillLevel2(comp3.Operation, opService.GetDescriptionOp(comp3.Operation).Replace("-", "").Replace(",", ""), comp3.ProcessingTime, item.Notes, isComp2);
+                                                                                                    FillLevel2(comp3.Operation, opService.GetDescriptionOp(comp3.Operation).Replace(",", ""), comp3.ProcessingTime, item.Notes, isComp2);
                                                                                                 }
                                                                                             }
                                                                                         }
@@ -180,7 +180,7 @@ namespace BillsOfMaterial_App.View
                                                         {
                                                             foreach (var comp2 in listOp)
                                                             {
-                                                                FillLevel2(comp2.Operation, opService.GetDescriptionOp(comp2.Operation).Replace("-", "").Replace(",", ""), comp2.ProcessingTime, item.Notes, isComp);
+                                                                FillLevel2(comp2.Operation, opService.GetDescriptionOp(comp2.Operation).Replace(",", ""), comp2.ProcessingTime, item.Notes, isComp);
                                                             }
                                                         }
                                                     }
@@ -199,7 +199,7 @@ namespace BillsOfMaterial_App.View
                     // Operations Level 1
                     foreach (var item in bomService.GetOperationsBOM(txtItem.Text))
                     {
-                        FillLevel1(item.Operation, opService.GetDescriptionOp(item.Operation).Replace("-", "").Replace(",", ""), item.ProcessingTime, item.Notes);
+                        FillLevel1(item.Operation, opService.GetDescriptionOp(item.Operation).Replace(",", ""), item.ProcessingTime, item.Notes);
                     }
 
                     this.Close();
@@ -344,11 +344,11 @@ namespace BillsOfMaterial_App.View
                 chilItem.Name = "treeViewLv1";
                 if(obs == string.Empty)
                 {
-                    chilItem.Header = item + " - " + description + " - Quantidade: " + qty;
+                    chilItem.Header = item.Replace("-", "") + " - " + description.Replace("-", "") + " - Quantidade: " + qty;
                 }
                 else
                 {
-                    chilItem.Header = item + " - " + description + " - Quantidade: " + qty + " - OBS: " + obs;
+                    chilItem.Header = item.Replace("-", "") + " - " + description.Replace("-", "") + " - Quantidade: " + qty + " - OBS: " + obs.Replace("-", "");
                 }               
                 _mainWindow.tvComponent.Items.Add(chilItem);
                 return chilItem;
@@ -373,7 +373,7 @@ namespace BillsOfMaterial_App.View
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = item + " - " + description + " - Quantidade: " + qty },
+                                new TextBlock { Text = item.Replace("-", "") + " - " + description.Replace("-", "") + " - Quantidade: " + qty },
                                 btn
                             }
                         }
@@ -397,7 +397,7 @@ namespace BillsOfMaterial_App.View
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = item + " - " + description + " - Quantidade: " + qty + " - OBS: " + obs },
+                                new TextBlock { Text = item.Replace("-", "") + " - " + description.Replace("-", "") + " - Quantidade: " + qty + " - OBS: " + obs.Replace("-", "") },
                                 btn
                             }
                         }
@@ -425,11 +425,11 @@ namespace BillsOfMaterial_App.View
                 chilItem.Name = "tvLevel2";
                 if (obs == string.Empty)
                 {
-                    chilItem.Header = item + " - " + description + " - Quantidade: " + qty;
+                    chilItem.Header = item.Replace("-", "") + " - " + description.Replace("-", "") + " - Quantidade: " + qty;
                 }
                 else
                 {
-                    chilItem.Header = item + " - " + description + " - Quantidade: " + qty + " - OBS: " + obs;
+                    chilItem.Header = item.Replace("-", "") + " - " + description.Replace("-", "") + " - Quantidade: " + qty + " - OBS: " + obs.Replace("-", "");
                 }
                 viewItem.Items.Add(chilItem);
                 return chilItem;
@@ -455,7 +455,7 @@ namespace BillsOfMaterial_App.View
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = item + " - " + description + "- Quantidade: " + qty },
+                                new TextBlock { Text = item.Replace("-", "") + " - " + description.Replace("-", "") + "- Quantidade: " + qty },
                                 btn
                             }
                         }
@@ -479,7 +479,7 @@ namespace BillsOfMaterial_App.View
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = item + " - " + description + "- Quantidade: " + qty + " - OBS: " + obs },
+                                new TextBlock { Text = item.Replace("-", "") + " - " + description.Replace("-", "") + "- Quantidade: " + qty + " - OBS: " + obs.Replace("-", "") },
                                 btn
                             }
                         }
@@ -507,11 +507,11 @@ namespace BillsOfMaterial_App.View
                 chilItem.Name = "tvLevel3";
                 if(obs == string.Empty)
                 {
-                    chilItem.Header = item + " - " + description + "- Quantidade: " + qty;
+                    chilItem.Header = item.Replace("-", "") + " - " + description.Replace("-", "") + "- Quantidade: " + qty;
                 }
                 else
                 {
-                    chilItem.Header = item + " - " + description + "- Quantidade: " + qty + " - OBS: " + obs;
+                    chilItem.Header = item.Replace("-", "") + " - " + description.Replace("-", "") + "- Quantidade: " + qty + " - OBS: " + obs.Replace("-", "");
                 }
                 viewItem.Items.Add(chilItem);
                 this.Close();
@@ -537,7 +537,7 @@ namespace BillsOfMaterial_App.View
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = item + " - " + description + "- Quantidade: " + qty },
+                                new TextBlock { Text = item.Replace("-", "") + " - " + description.Replace("-", "") + "- Quantidade: " + qty },
                                 btn
                             }
                         }
@@ -556,7 +556,7 @@ namespace BillsOfMaterial_App.View
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = item + " - " + description + "- Quantidade: " + qty + " - OBS: " + obs },
+                                new TextBlock { Text = item.Replace("-", "") + " - " + description.Replace("-", "") + "- Quantidade: " + qty + " - OBS: " + obs.Replace("-", "") },
                                 btn
                             }
                         }
@@ -579,11 +579,11 @@ namespace BillsOfMaterial_App.View
             chilItem.Name = "tvOpLevel1";
             if(obs == string.Empty)
             {
-                chilItem.Header = op + " - " + description + "- " + "Tempo de Processamento = " + timeStr;
+                chilItem.Header = op.Replace("-", "") + " - " + description.Replace("-", "") + "- " + "Tempo de Processamento = " + timeStr;
             }
             else
             {
-                chilItem.Header = op + " - " + description + "- " + "Tempo de Processamento = " + timeStr + " - OBS: " + obs;
+                chilItem.Header = op.Replace("-", "") + " - " + description.Replace("-", "") + "- " + "Tempo de Processamento = " + timeStr + " - OBS: " + obs.Replace("-", "");
             }
             
             _mainWindow.tvOperation.Items.Add(chilItem);
@@ -601,11 +601,11 @@ namespace BillsOfMaterial_App.View
             chilItem.Name = "tvOpLevel2";
             if (obs == string.Empty)
             {
-                chilItem.Header = op + " - " + description + "- " + "Tempo de Processamento = " + timeStr;
+                chilItem.Header = op.Replace("-", "") + " - " + description.Replace("-", "") + "- " + "Tempo de Processamento = " + timeStr;
             }
             else
             {
-                chilItem.Header = op + " - " + description + "- " + "Tempo de Processamento = " + timeStr + " - OBS: " + obs;
+                chilItem.Header = op.Replace("-", "") + " - " + description.Replace("-", "") + "- " + "Tempo de Processamento = " + timeStr + " - OBS: " + obs.Replace("-", "");
             }
             viewItem.Items.Add(chilItem);
         }
