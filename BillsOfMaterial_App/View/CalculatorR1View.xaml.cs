@@ -27,6 +27,7 @@ namespace BillsOfMaterial_App.View
         public CalculatorR1View(ItemsView window)
         {
             InitializeComponent();
+            txtD1.Focus();
             _window = window;
             service = new ItemsService();
             EnabledFields();
@@ -208,7 +209,7 @@ namespace BillsOfMaterial_App.View
                         totalValue = (totalWeight * costValue);
                         break;
                     case "Tubo Retangular":
-                        totalWeight = (((d3 * d2) - ((d2 - d1 * 2) * (d3 - d1 * 2))) * specificWeight * lenght) / 1000000;
+                        totalWeight = (((d3 * d2) - (((d2 - d1) * 2) * ((d3 - d1) * 2))) * (specificWeight * lenght)) / 1000000;
                         totalValue = (totalWeight * costValue);
                         break;
                     case "Tubo Sextavado":

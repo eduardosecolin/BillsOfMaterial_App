@@ -23,7 +23,7 @@ namespace BillsOfMaterial_App.Service
 
         public List<MA_Operations> GetAll(string op)
         {
-            return _context.MA_Operations.Where(x => x.Item.Contains(op)).ToList();
+            return _context.MA_Operations.Where(x => x.Operation.Contains(op)).ToList();
         }
 
         public string GetOperationNotes(string op)
