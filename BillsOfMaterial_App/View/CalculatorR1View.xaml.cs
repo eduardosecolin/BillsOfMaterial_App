@@ -149,7 +149,7 @@ namespace BillsOfMaterial_App.View
             if (_window.cbFormatItem.Text != string.Empty)
             {
                 txtFormatItem.Text = _window.cbFormatItem.Text;
-                txtCostValue.Text = service.GetBasePrice(_window.txtItem.Text).ToString();
+                txtCostValue.Text = service.GetStandardCost(_window.txtItem.Text).ToString();
                 switch (txtFormatItem.Text)
                 {
                     case "Bloco":

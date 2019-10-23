@@ -232,6 +232,10 @@ namespace BillsOfMaterial_App
                                                     {
                                                         comp.R1Costvalue = Convert.ToDouble(vetR1[1]);
                                                     }
+                                                    else
+                                                    {
+                                                        comp.R1Costvalue = 0;
+                                                    }
                                                 }
                                             }
                                         }
@@ -298,6 +302,10 @@ namespace BillsOfMaterial_App
                                         if (vet2 != "")
                                         {
                                             comp.R1Costvalue = Convert.ToDouble(vetR1[1]);
+                                        }
+                                        else
+                                        {
+                                            comp.R1Costvalue = 0;
                                         }
                                     }
                                 }
@@ -489,6 +497,10 @@ namespace BillsOfMaterial_App
                                                                                     {
                                                                                         comp.R1Costvalue = Convert.ToDouble(vetR1[1]);
                                                                                     }
+                                                                                    else
+                                                                                    {
+                                                                                        comp.R1Costvalue = 0;
+                                                                                    }
                                                                                 }
                                                                             }
                                                                         }
@@ -549,6 +561,10 @@ namespace BillsOfMaterial_App
                                                                                 if (vet2 != "")
                                                                                 {
                                                                                     comp.R1Costvalue = Convert.ToDouble(vetR1[1]);
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    comp.R1Costvalue = 0;
                                                                                 }
                                                                             }
                                                                         }
@@ -737,6 +753,10 @@ namespace BillsOfMaterial_App
                                                                         {
                                                                             comp.R1Costvalue = Convert.ToDouble(vetR1[1]);
                                                                         }
+                                                                        else
+                                                                        {
+                                                                            comp.R1Costvalue = 0;
+                                                                        }
                                                                     }
                                                                 }
                                                             }
@@ -796,6 +816,10 @@ namespace BillsOfMaterial_App
                                                                 if (vet2 != "")
                                                                 {
                                                                     comp.R1Costvalue = Convert.ToDouble(vetR1[1]);
+                                                                }
+                                                                else
+                                                                {
+                                                                    comp.R1Costvalue = 0;
                                                                 }
                                                             }
                                                         }

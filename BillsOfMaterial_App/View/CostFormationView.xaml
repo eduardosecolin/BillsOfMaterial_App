@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BillsOfMaterial_App.View"
         mc:Ignorable="d"
-        Title="Formação de Custo" Height="550" Width="700" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen">
+        Title="Formação de Custo" Height="568" Width="700" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen">
     <Grid Margin="0,0,-196,0">
         <TextBox 
             x:Name="txtFreightValue"
@@ -103,7 +103,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            TabIndex="0" Margin="249,126,0,0" IsEnabled="False"/>
+            TabIndex="20" Margin="249,126,0,0" IsEnabled="False"/>
         <TextBox 
             x:Name="txtPathFile2"
             HorizontalAlignment="Left"
@@ -146,12 +146,36 @@
             Height="53" Width="80" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnFile3_Click">
             <materialDesign:PackIcon Foreground="#FF00BCD4" Height="29" Width="27" Kind="FileImport"/>
         </Button>
-        <Button x:Name="btnSaveAll" Cursor="Hand" HorizontalAlignment="Left" Margin="66,412,0,0" VerticalAlignment="Top" Width="522" Height="40" Click="BtnSaveAll_Click">
+        <Button x:Name="btnSaveAll" Cursor="Hand" HorizontalAlignment="Left" Margin="66,474,0,0" VerticalAlignment="Top" Width="522" Height="40" Click="BtnSaveAll_Click">
             <StackPanel Orientation="Horizontal">
                 <materialDesign:PackIcon Kind="ContentSave" />
                 <TextBlock Margin="8 0 0 0"><Run Text="Salvar simulação e formação de custo"/></TextBlock>
             </StackPanel>
         </Button>
+        <TextBox 
+            x:Name="txtMargin"
+            HorizontalAlignment="Left"
+            Height="42"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="150"
+            materialDesign:HintAssist.Hint="Margem %" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            MaxLength="10" TabIndex="7" Margin="66,362,0,0" PreviewTextInput="TxtMargin_PreviewTextInput"/>
+        <TextBox 
+            x:Name="txtVariableMargin"
+            HorizontalAlignment="Left"
+            Height="42"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="150"
+            materialDesign:HintAssist.Hint="Margem Variavel %" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            MaxLength="10" TabIndex="8" Margin="66,410,0,0" PreviewTextInput="TxtVariableMargin_PreviewTextInput"/>
 
     </Grid>
 </Window>

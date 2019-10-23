@@ -166,7 +166,7 @@ namespace BillsOfMaterial_App.View
                     unitValue += CalculateComponents(id, item) + vet[0] + vet[1];
                     double? costValue = CalculateFieldsView(Convert.ToDouble(unitValue));
                     serviceCQ.UpdateCostFormationCustQuatas(id, _window.positionLine, costValue, pathFile1, pathFile2, pathFile3);
-                    MessageBox.Show($"Formação de Custo (R$ { costValue }) e Simulação de Engenharia de Produtos salva com sucesso!",
+                    MessageBox.Show($"Formação de Custo (R$ { Math.Round(Convert.ToDouble(costValue), 2) }) e Simulação de Engenharia de Produtos salva com sucesso!",
                         "Informação", MessageBoxButton.OK, MessageBoxImage.Information);
                     MessageBoxResult resultDialog = MessageBox.Show("Deseja realizar outra simulação?", "Pergunta",
                         MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -178,7 +178,7 @@ namespace BillsOfMaterial_App.View
                     }
                     else
                     {
-                        //Environment.Exit(0);
+                        Environment.Exit(0);
                     }
                 }
                 else
@@ -204,7 +204,14 @@ namespace BillsOfMaterial_App.View
                 {
                     foreach (var item in listComp)
                     {
-                        result += (serviceItem.GetStandardCost(item.Component) * item.Qty);
+                        if (item.R1Costvalue > 0)
+                        {
+                            result += (item.R1Costvalue * item.Qty);
+                        }
+                        else
+                        {
+                            result += (serviceItem.GetStandardCost(item.Component) * item.Qty);
+                        }
                     }
                 }
 
@@ -228,8 +235,8 @@ namespace BillsOfMaterial_App.View
                 {
                     foreach (var item in listOp)
                     {
-                        resultFamily += CalculateHorlyCostFamilyOperation(item.Operation);
-                        resultWorkers += CalculateHorlyCostWorkerOperation(item.Operation);
+                        resultFamily += (GetHourlyCostFamily(item.Operation) * CalculateHorlyCostFamilyOperation(item.TimeProcess));
+                        resultWorkers += GetHourlyCostWorkers(item.Operation);
                     }
                 }
 
@@ -242,18 +249,14 @@ namespace BillsOfMaterial_App.View
             }
         }
 
-        private double? CalculateHorlyCostWorkerOperation(string op)
+        private double? CalculateHorlyCostFamilyOperation(DateTime? timeProcess)
         {
             try
             {
                 // calculo da mao de obra
-                double? totalWHourlyCost = 0;
                 string timeStringFormat = string.Empty;
-                string timeString = serviceOp.GetWorkTimeOperation(op).ToString() + "000";
-                double timeDouble = Convert.ToDouble(timeString);
-                double time = TimeSpan.FromMilliseconds(timeDouble).TotalHours;
-                string timeStr = TimeSpan.FromHours(time).ToString("h\\:mm");
-                string[] timeSplit = timeStr.Split(':');
+                double timeDouble = 0;
+                string[] timeSplit = Convert.ToDateTime(timeProcess).ToShortTimeString().Split(':');
                 if (timeSplit.Length > 1)
                 {
                     if (timeSplit[1] != "00")
@@ -273,14 +276,8 @@ namespace BillsOfMaterial_App.View
                 }
 
                 timeDouble = Convert.ToDouble(timeStringFormat);
-                totalWHourlyCost = (GetHourlyCostWorkers(op));
 
-                if (double.IsNaN(Convert.ToDouble(totalWHourlyCost)))
-                {
-                    return 0;
-                }
-
-                return totalWHourlyCost;
+                return timeDouble;
 
             }
             catch (Exception ex)
@@ -290,14 +287,13 @@ namespace BillsOfMaterial_App.View
             }
         }
 
-        private double? CalculateHorlyCostFamilyOperation(string op)
+        private double? CalculateHorlyCostWorkerOperation(int? workTime)
         {
             try
             {
                 // calculo da mao de obra
-                double? totalWCHourlyCost = 0;
                 string timeStringFormat = string.Empty;
-                string timeString = serviceOp.GetWorkTimeOperation(op).ToString() + "000";
+                string timeString = workTime + "000";
                 double timeDouble = Convert.ToDouble(timeString);
                 double time = TimeSpan.FromMilliseconds(timeDouble).TotalHours;
                 string timeStr = TimeSpan.FromHours(time).ToString("h\\:mm");
@@ -321,14 +317,8 @@ namespace BillsOfMaterial_App.View
                 }
 
                 timeDouble = Convert.ToDouble(timeStringFormat);
-                totalWCHourlyCost = (GetHourlyCostFamily(op) * timeDouble);
 
-                if (double.IsNaN(Convert.ToDouble(totalWCHourlyCost)))
-                {
-                    return 0;
-                }
-
-                return totalWCHourlyCost;
+                return timeDouble;
 
             }
             catch (Exception ex)
@@ -343,9 +333,10 @@ namespace BillsOfMaterial_App.View
             try
             {
                 double? result = 0;
-                foreach (var item in serviceOp.GetWorkersOperation(op))
+                List<MA_OperationsLabour> ListWorkersOp = serviceOp.GetWorkersOperation(op);
+                foreach (var item in ListWorkersOp)
                 {
-                    result += serviceWorkers.GetHorlyCostWorker(item.WorkerID);
+                    result += ((serviceWorkers.GetHorlyCostWorker(item.WorkerID) / ListWorkersOp.Count) * CalculateHorlyCostWorkerOperation(item.WorkingTime));
                 }
 
                 return result;
@@ -389,6 +380,8 @@ namespace BillsOfMaterial_App.View
                 double ipi = (!string.IsNullOrEmpty(txtIpi.Text)) ? (costValue / 100) * Convert.ToDouble(txtIpi.Text) : 0;
                 double df = (!string.IsNullOrEmpty(txtFixedExpenses.Text)) ? (costValue / 100) * Convert.ToDouble(txtFixedExpenses.Text) : 0;
                 double dv = (!string.IsNullOrEmpty(txtVariableExpenses.Text)) ? (costValue / 100) * Convert.ToDouble(txtVariableExpenses.Text) : 0;
+                double margin = (!string.IsNullOrEmpty(txtMargin.Text)) ? (costValue / 100) * Convert.ToDouble(txtMargin.Text) : 0;
+                double variableMargin = (!string.IsNullOrEmpty(txtVariableMargin.Text)) ? (costValue / 100) * Convert.ToDouble(txtVariableMargin.Text) : 0;
 
                 return costValue + (
                     freight +
@@ -397,7 +390,9 @@ namespace BillsOfMaterial_App.View
                     icms +
                     ipi +
                     df +
-                    dv
+                    dv +
+                    margin +
+                    variableMargin
                     );
             }
             catch (Exception ex)
@@ -405,6 +400,18 @@ namespace BillsOfMaterial_App.View
 
                 throw ex;
             }
+        }
+
+        private void TxtMargin_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9,]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void TxtVariableMargin_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9,]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }
