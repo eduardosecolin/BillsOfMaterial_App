@@ -150,6 +150,7 @@ namespace BillsOfMaterial_App.View
             {
                 txtFormatItem.Text = _window.cbFormatItem.Text;
                 txtCostValue.Text = service.GetStandardCost(_window.txtItem.Text).ToString();
+                txtSpecificWeight.Text = service.GetSpecificWeight(_window.txtItem.Text).ToString();
                 switch (txtFormatItem.Text)
                 {
                     case "Bloco":

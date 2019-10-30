@@ -24,7 +24,7 @@ namespace BillsOfMaterial_App.Service
 
         public List<MA_Items> GetAll(string item)
         {
-            return _context.MA_Items.Where(x => x.Item.Contains(item) && x.Disabled == "0").OrderBy(x => x.Item).ToList();
+            return _context.MA_Items.Where(x => x.Item.Contains(item) || x.Description.Contains(item) && x.Disabled == "0").OrderBy(x => x.Item).ToList();
         }
 
         public string GetUoMItem(string item)
@@ -58,7 +58,7 @@ namespace BillsOfMaterial_App.Service
         public bool IsSpecificItem(string item)
         {
             var sql = _context.MA_Items.Where(x => x.Item == item).FirstOrDefault();
-            if(sql != null)
+            if (sql != null)
             {
                 return (sql.IsSpecificItem.Equals("1")) ? true : false;
             }
@@ -71,7 +71,7 @@ namespace BillsOfMaterial_App.Service
         public double? GetBasePrice(string item)
         {
             var sql = _context.MA_Items.Where(x => x.Item == item).FirstOrDefault();
-            if(sql != null)
+            if (sql != null)
             {
                 return sql.BasePrice;
             }
@@ -84,9 +84,22 @@ namespace BillsOfMaterial_App.Service
         public double? GetStandardCost(string item)
         {
             var sql = _context.MA_ItemsFiscalYearData.Where(x => x.Item == item && x.FiscalYear == DateTime.Now.Year).FirstOrDefault();
-            if(sql != null)
+            if (sql != null)
             {
                 return sql.StandardCost;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public double? GetSpecificWeight(string item)
+        {
+            var sql = _context.MA_Items.Where(x => x.Item == item).FirstOrDefault();
+            if(sql != null)
+            {
+                return sql.SpecificWeight;                   
             }
             else
             {

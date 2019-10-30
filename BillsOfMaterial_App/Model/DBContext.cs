@@ -52,6 +52,8 @@ namespace BillsOfMaterial_App.Model
         public virtual DbSet<MA_WorkCenters> MA_WorkCenters { get; set; }
         public virtual DbSet<MA_WCFamilies> MA_WCFamilies { get; set; }
         public virtual DbSet<MA_WCFamiliesDetails> MA_WCFamiliesDetails { get; set; }
+        public virtual DbSet<MA_Drawings> MA_Drawings { get; set; }
+        public virtual DbSet<MA_DrawingsDescription> MA_DrawingsDescription { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -447,6 +449,42 @@ namespace BillsOfMaterial_App.Model
             modelBuilder.Entity<MA_CustSupp>()
                 .Property(e => e.SendByCertifiedEmail)
                 .IsFixedLength();
+
+            modelBuilder.Entity<MA_Drawings>()
+               .Property(e => e.Description)
+               .IsFixedLength();
+
+            modelBuilder.Entity<MA_Drawings>()
+               .Property(e => e.Revision)
+               .IsFixedLength();
+
+            modelBuilder.Entity<MA_Drawings>()
+               .Property(e => e.DerivedFrom)
+               .IsFixedLength();
+
+            modelBuilder.Entity<MA_Drawings>()
+               .Property(e => e.BarCode)
+               .IsFixedLength();
+
+            modelBuilder.Entity<MA_Drawings>()
+               .Property(e => e.Notes)
+               .IsFixedLength();
+
+            modelBuilder.Entity<MA_Drawings>()
+               .Property(e => e.ApprovalSignature)
+               .IsFixedLength();
+
+            modelBuilder.Entity<MA_Drawings>()
+               .Property(e => e.FilePath)
+               .IsFixedLength();
+
+            modelBuilder.Entity<MA_Drawings>()
+               .Property(e => e.PreferredDrawing)
+               .IsFixedLength();
+
+            modelBuilder.Entity<MA_DrawingsDescription>()
+               .Property(e => e.Description)
+               .IsFixedLength();
 
             modelBuilder.Entity<MA_Items>()
                 .Property(e => e.IsGood)

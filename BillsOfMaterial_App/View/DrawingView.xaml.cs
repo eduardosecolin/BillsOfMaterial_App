@@ -23,12 +23,14 @@ namespace BillsOfMaterial_App.View
     {
         ItemsView _window;
         ItemsService service;
+        DrawingService dwService;
 
         public DrawingView(ItemsView window)
         {
             InitializeComponent();
             _window = window;
             service = new ItemsService();
+            dwService = new DrawingService();
             LoadGrid();
         }
 

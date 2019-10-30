@@ -219,6 +219,8 @@ namespace BillsOfMaterial_App.Model
         [StringLength(16)]
         public string ItemCodes { get; set; }
 
+        public double? SpecificWeight { get; set; }
+
         [StringLength(1)]
         public string AdditionalCharge { get; set; }
 

@@ -6,17 +6,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BillsOfMaterial_App"
         mc:Ignorable="d"
-        Title="Formação de Custo e criação de Engenharia de Produtos" Height="720" Width="1280" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Background="White">
+        Title="Formação de Custo e criação de Engenharia de Produtos" Height="738" Width="1366" WindowStartupLocation="CenterScreen" Background="White">
     <Grid>
         <Label x:Name="lblNoCustQuota" Content="Selecione a Oferta" FontSize="18" FontWeight="SemiBold" Margin="10,10,1070,633"/>
         <Button 
             x:Name="btnSearchOffer" 
-            Cursor="Hand" Margin="179,8,999,642" 
-            Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnSearchOffer_Click">
+            Cursor="Hand" Margin="162,6,1096,651" 
+            Height="50" Width="100" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnSearchOffer_Click">
             <materialDesign:PackIcon Foreground="#FF00BCD4" Height="31" Width="66" Kind="FilterVariant"/>
         </Button>
         <ComboBox 
-            x:Name="cbItemGrid" 
+            x:Name="cbItemGrid"
             materialDesign:HintAssist.Hint="Selecione um item" 
             Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}" 
             FontFamily="champagne &amp; Limousines" 
@@ -28,7 +28,7 @@
             IsReadOnly="True"
             TabIndex="1"
             Width="210" Height="39" LostFocus="CbItemGrid_LostFocus" SelectionChanged="CbItemGrid_SelectionChanged"/>
-        <TreeView HorizontalAlignment="Left" Visibility="Hidden" BorderBrush="DarkCyan" BorderThickness="1,1,1,1" x:Name="tvBOM" Height="472" Margin="10,120,0,0" VerticalAlignment="Top" Width="1245" MouseDoubleClick="TvBOM_MouseDoubleClick" MouseRightButtonDown="TvBOM_MouseRightButtonDown">
+        <TreeView HorizontalAlignment="Left" Visibility="Hidden" BorderBrush="DarkCyan" BorderThickness="1,1,1,1" x:Name="tvBOM" Height="508" Margin="10,120,0,0" VerticalAlignment="Top" Width="1338" MouseDoubleClick="TvBOM_MouseDoubleClick" MouseRightButtonDown="TvBOM_MouseRightButtonDown">
             <TreeViewItem IsExpanded="True">
                 <TreeViewItem.Header>
                     <StackPanel Orientation="Horizontal">
@@ -57,22 +57,22 @@
                 </TreeViewItem>
             </TreeViewItem>
         </TreeView>
-        <Button x:Name="btnNext" Cursor="Hand" IsEnabled="False" Margin="1046,624,19,0" VerticalAlignment="Top" Height="38" Click="BtnNext_Click">
+        <Button x:Name="btnNext" Cursor="Hand" IsEnabled="False" Margin="1118,653,10,0" VerticalAlignment="Top" Height="38" Click="BtnNext_Click">
             <StackPanel Orientation="Horizontal">
                 <materialDesign:PackIcon Kind="SkipNext" />
                 <TextBlock Margin="8 0 0 0">Proximo</TextBlock>
             </StackPanel>
         </Button>
-        <Button x:Name="btnClear" Cursor="Hand" IsEnabled="False" Margin="828,624,246,0" VerticalAlignment="Top" Height="38" Click="BtnClear_Click">
+        <Button x:Name="btnClear" Cursor="Hand" IsEnabled="False" Margin="10,653,1118,0" VerticalAlignment="Top" Height="38" Click="BtnClear_Click">
             <StackPanel Orientation="Horizontal">
-                <materialDesign:PackIcon Kind="FormatClear" />
+                <materialDesign:PackIcon Kind="FormatClear"/>
                 <TextBlock Margin="8 0 0 0"><Run Text="Limpar"/></TextBlock>
             </StackPanel>
         </Button>
         <Button x:Name="btnImport" 
                 Cursor="Hand" 
                 IsEnabled="True" 
-                Margin="248,68,821,0" 
+                Margin="248,70,880,0" 
                 VerticalAlignment="Top" Height="38" 
                 Click="BtnImport_Click">
             <StackPanel Orientation="Horizontal">

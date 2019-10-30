@@ -215,6 +215,8 @@ namespace BillsOfMaterial_App.View
                     }
                 }
 
+                result = (double.IsNaN(Convert.ToDouble(result))) ? 0 : result;
+
                 return result ?? 0;
             }
             catch (Exception ex)
@@ -239,6 +241,9 @@ namespace BillsOfMaterial_App.View
                         resultWorkers += GetHourlyCostWorkers(item.Operation);
                     }
                 }
+
+                resultFamily = (double.IsNaN(Convert.ToDouble(resultFamily))) ? 0 : resultFamily;
+                resultWorkers = (double.IsNaN(Convert.ToDouble(resultWorkers))) ? 0 : resultWorkers;
 
                 return new double?[] { resultFamily, resultWorkers };
             }

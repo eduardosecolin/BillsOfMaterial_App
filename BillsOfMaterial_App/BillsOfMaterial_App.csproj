@@ -82,6 +82,8 @@
     <Compile Include="Model\MA_CustQuotasSummary.cs" />
     <Compile Include="Model\MA_CustQuotasTaxSummary.cs" />
     <Compile Include="Model\MA_CustSupp.cs" />
+    <Compile Include="Model\MA_Drawings.cs" />
+    <Compile Include="Model\MA_DrawingsDescription.cs" />
     <Compile Include="Model\MA_Items.cs" />
     <Compile Include="Model\MA_ItemsBalances.cs" />
     <Compile Include="Model\MA_ItemsBRTaxes.cs" />
@@ -104,6 +106,7 @@
     <Compile Include="Service\CQBOMService.cs" />
     <Compile Include="Service\CustQuotaCompOpService.cs" />
     <Compile Include="Service\CustQuotasService.cs" />
+    <Compile Include="Service\DrawingService.cs" />
     <Compile Include="Service\ItemsService.cs" />
     <Compile Include="Service\OperationService.cs" />
     <Compile Include="Service\OPFamilyService.cs" />

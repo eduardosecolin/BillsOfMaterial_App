@@ -4,6 +4,7 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using BillsOfMaterial_App.Model;
 
 namespace BillsOfMaterial_App.Service
@@ -57,7 +58,16 @@ namespace BillsOfMaterial_App.Service
                 var sql = _context.MA_CustQuotasDetail.Where(x => x.CustQuotaId == id && x.Position == position).FirstOrDefault();
                 if (sql != null)
                 {
-                    sql.FinalCostFormation = costValue;
+                    if (double.IsNaN(Convert.ToDouble(costValue)))
+                    {
+                        MessageBox.Show("O valor de formação de custo é NaN (Not a NUmber) revise o calculo!",
+                            "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    else
+                    {
+                        sql.FinalCostFormation = costValue;
+                    }
 
                     _context.MA_CustQuotasDetail.AddOrUpdate(sql);
                     _context.SaveChanges();
