@@ -224,5 +224,13 @@
   <ItemGroup>
     <Resource Include="SoCilindrosIcon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\bloco.png" />
+    <Resource Include="Images\redondo.png" />
+    <Resource Include="Images\sextavado.png" />
+    <Resource Include="Images\tubo redondo.png" />
+    <Resource Include="Images\tubo retangular.png" />
+    <Resource Include="Images\tubo sextavado.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -155,22 +155,28 @@ namespace BillsOfMaterial_App.View
                 {
                     case "Bloco":
                         txtD3.IsEnabled = false;
+                        imgR1.Source = new BitmapImage(new Uri(@"/Formação de Custo e Simulação de E.D.P;component/Images/bloco.png", UriKind.Relative));
                         break;
                     case "Redondo":
                         txtD2.IsEnabled = false;
                         txtD3.IsEnabled = false;
+                        imgR1.Source = new BitmapImage(new Uri(@"/Formação de Custo e Simulação de E.D.P;component/Images/redondo.png", UriKind.Relative));
                         break;
                     case "Sextavado":
                         txtD2.IsEnabled = false;
                         txtD3.IsEnabled = false;
+                        imgR1.Source = new BitmapImage(new Uri(@"/Formação de Custo e Simulação de E.D.P;component/Images/sextavado.png", UriKind.Relative));
                         break;
                     case "Tubo Redondo":
                         txtD3.IsEnabled = false;
+                        imgR1.Source = new BitmapImage(new Uri(@"/Formação de Custo e Simulação de E.D.P;component/Images/tubo redondo.png", UriKind.Relative));
                         break;
                     case "Tubo Retangular":
+                        imgR1.Source = new BitmapImage(new Uri(@"/Formação de Custo e Simulação de E.D.P;component/Images/tubo retangular.png", UriKind.Relative));
                         break;
                     case "Tubo Sextavado":
                         txtD3.IsEnabled = false;
+                        imgR1.Source = new BitmapImage(new Uri(@"/Formação de Custo e Simulação de E.D.P;component/Images/tubo sextavado.png", UriKind.Relative));
                         break;
                 }
             }
