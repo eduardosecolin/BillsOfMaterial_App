@@ -22,12 +22,21 @@ namespace BillsOfMaterial_App.View
     public partial class OfferSearchView : Window
     {
         MainWindow _mainWindow;
+        CostFormationView _viewCostFormation;
         CustQuotasService service;
 
         public OfferSearchView(MainWindow mainWindow)
         {
             InitializeComponent();
             _mainWindow = mainWindow;
+            service = new CustQuotasService();
+            LoadGrid();
+        }
+
+        public OfferSearchView(CostFormationView viewCostFormation)
+        {
+            InitializeComponent();
+            _viewCostFormation = viewCostFormation;
             service = new CustQuotasService();
             LoadGrid();
         }
@@ -57,15 +66,25 @@ namespace BillsOfMaterial_App.View
 
         private void DgOffer_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if(dgOffer.SelectedItems.Count > 0)
+            if (dgOffer.SelectedItems.Count > 0)
             {
                 var custquota = dgOffer.SelectedItem as MA_CustQuotas;
-                if(custquota != null)
+                if (custquota != null)
                 {
-                    _mainWindow.lblNoCustQuota.Content = "Oferta Nº: " + custquota.QuotationNo;
-                    _mainWindow.lblCustQuotaId.Content = custquota.CustQuotaId.ToString();
-                    _mainWindow.LoadCbItemGrid();
-                    this.Close();
+                    if (_mainWindow != null)
+                    {
+                        _mainWindow.lblNoCustQuota.Content = "Oferta Nº: " + custquota.QuotationNo;
+                        _mainWindow.lblCustQuotaId.Content = custquota.CustQuotaId.ToString();
+                        _mainWindow.LoadCbItemGrid();
+                        this.Close();
+                    }
+                    else if (_viewCostFormation != null)
+                    {
+                        _viewCostFormation.txtSelectItem.Text = custquota.QuotationNo;
+                        _viewCostFormation.txtCustQuotaId.Text = custquota.CustQuotaId.ToString();
+                        _viewCostFormation.LoadCbItemGrid();
+                        this.Close();
+                    }
                 }
             }
         }

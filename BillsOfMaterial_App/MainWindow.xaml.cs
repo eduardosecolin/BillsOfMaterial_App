@@ -89,7 +89,7 @@ namespace BillsOfMaterial_App
             if (cbItemGrid.Text != string.Empty)
             {
                 tvBOM.Visibility = Visibility.Visible;
-                btnNext.IsEnabled = true;
+                btnSaveSimulation.IsEnabled = true;
                 btnClear.IsEnabled = true;
             }
         }
@@ -174,6 +174,7 @@ namespace BillsOfMaterial_App
                     comp.Id = int.Parse(lblCustQuotaId.Content.ToString());
                     comp.BOM = cbItemGrid.Text;
                     comp.Item = cbItemGrid.Text;
+                    comp.Drawing = txtDrawing.Text;
                     if (selectedNode.Items.Count > 1)
                     {
                         foreach (var item2 in selectedNode.Items)
@@ -213,12 +214,12 @@ namespace BillsOfMaterial_App
                                                     comp.Obs = vetObs[1];
                                                 }
                                             }
-                                            if (o.Contains("Desenho:"))
+                                            if (o.Contains("Imagem:"))
                                             {
                                                 string[] vetDraw = o.Split(':');
                                                 if (vetDraw.Length > 1)
                                                 {
-                                                    comp.Drawing = vetDraw[1];
+                                                    comp.PathFile1 = vetDraw[1];
                                                 }
                                             }
                                             if (o.Contains("Custo R1:"))
@@ -284,12 +285,12 @@ namespace BillsOfMaterial_App
                                         comp.Obs = vetObs[1];
                                     }
                                 }
-                                if (o.Contains("Desenho:"))
+                                if (o.Contains("Imagem:"))
                                 {
                                     string[] vetDraw = o.Split(':');
                                     if (vetDraw.Length > 1)
                                     {
-                                        comp.Drawing = vetDraw[1];
+                                        comp.PathFile1 = vetDraw[1];
                                     }
                                 }
                                 if (o.Contains("Custo R1:"))
@@ -439,6 +440,7 @@ namespace BillsOfMaterial_App
                                                             comp.Line = compOpService.GetMaxLineComp();
                                                             comp.Id = int.Parse(lblCustQuotaId.Content.ToString());
                                                             comp.Item = cbItemGrid.Text;
+                                                            comp.Drawing = txtDrawing.Text;
 
                                                             TreeViewItem components = comps as TreeViewItem;
 
@@ -478,12 +480,12 @@ namespace BillsOfMaterial_App
                                                                                     comp.Obs = vetObs[1];
                                                                                 }
                                                                             }
-                                                                            if (o.Contains("Desenho:"))
+                                                                            if (o.Contains("Imagem:"))
                                                                             {
                                                                                 string[] vetDraw = o.Split(':');
                                                                                 if (vetDraw.Length > 1)
                                                                                 {
-                                                                                    comp.Drawing = vetDraw[1];
+                                                                                    comp.PathFile1 = vetDraw[1];
                                                                                 }
                                                                             }
                                                                             if (o.Contains("Custo R1:"))
@@ -543,12 +545,12 @@ namespace BillsOfMaterial_App
                                                                                 comp.Obs = vetObs[1];
                                                                             }
                                                                         }
-                                                                        if (o.Contains("Desenho:"))
+                                                                        if (o.Contains("Imagem:"))
                                                                         {
                                                                             string[] vetDraw = o.Split(':');
                                                                             if (vetDraw.Length > 1)
                                                                             {
-                                                                                comp.Drawing = vetDraw[1];
+                                                                                comp.PathFile1 = vetDraw[1];
                                                                             }
                                                                         }
                                                                         if (o.Contains("Custo R1:"))
@@ -697,6 +699,7 @@ namespace BillsOfMaterial_App
                                             comp.Line = compOpService.GetMaxLineComp();
                                             comp.Id = int.Parse(lblCustQuotaId.Content.ToString());
                                             comp.Item = cbItemGrid.Text;
+                                            comp.Drawing = txtDrawing.Text;
 
                                             if (item3.Header is StackPanel)
                                             {
@@ -734,12 +737,12 @@ namespace BillsOfMaterial_App
                                                                         comp.Obs = vetObs[1];
                                                                     }
                                                                 }
-                                                                if (o.Contains("Desenho:"))
+                                                                if (o.Contains("Imagem:"))
                                                                 {
                                                                     string[] vetDraw = o.Split(':');
                                                                     if (vetDraw.Length > 1)
                                                                     {
-                                                                        comp.Drawing = vetDraw[1];
+                                                                        comp.PathFile1 = vetDraw[1];
                                                                     }
                                                                 }
                                                                 if (o.Contains("Custo R1:"))
@@ -798,12 +801,12 @@ namespace BillsOfMaterial_App
                                                                 comp.Obs = vetObs[1];
                                                             }
                                                         }
-                                                        if (o.Contains("Desenho:"))
+                                                        if (o.Contains("Imagem:"))
                                                         {
                                                             string[] vetDraw = o.Split(':');
                                                             if (vetDraw.Length > 1)
                                                             {
-                                                                comp.Drawing = vetDraw[1];
+                                                                comp.PathFile1 = vetDraw[1];
                                                             }
                                                         }
                                                         if (o.Contains("Custo R1:"))
@@ -968,7 +971,7 @@ namespace BillsOfMaterial_App
         private void BtnNext_Click(object sender, RoutedEventArgs e)
         {
             tvBOM.IsEnabled = false;
-            CostFormationView window = new CostFormationView(this);
+            CostFormationView window = new CostFormationView();
             window.Show();
         }
 
@@ -982,6 +985,7 @@ namespace BillsOfMaterial_App
             tvBOM.Visibility = Visibility.Hidden;
             btnNext.IsEnabled = false;
             btnClear.IsEnabled = false;
+            txtDrawing.Clear();
             if(tvBOM.IsEnabled == false)
             {
                 tvBOM.IsEnabled = true;
@@ -1079,7 +1083,7 @@ namespace BillsOfMaterial_App
                                                         window.txtObs.Text = vetObs[1];
                                                     }
                                                 }
-                                                if (item2.Contains("Desenho:"))
+                                                if (item2.Contains("Imagem:"))
                                                 {
                                                     string[] vetDraw = item2.Split(':');
                                                     if (vetDraw.Length > 1)
@@ -1131,7 +1135,7 @@ namespace BillsOfMaterial_App
                                             window.txtObs.Text = vetObs[1];
                                         }
                                     }
-                                    if (item.Contains("Desenho:"))
+                                    if (item.Contains("Imagem:"))
                                     {
                                         string[] vetDraw = item.Split(':');
                                         if (vetDraw.Length > 1)
@@ -1343,6 +1347,33 @@ namespace BillsOfMaterial_App
         private void CbItemGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             positionLine = cbItemGrid.SelectedIndex + 1;
+        }
+
+        private void BtnDrawing_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (cbItemGrid.Text != string.Empty)
+                {
+                    DrawingView window = new DrawingView(this);
+                    window.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Selecione um item para simular a engenharia!", "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }catch(Exception ex)
+            {
+                MessageBox.Show("Erro ao abrir tela de Desenhos!" + "\n" + ex.Message, "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void BtnSaveSimulation_Click(object sender, RoutedEventArgs e)
+        {
+            if (SaveSimulation())
+            {
+                MessageBox.Show("Simulação de Engenharia de Produtos salva com sucesso!", "Informação", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
     }
 }

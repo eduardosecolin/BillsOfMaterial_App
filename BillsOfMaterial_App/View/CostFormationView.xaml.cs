@@ -23,7 +23,6 @@ namespace BillsOfMaterial_App.View
     /// </summary>
     public partial class CostFormationView : Window
     {
-        MainWindow _window;
         CustQuotaCompOpService serviceCompOp;
         CustQuotasService serviceCQ;
         OperationService serviceOp;
@@ -33,11 +32,11 @@ namespace BillsOfMaterial_App.View
         private string pathFile1 = string.Empty;
         private string pathFile2 = string.Empty;
         private string pathFile3 = string.Empty;
+        public int positionLine;
 
-        public CostFormationView(MainWindow mainWindow)
+        public CostFormationView()
         {
             InitializeComponent();
-            _window = mainWindow;
             serviceCompOp = new CustQuotaCompOpService();
             serviceItem = new ItemsService();
             serviceCQ = new CustQuotasService();
@@ -156,30 +155,22 @@ namespace BillsOfMaterial_App.View
         {
             try
             {
-                if (_window.SaveSimulation())
+                // calculo da formação de custo               
+                int id = Convert.ToInt32(txtCustQuotaId.Text);
+                string item = cbItemGrid.Text;
+                double? unitValue = serviceCQ.GetUnitValueItem(id, positionLine);
+                double?[] vet = CalculateOperations(id, item);
+                unitValue += CalculateComponents(id, item) + vet[0] + vet[1];
+                double? costValue = CalculateFieldsView(Convert.ToDouble(unitValue));
+                serviceCQ.UpdateCostFormationCustQuatas(id, positionLine, costValue);
+                MessageBox.Show($"Formação de Custo (R$ { Math.Round(Convert.ToDouble(costValue), 2) }) e Simulação de Engenharia de Produtos salva com sucesso!",
+                    "Informação", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBoxResult resultDialog = MessageBox.Show("Deseja realizar outra simulação?", "Pergunta",
+                    MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (resultDialog == MessageBoxResult.Yes)
                 {
-                    // calculo da formação de custo               
-                    int id = Convert.ToInt32(_window.lblCustQuotaId.Content.ToString());
-                    string item = _window.cbItemGrid.Text;
-                    double? unitValue = serviceCQ.GetUnitValueItem(id, _window.positionLine);
-                    double?[] vet = CalculateOperations(id, item);
-                    unitValue += CalculateComponents(id, item) + vet[0] + vet[1];
-                    double? costValue = CalculateFieldsView(Convert.ToDouble(unitValue));
-                    serviceCQ.UpdateCostFormationCustQuatas(id, _window.positionLine, costValue, pathFile1, pathFile2, pathFile3);
-                    MessageBox.Show($"Formação de Custo (R$ { Math.Round(Convert.ToDouble(costValue), 2) }) e Simulação de Engenharia de Produtos salva com sucesso!",
-                        "Informação", MessageBoxButton.OK, MessageBoxImage.Information);
-                    MessageBoxResult resultDialog = MessageBox.Show("Deseja realizar outra simulação?", "Pergunta",
-                        MessageBoxButton.YesNo, MessageBoxImage.Question);
-                    if(resultDialog == MessageBoxResult.Yes)
-                    {
-                        ClearFields();
-                        _window.BtnClear_Click(sender, e);
-                        this.Close();
-                    }
-                    else
-                    {
-                        Environment.Exit(0);
-                    }
+                    ClearFields();
+                    this.Close();
                 }
                 else
                 {
@@ -188,7 +179,7 @@ namespace BillsOfMaterial_App.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message + " - " + ex.StackTrace, 
+                MessageBox.Show(ex.Message + " - " + ex.StackTrace,
                     "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
 
             }
@@ -417,6 +408,86 @@ namespace BillsOfMaterial_App.View
         {
             Regex regex = new Regex("[^0-9,]+");
             e.Handled = regex.IsMatch(e.Text);
+        }
+
+        public void LoadCbItemGrid()
+        {
+            try
+            {
+                var custQuota = serviceCQ.GetById(Convert.ToInt32(txtCustQuotaId.Text));
+
+                if (custQuota != null)
+                {
+                    cbItemGrid.ItemsSource = null;
+                    List<string> items = new List<string>();
+                    foreach (var item in serviceCQ.GetAll(custQuota.CustQuotaId))
+                    {
+                        items.Add(item.Item);
+                    }
+                    cbItemGrid.ItemsSource = items;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void CbItemGrid_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (serviceCQ.ExistCostFormation(int.Parse(txtCustQuotaId.Text), cbItemGrid.Text))
+            {
+                MessageBox.Show("Já existe formação de custo para a simulãção selecionada!", "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+                BlockFields();
+                return;
+            }
+            EnabledFields();
+            double?[] vet = serviceItem.GetTaxValues(cbItemGrid.Text);
+            if(vet != null && vet.Length > 0)
+            {
+                txtPis.Text = vet[0].ToString();
+                txtCofins.Text = vet[1].ToString();
+                txtIcms.Text = vet[2].ToString();
+                txtIpi.Text = vet[3].ToString();
+            }
+        }
+
+        private void CbItemGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            positionLine = cbItemGrid.SelectedIndex + 1;
+        }
+
+        private void EnabledFields()
+        {
+            txtFreightValue.IsEnabled = true;
+            txtPis.IsEnabled = true;
+            txtCofins.IsEnabled = true;
+            txtIcms.IsEnabled = true;
+            txtIpi.IsEnabled = true;
+            txtFixedExpenses.IsEnabled = true;
+            txtVariableExpenses.IsEnabled = true;
+            txtMargin.IsEnabled = true;
+            txtVariableMargin.IsEnabled = true;
+        }
+
+        private void BlockFields()
+        {
+            txtFreightValue.IsEnabled = false;
+            txtPis.IsEnabled = false;
+            txtCofins.IsEnabled = false;
+            txtIcms.IsEnabled = false;
+            txtIpi.IsEnabled = false;
+            txtFixedExpenses.IsEnabled = false;
+            txtVariableExpenses.IsEnabled = false;
+            txtMargin.IsEnabled = false;
+            txtVariableMargin.IsEnabled = false;
+        }
+
+        private void BtnSerchOffer_Click(object sender, RoutedEventArgs e)
+        {
+            OfferSearchView window = new OfferSearchView(this);
+            window.Show();
         }
     }
 }

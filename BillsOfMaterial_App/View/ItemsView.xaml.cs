@@ -1,6 +1,7 @@
 ﻿using BillsOfMaterial_App.Model;
 using BillsOfMaterial_App.Service;
 using MaterialDesignThemes.Wpf;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -29,6 +30,7 @@ namespace BillsOfMaterial_App.View
         private string description = string.Empty;
         public bool isEditmode = false;
         private bool isException = false;
+        public string longPath = string.Empty;
 
         public ItemsView(MainWindow window)
         {
@@ -226,11 +228,11 @@ namespace BillsOfMaterial_App.View
                 chilItem.Name = "treeViewLv1";
                 if (txtObs.Text == string.Empty)
                 {
-                    chilItem.Header = txtItem.Text.Replace("-", "") + " - " + description.Replace("-", "") + " - Quantidade: " + txtQty.Text + " - Desenho: " + txtDrawing.Text.Replace("-", "") + " - Custo R1: " + txtResultValue.Text;
+                    chilItem.Header = txtItem.Text.Replace("-", "") + " - " + description.Replace("-", "") + " - Quantidade: " + txtQty.Text + " - Imagem: " + longPath.Replace("-", "") + " - Custo R1: " + txtResultValue.Text;
                 }
                 else
                 {
-                    chilItem.Header = txtItem.Text.Replace("-", "") + " - " + description.Replace("-", "") + " - Quantidade: " + txtQty.Text + " - OBS: " + txtObs.Text.Replace("-", "") + " - Desenho: " + txtDrawing.Text.Replace("-", "") + " - Custo R1: " + txtResultValue.Text;
+                    chilItem.Header = txtItem.Text.Replace("-", "") + " - " + description.Replace("-", "") + " - Quantidade: " + txtQty.Text + " - OBS: " + txtObs.Text.Replace("-", "") + " - Imagem: " + longPath.Replace("-", "") + " - Custo R1: " + txtResultValue.Text;
                 }
                 _mainWindow.tvComponent.Items.Add(chilItem);
                 this.Close();
@@ -256,7 +258,7 @@ namespace BillsOfMaterial_App.View
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = txtItem.Text.Replace("-", "") + " - " + description.Replace("-","") + " - Quantidade: " + txtQty.Text + " - Desenho: " + txtDrawing.Text.Replace("-", "") + " - Custo R1: " + txtResultValue.Text },
+                                new TextBlock { Text = txtItem.Text.Replace("-", "") + " - " + description.Replace("-","") + " - Quantidade: " + txtQty.Text + " - Imagem: " + longPath.Replace("-", "") + " - Custo R1: " + txtResultValue.Text },
                                 btn
                             }
                         }
@@ -278,7 +280,7 @@ namespace BillsOfMaterial_App.View
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = txtItem.Text.Replace("-", "") + " - " + description.Replace("-","") + " - Quantidade: " + txtQty.Text + " - OBS: " + txtObs.Text.Replace("-", "") + " - Desenho: " + txtDrawing.Text.Replace("-", "") + " - Custo R1: " + txtResultValue.Text },
+                                new TextBlock { Text = txtItem.Text.Replace("-", "") + " - " + description.Replace("-","") + " - Quantidade: " + txtQty.Text + " - OBS: " + txtObs.Text.Replace("-", "") + " - Imagem: " + longPath.Replace("-", "") + " - Custo R1: " + txtResultValue.Text },
                                 btn
                             }
                         }
@@ -304,11 +306,11 @@ namespace BillsOfMaterial_App.View
                 chilItem.Name = "tvLevel2";
                 if (txtObs.Text == string.Empty)
                 {
-                    chilItem.Header = txtItem.Text.Replace("-", "") + " - " + description.Replace("-", "") + " - Quantidade: " + txtQty.Text + " - Desenho: " + txtDrawing.Text.Replace("-", "") + " - Custo R1: " + txtResultValue.Text;
+                    chilItem.Header = txtItem.Text.Replace("-", "") + " - " + description.Replace("-", "") + " - Quantidade: " + txtQty.Text + " - Imagem: " + longPath.Replace("-", "") + " - Custo R1: " + txtResultValue.Text;
                 }
                 else
                 {
-                    chilItem.Header = txtItem.Text.Replace("-", "") + " - " + description.Replace("-", "") + " - Quantidade: " + txtQty.Text + " - OBS: " + txtObs.Text.Replace("-", "") + " - Desenho: " + txtDrawing.Text.Replace("-", "") + " - Custo R1: " + txtResultValue.Text;
+                    chilItem.Header = txtItem.Text.Replace("-", "") + " - " + description.Replace("-", "") + " - Quantidade: " + txtQty.Text + " - OBS: " + txtObs.Text.Replace("-", "") + " - Imagem: " + longPath.Replace("-", "") + " - Custo R1: " + txtResultValue.Text;
                 }
                 viewItem.Items.Add(chilItem);
                 this.Close();
@@ -334,7 +336,7 @@ namespace BillsOfMaterial_App.View
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = txtItem.Text.Replace("-", "") + " - " + description.Replace("-","") + " - Quantidade: " + txtQty.Text + " - Desenho: " + txtDrawing.Text.Replace("-", "") + " - Custo R1: " + txtResultValue.Text },
+                                new TextBlock { Text = txtItem.Text.Replace("-", "") + " - " + description.Replace("-","") + " - Quantidade: " + txtQty.Text + " - Imagem: " + longPath.Replace("-", "") + " - Custo R1: " + txtResultValue.Text },
                                 btn
                             }
                         }
@@ -356,7 +358,7 @@ namespace BillsOfMaterial_App.View
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = txtItem.Text.Replace("-", "") + " - " + description.Replace("-","") + " - Quantidade: " + txtQty.Text + " - OBS: " + txtObs.Text.Replace("-", "") + " - Desenho: " + txtDrawing.Text.Replace("-", "") + " - Custo R1: " + txtResultValue.Text },
+                                new TextBlock { Text = txtItem.Text.Replace("-", "") + " - " + description.Replace("-","") + " - Quantidade: " + txtQty.Text + " - OBS: " + txtObs.Text.Replace("-", "") + " - Imagem: " + longPath.Replace("-", "") + " - Custo R1: " + txtResultValue.Text },
                                 btn
                             }
                         }
@@ -382,11 +384,11 @@ namespace BillsOfMaterial_App.View
                 chilItem.Name = "tvLevel3";
                 if (txtObs.Text == string.Empty)
                 {
-                    chilItem.Header = txtItem.Text.Replace("-", "") + " - " + description.Replace("-", "") + " - Quantidade: " + txtQty.Text + " - Desenho: " + txtDrawing.Text.Replace("-", "") + " - Custo R1: " + txtResultValue.Text;
+                    chilItem.Header = txtItem.Text.Replace("-", "") + " - " + description.Replace("-", "") + " - Quantidade: " + txtQty.Text + " - Imagem: " + longPath.Replace("-", "") + " - Custo R1: " + txtResultValue.Text;
                 }
                 else
                 {
-                    chilItem.Header = txtItem.Text.Replace("-", "") + " - " + description.Replace("-", "") + " - Quantidade: " + txtQty.Text + " - OBS: " + txtObs.Text.Replace("-", "") + " - Desenho: " + txtDrawing.Text.Replace("-", "") + " - Custo R1: " + txtResultValue.Text;
+                    chilItem.Header = txtItem.Text.Replace("-", "") + " - " + description.Replace("-", "") + " - Quantidade: " + txtQty.Text + " - OBS: " + txtObs.Text.Replace("-", "") + " - Imagem: " + longPath.Replace("-", "") + " - Custo R1: " + txtResultValue.Text;
                 }
                 viewItem.Items.Add(chilItem);
                 this.Close();
@@ -412,7 +414,7 @@ namespace BillsOfMaterial_App.View
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = txtItem.Text.Replace("-", "") + " - " + description.Replace("-","") + " - Quantidade: " + txtQty.Text + " - Desenho: " + txtDrawing.Text.Replace("-", "") + " - Custo R1: " + txtResultValue.Text },
+                                new TextBlock { Text = txtItem.Text.Replace("-", "") + " - " + description.Replace("-","") + " - Quantidade: " + txtQty.Text + " - Imagem: " + longPath.Replace("-", "") + " - Custo R1: " + txtResultValue.Text },
                                 btn
                             }
                         }
@@ -431,7 +433,7 @@ namespace BillsOfMaterial_App.View
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = txtItem.Text.Replace("-", "") + " - " + description.Replace("-","") + " - Quantidade: " + txtQty.Text + " - OBS: " + txtObs.Text.Replace("-", "") + " - Desenho: " + txtDrawing.Text.Replace("-", "") + " - Custo R1: " + txtResultValue.Text },
+                                new TextBlock { Text = txtItem.Text.Replace("-", "") + " - " + description.Replace("-","") + " - Quantidade: " + txtQty.Text + " - OBS: " + txtObs.Text.Replace("-", "") + " - Imagem: " + longPath.Replace("-", "") + " - Custo R1: " + txtResultValue.Text },
                                 btn
                             }
                         }
@@ -625,8 +627,16 @@ namespace BillsOfMaterial_App.View
         {
             try
             {
-                DrawingView window = new DrawingView(this);
-                window.Show();
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Filter = "Todos os arquivos (*.*)|*.*";
+                dialog.Title = "Selecione um arquivo";
+
+                Nullable<bool> result = dialog.ShowDialog();
+                if (result == true)
+                {
+                    txtDrawing.Text = System.IO.Path.GetFileName(dialog.FileName);
+                    longPath = dialog.FileName;
+                }
             }
             catch (Exception ex)
             {

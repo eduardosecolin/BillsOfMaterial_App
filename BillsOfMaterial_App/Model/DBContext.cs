@@ -495,6 +495,10 @@ namespace BillsOfMaterial_App.Model
                 .IsFixedLength();
 
             modelBuilder.Entity<MA_Items>()
+                .Property(e => e.Dimension)
+                .IsFixedLength();
+
+            modelBuilder.Entity<MA_Items>()
                 .Property(e => e.HasSuppliers)
                 .IsFixedLength();
 

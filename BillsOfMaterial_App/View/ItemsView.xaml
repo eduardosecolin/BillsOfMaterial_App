@@ -76,7 +76,7 @@
             VerticalAlignment="Top"
             IsReadOnly="True"
             Width="317"
-            materialDesign:HintAssist.Hint="Desenho" 
+            materialDesign:HintAssist.Hint="Imagem" 
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
@@ -86,7 +86,7 @@
             Cursor="Hand" Margin="327,488,521,75" 
             TabIndex="2"
             Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnDrawing_Click">
-            <materialDesign:PackIcon Foreground="#FF00BCD4" Height="42" Width="75" Kind="DrawingBox"/>
+            <materialDesign:PackIcon Foreground="#FF00BCD4" Height="42" Width="75" Kind="FileImport"/>
         </Button>
         <ComboBox 
             x:Name="cbFormatItem" 

@@ -21,16 +21,14 @@ namespace BillsOfMaterial_App.View
     /// </summary>
     public partial class DrawingView : Window
     {
-        ItemsView _window;
-        ItemsService service;
-        DrawingService dwService;
+        MainWindow _window;
+        BOMService bomService;
 
-        public DrawingView(ItemsView window)
+        public DrawingView(MainWindow window)
         {
             InitializeComponent();
             _window = window;
-            service = new ItemsService();
-            dwService = new DrawingService();
+            bomService = new BOMService();
             LoadGrid();
         }
 
@@ -38,7 +36,7 @@ namespace BillsOfMaterial_App.View
         {
             try
             {
-                dgDrawing.ItemsSource = service.GetAllOldItem();
+                dgDrawing.ItemsSource = bomService.GetAllDrawing(txtDrawing.Text);
 
             }
             catch (Exception ex)
@@ -49,32 +47,24 @@ namespace BillsOfMaterial_App.View
 
         private void TxtFilter_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (txtFilter.Text != string.Empty)
-            {
-                dgDrawing.ItemsSource = null;
-                dgDrawing.ItemsSource = service.GetAllOldItemByParam(txtFilter.Text);
-            }
-            else
-            {
-                LoadGrid();
-            }
+            LoadGrid();
         }
 
         private void DgDrawing_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (dgDrawing.SelectedItems.Count > 0)
             {
-                var items = dgDrawing.SelectedItem as MA_Items;
+                var items = dgDrawing.SelectedItem as MA_BillOfMaterialsDrawings;
                 if (items != null)
                 {
-                    txtDrawing.Text = items.OldItem;
+                    txtDrawing.Text = items.Drawing;
                 }
             }
         }
 
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
-            if(txtDrawing.Text != string.Empty)
+            if (txtDrawing.Text != string.Empty)
             {
                 _window.txtDrawing.Text = txtDrawing.Text;
                 this.Close();

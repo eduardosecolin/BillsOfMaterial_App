@@ -36,7 +36,7 @@
         <Button x:Name="btnAdd" Content="Adicionar" HorizontalAlignment="Left" Margin="295,552,0,0" VerticalAlignment="Top" Width="119" Click="BtnAdd_Click"/>
         <DataGrid x:Name="dgDrawing" IsReadOnly="True" HorizontalAlignment="Left" Height="414" Margin="8,92,0,0" VerticalAlignment="Top" Width="412" AutoGenerateColumns="False" MouseDoubleClick="DgDrawing_MouseDoubleClick">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="412" Binding="{Binding OldItem}" ClipboardContentBinding="{x:Null}" Header="Desenho"/>
+                <DataGridTextColumn Width="412" Binding="{Binding Drawing}" ClipboardContentBinding="{x:Null}" Header="Desenho"/>
             </DataGrid.Columns>
         </DataGrid>
 

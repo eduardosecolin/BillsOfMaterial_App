@@ -25,6 +25,7 @@ namespace BillsOfMaterial_App
         public SplashScreen()
         {
             InitializeComponent();
+            //ValidateLicense();
         }
 
         private delegate void ProgressBarDelegate();
@@ -69,6 +70,22 @@ namespace BillsOfMaterial_App
         private void Window_Activated(object sender, EventArgs e)
         {
             LoadprogressBar();
+        }
+
+        private void ValidateLicense()
+        {
+            DateTime period = new DateTime(2119, 11, 5);
+            if(DateTime.Now > period)
+            {
+                MessageBox.Show("A licença expirou! informe o administrador do sistema!", "Aviso",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                this.Close();
+            }
+            else
+            {
+                return;
+            }
         }
     }
 }

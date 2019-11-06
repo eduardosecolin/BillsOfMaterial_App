@@ -32,6 +32,12 @@ namespace BillsOfMaterial_App.Model
         [StringLength(4)]
         public string TaxCode { get; set; }
 
+        [StringLength(128)]
+        public string Customer { get; set; }
+
+        [StringLength(50)]
+        public string Dimension { get; set; }
+
         [StringLength(8)]
         public string BaseUoM { get; set; }
 
@@ -45,6 +51,14 @@ namespace BillsOfMaterial_App.Model
         public string DiscountFormula { get; set; }
 
         public double? Markup { get; set; }
+
+        public double? PIS { get; set; }
+
+        public double? COFINS { get; set; }
+
+        public double? ICMS { get; set; }
+
+        public double? IPI { get; set; }
 
         [StringLength(8)]
         public string ItemType { get; set; }

@@ -19,7 +19,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="0" Margin="66,32,0,0" PreviewTextInput="TxtFreightValue_PreviewTextInput"/>
+            MaxLength="10" TabIndex="1" Margin="94,159,0,0" PreviewTextInput="TxtFreightValue_PreviewTextInput" IsEnabled="False"/>
         <TextBox 
             x:Name="txtPis"
             HorizontalAlignment="Left"
@@ -31,7 +31,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="1" Margin="66,79,0,0" PreviewTextInput="TxtPis_PreviewTextInput"/>
+            MaxLength="10" TabIndex="2" Margin="265,159,0,0" PreviewTextInput="TxtPis_PreviewTextInput" IsEnabled="False"/>
         <TextBox 
             x:Name="txtCofins"
             HorizontalAlignment="Left"
@@ -43,7 +43,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="2" Margin="66,126,0,0" PreviewTextInput="TxtCofins_PreviewTextInput"/>
+            MaxLength="10" TabIndex="3" Margin="441,159,0,0" PreviewTextInput="TxtCofins_PreviewTextInput" IsEnabled="False"/>
         <TextBox 
             x:Name="txtIcms"
             HorizontalAlignment="Left"
@@ -55,7 +55,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="3" Margin="66,172,0,0" PreviewTextInput="TxtIcms_PreviewTextInput" />
+            MaxLength="10" TabIndex="4" Margin="94,206,0,0" PreviewTextInput="TxtIcms_PreviewTextInput" IsEnabled="False" />
         <TextBox 
             x:Name="txtIpi"
             HorizontalAlignment="Left"
@@ -67,7 +67,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="4" Margin="66,220,0,0" PreviewTextInput="TxtIpi_PreviewTextInput"/>
+            MaxLength="10" TabIndex="5" Margin="265,206,0,0" PreviewTextInput="TxtIpi_PreviewTextInput" IsEnabled="False"/>
         <TextBox 
             x:Name="txtFixedExpenses"
             HorizontalAlignment="Left"
@@ -79,7 +79,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="5" Margin="66,266,0,0" PreviewTextInput="TxtFixedExpenses_PreviewTextInput"/>
+            MaxLength="10" TabIndex="6" Margin="441,206,0,0" PreviewTextInput="TxtFixedExpenses_PreviewTextInput" IsEnabled="False"/>
         <TextBox 
             x:Name="txtVariableExpenses"
             HorizontalAlignment="Left"
@@ -91,8 +91,9 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="6" Margin="66,314,0,0" PreviewTextInput="TxtVariableExpenses_PreviewTextInput"/>
+            MaxLength="10" TabIndex="7" Margin="94,253,0,0" PreviewTextInput="TxtVariableExpenses_PreviewTextInput" IsEnabled="False"/>
         <TextBox 
+            Visibility="Hidden"
             x:Name="txtPathFile1"
             HorizontalAlignment="Left"
             Height="42"
@@ -103,9 +104,10 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            TabIndex="20" Margin="249,126,0,0" IsEnabled="False"/>
+            TabIndex="20" Margin="237,283,0,0" IsEnabled="False"/>
         <TextBox 
             x:Name="txtPathFile2"
+            Visibility="Hidden"
             HorizontalAlignment="Left"
             Height="42"
             TextWrapping="Wrap"
@@ -115,8 +117,9 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            TabIndex="8" Margin="249,220,0,0" IsEnabled="False"/>
+            TabIndex="8" Margin="237,343,0,0" IsEnabled="False"/>
         <TextBox 
+            Visibility="Hidden"
             x:Name="txtPathFile3"
             HorizontalAlignment="Left"
             Height="42"
@@ -127,29 +130,37 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            TabIndex="9" Margin="249,314,0,0" IsEnabled="False"/>
+            TabIndex="9" Margin="237,397,0,0" IsEnabled="False"/>
         <Button 
-            x:Name="btnFile1" 
-            Cursor="Hand" Margin="560,115,252,352" 
+            x:Name="btnFile1" Visibility="Hidden" 
+            Cursor="Hand" Margin="548,272,264,195" 
             Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnFile1_Click">
             <materialDesign:PackIcon Foreground="#FF00BCD4" Height="29" Width="27" Kind="FileImport"/>
         </Button>
         <Button 
+            x:Name="btnSerchOffer" Visibility="Visible" 
+            Cursor="Hand" Margin="515,40,297,427" 
+            Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnSerchOffer_Click">
+            <materialDesign:PackIcon Foreground="#FF00BCD4" Height="29" Width="27" Kind="FilterOutline"/>
+        </Button>
+        <Button 
+            Visibility="Hidden"
             x:Name="btnSFile2" 
-            Cursor="Hand" Margin="560,214,252,253" 
+            Cursor="Hand" Margin="548,346,260,139" 
             Height="53" Background="{x:Null}" Width="80" BorderBrush="{x:Null}" Click="BtnSFile2_Click">
             <materialDesign:PackIcon Foreground="#FF00BCD4" Height="29" Width="27" Kind="FileImport"/>
         </Button>
         <Button 
+            Visibility="Hidden"
             x:Name="btnFile3" 
-            Cursor="Hand" Margin="560,307,252,160" 
+            Cursor="Hand" Margin="548,399,260,86" 
             Height="53" Width="80" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnFile3_Click">
             <materialDesign:PackIcon Foreground="#FF00BCD4" Height="29" Width="27" Kind="FileImport"/>
         </Button>
-        <Button x:Name="btnSaveAll" Cursor="Hand" HorizontalAlignment="Left" Margin="66,474,0,0" VerticalAlignment="Top" Width="522" Height="40" Click="BtnSaveAll_Click">
+        <Button x:Name="btnSaveAll" Cursor="Hand" HorizontalAlignment="Left" Margin="94,402,0,0" VerticalAlignment="Top" Width="497" Height="40" Click="BtnSaveAll_Click">
             <StackPanel Orientation="Horizontal">
                 <materialDesign:PackIcon Kind="ContentSave" />
-                <TextBlock Margin="8 0 0 0"><Run Text="Salvar simulação e formação de custo"/></TextBlock>
+                <TextBlock Margin="8 0 0 0"><Run Text="Salvar formação de custo"/></TextBlock>
             </StackPanel>
         </Button>
         <TextBox 
@@ -163,7 +174,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="7" Margin="66,362,0,0" PreviewTextInput="TxtMargin_PreviewTextInput"/>
+            MaxLength="10" TabIndex="8" Margin="265,253,0,0" PreviewTextInput="TxtMargin_PreviewTextInput" IsEnabled="False"/>
         <TextBox 
             x:Name="txtVariableMargin"
             HorizontalAlignment="Left"
@@ -175,7 +186,43 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="8" Margin="66,410,0,0" PreviewTextInput="TxtVariableMargin_PreviewTextInput"/>
+            MaxLength="10" TabIndex="9" Margin="441,253,0,0" PreviewTextInput="TxtVariableMargin_PreviewTextInput" IsEnabled="False"/>
+        <TextBox 
+            x:Name="txtSelectItem"
+            HorizontalAlignment="Left"
+            Height="42"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="416"
+            materialDesign:HintAssist.Hint="Nº da Oferta" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            MaxLength="10" TabIndex="0" Margin="94,40,0,0" IsReadOnly="True" />
+        <TextBox 
+            x:Name="txtCustQuotaId"
+            HorizontalAlignment="Left"
+            Height="42"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="416"
+            materialDesign:HintAssist.Hint="CustQuotaId" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            MaxLength="10" TabIndex="0" Margin="94,313,0,0" Visibility="Hidden" IsReadOnly="True" />
+        <ComboBox 
+            x:Name="cbItemGrid"
+            materialDesign:HintAssist.Hint="Selecione um item" 
+            Style="{StaticResource ResourceKey=MaterialDesignFloatingHintComboBox}" 
+            FontFamily="champagne &amp; Limousines" 
+            FontSize="14" 
+            Foreground="#FF0A0A0A" 
+            HorizontalAlignment="Left" 
+            Margin="94,87,0,0" 
+            VerticalAlignment="Top"
+            TabIndex="1"
+            Width="416" Height="39" IsReadOnly="True" LostFocus="CbItemGrid_LostFocus" SelectionChanged="CbItemGrid_SelectionChanged"/>
 
     </Grid>
 </Window>

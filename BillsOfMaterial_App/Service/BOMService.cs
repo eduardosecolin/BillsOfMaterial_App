@@ -36,5 +36,17 @@ namespace BillsOfMaterial_App.Service
         {
             return _context.MA_BillOfMaterials.Where(x => x.BOM.Contains(bom)).ToList();
         }
+
+        public List<MA_BillOfMaterialsDrawings> GetAllDrawing(string param)
+        {
+            if (string.IsNullOrEmpty(param))
+            {
+                return _context.MA_BillOfMaterialsDrawings.ToList();
+            }
+            else
+            {
+                return _context.MA_BillOfMaterialsDrawings.Where(x => x.Drawing.Contains(param)).ToList();
+            }
+        }
     }
 }

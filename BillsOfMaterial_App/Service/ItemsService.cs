@@ -106,5 +106,18 @@ namespace BillsOfMaterial_App.Service
                 return 0;
             }
         }
+
+        public double?[] GetTaxValues(string item)
+        {
+            var sql = _context.MA_Items.Where(x => x.Item == item).FirstOrDefault();
+            if(sql != null)
+            {
+                return new double?[] { sql.PIS, sql.COFINS, sql.ICMS, sql.IPI };
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

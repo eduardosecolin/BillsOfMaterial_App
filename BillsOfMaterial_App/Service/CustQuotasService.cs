@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,7 +52,7 @@ namespace BillsOfMaterial_App.Service
             }
         }
 
-        public void UpdateCostFormationCustQuatas(int id, int position, double? costValue, string path1, string path2, string path3)
+        public void UpdateCostFormationCustQuatas(int id, int position, double? costValue)
         {
             try
             {
@@ -72,24 +73,30 @@ namespace BillsOfMaterial_App.Service
                     _context.MA_CustQuotasDetail.AddOrUpdate(sql);
                     _context.SaveChanges();
                 }
-
-                if (path1 != string.Empty || path2 != string.Empty || path3 != string.Empty)
-                {
-                    var sql2 = _context.MA_CustQuotas.Where(x => x.CustQuotaId == id).FirstOrDefault();
-                    if (sql2 != null)
-                    {
-                        sql2.PathFile1 = path1;
-                        sql2.PathFile2 = path2;
-                        sql2.PathFile3 = path3;
-
-                        _context.MA_CustQuotas.AddOrUpdate(sql2);
-                        _context.SaveChanges();
-                    }
-                }
             }
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        public bool ExistCostFormation(int id, string item)
+        {
+            var sql = _context.MA_CustQuotasDetail.Where(x => x.CustQuotaId == id && x.Item == item).FirstOrDefault();
+            if(sql != null)
+            {
+                if(sql.FinalCostFormation > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
             }
         }
     }
