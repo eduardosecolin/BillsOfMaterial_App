@@ -34,14 +34,21 @@ namespace BillsOfMaterial_App.View
             bomService = new BOMService();
             itemsService = new ItemsService();
             opService = new OperationService();
-            LoadGrid();
         }
 
         private void LoadGrid()
         {
             try
             {
-                dgBOM.ItemsSource = bomService.GetBOM();
+                dgBOM.ItemsSource = null;
+                if (rbEDPImport.IsChecked == true && rbSimulationImport.IsChecked == false)
+                {
+                    dgBOM.ItemsSource = bomService.GetBOM();
+                }
+                else
+                {
+                    dgBOM.ItemsSource = bomService.GetBOMFromSImulation();
+                }
 
             }
             catch (Exception ex)
@@ -84,7 +91,7 @@ namespace BillsOfMaterial_App.View
         {
             try
             {
-                if(txtItem.Text != string.Empty)
+                if(txtItem.Text != string.Empty && rbEDPImport.IsChecked == true)
                 {
                     _mainWindow.tvComponent.Items.Clear();
                     _mainWindow.tvOperation.Items.Clear();
@@ -204,6 +211,125 @@ namespace BillsOfMaterial_App.View
 
                     this.Close();
 
+                }else if (txtItem.Text != string.Empty && rbSimulationImport.IsChecked == true)
+                {
+                    _mainWindow.tvComponent.Items.Clear();
+                    _mainWindow.tvOperation.Items.Clear();
+
+                    // Components Level 1
+                    foreach (var item in bomService.GetComponentsBOMFromSimulation(txtItem.Text, txtItem.Text))
+                    {
+                        TreeViewItem tvItem1 = FillLevel1(item.Component, item.Description.Replace(",", ""), item.Qty.ToString().Replace(",", "."), item.Notes);
+
+                        #region Level 2
+
+                        List<MA_BillOfMaterialsComp> listComp = bomService.GetComponentsBOMFromSimulation(item.BOM, item.Component);
+                        List<MA_BillOfMaterialsRouting> listOp = bomService.GetOperationsBOMFromSimulation(item.BOM, item.Component);
+
+                        if (listComp.Count > 0)
+                        {
+                            if (tvItem1.Name == "treeViewLv1")
+                            {
+                                foreach (var itemTv1 in tvItem1.Items)
+                                {
+                                    TreeViewItem isComp = itemTv1 as TreeViewItem;
+
+                                    if (isComp.Header is StackPanel)
+                                    {
+                                        StackPanel panel1 = isComp.Header as StackPanel;
+                                        if (panel1.Children.Count > 0)
+                                        {
+                                            foreach (var child in panel1.Children)
+                                            {
+                                                if (child is Label)
+                                                {
+                                                    Label lbl = child as Label;
+                                                    if (lbl.Content.ToString().Equals("Componente nv.2"))
+                                                    {
+                                                        foreach (var comp2 in listComp)
+                                                        {
+                                                            TreeViewItem tvItem2 = FillLevel2(comp2.Component, comp2.Description.Replace(",", ""), comp2.Qty.ToString().Replace(",", "."), item.Notes, isComp);
+
+                                                            #region Level 3
+
+                                                            List<MA_BillOfMaterialsComp> listComp2 = bomService.GetComponentsBOMFromSimulation(comp2.BOM, comp2.Component);
+                                                            List<MA_BillOfMaterialsRouting> listOp2 = bomService.GetOperationsBOMFromSimulation(comp2.BOM, comp2.Component);
+
+                                                            if (listComp2.Count > 0)
+                                                            {
+                                                                if (tvItem2.Name == "tvLevel2")
+                                                                {
+                                                                    foreach (var itemTv2 in tvItem2.Items)
+                                                                    {
+                                                                        TreeViewItem isComp2 = itemTv2 as TreeViewItem;
+                                                                        if (isComp2.Header is StackPanel)
+                                                                        {
+                                                                            StackPanel panel2 = isComp2.Header as StackPanel;
+                                                                            if (panel2.Children.Count > 0)
+                                                                            {
+                                                                                foreach (var child2 in panel2.Children)
+                                                                                {
+                                                                                    if (child2 is Label)
+                                                                                    {
+                                                                                        Label lbl2 = child2 as Label;
+                                                                                        if (lbl2.Content.ToString().Equals("Componente nv.3"))
+                                                                                        {
+                                                                                            foreach (var comp3 in listComp2)
+                                                                                            {
+                                                                                                FillLevel3(comp3.Component, comp3.Description.Replace(",", ""), comp3.Qty.ToString().Replace(",", "."), item.Notes, isComp2);
+                                                                                            }
+                                                                                        }
+                                                                                        else if (lbl2.Content.ToString().Equals("Operação nv.3"))
+                                                                                        {
+                                                                                            if (listOp2.Count > 0)
+                                                                                            {
+                                                                                                foreach (var comp3 in listOp2)
+                                                                                                {
+                                                                                                    FillLevel2(comp3.Operation, opService.GetDescriptionOp(comp3.Operation).Replace(",", ""), comp3.ProcessingTime, item.Notes, isComp2);
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+
+                                                            #endregion
+                                                        }
+
+                                                    }
+                                                    else if (lbl.Content.ToString().Equals("Operação nv.2"))
+                                                    {
+                                                        if (listOp.Count > 0)
+                                                        {
+                                                            foreach (var comp2 in listOp)
+                                                            {
+                                                                FillLevel2(comp2.Operation, opService.GetDescriptionOp(comp2.Operation).Replace(",", ""), comp2.ProcessingTime, item.Notes, isComp);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        #endregion
+
+                    }
+
+                    // Operations Level 1
+                    foreach (var item in bomService.GetOperationsBOMFromSimulation(txtItem.Text, txtItem.Text))
+                    {
+                        FillLevel1(item.Operation, opService.GetDescriptionOp(item.Operation).Replace(",", ""), item.ProcessingTime, item.Notes);
+                    }
+
+                    this.Close();
                 }
                 else
                 {
@@ -344,11 +470,11 @@ namespace BillsOfMaterial_App.View
                 chilItem.Name = "treeViewLv1";
                 if(obs == string.Empty)
                 {
-                    chilItem.Header = item.Replace("-", "") + " - " + description.Replace("-", "") + " - Quantidade: " + qty;
+                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty;
                 }
                 else
                 {
-                    chilItem.Header = item.Replace("-", "") + " - " + description.Replace("-", "") + " - Quantidade: " + qty + " - OBS: " + obs.Replace("-", "");
+                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty + " | OBS: " + obs.Replace("|", "");
                 }               
                 _mainWindow.tvComponent.Items.Add(chilItem);
                 return chilItem;
@@ -373,7 +499,7 @@ namespace BillsOfMaterial_App.View
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = item.Replace("-", "") + " - " + description.Replace("-", "") + " - Quantidade: " + qty },
+                                new TextBlock { Text = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty },
                                 btn
                             }
                         }
@@ -397,7 +523,7 @@ namespace BillsOfMaterial_App.View
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = item.Replace("-", "") + " - " + description.Replace("-", "") + " - Quantidade: " + qty + " - OBS: " + obs.Replace("-", "") },
+                                new TextBlock { Text = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty + " | OBS: " + obs.Replace("|", "") },
                                 btn
                             }
                         }
@@ -425,11 +551,11 @@ namespace BillsOfMaterial_App.View
                 chilItem.Name = "tvLevel2";
                 if (obs == string.Empty)
                 {
-                    chilItem.Header = item.Replace("-", "") + " - " + description.Replace("-", "") + " - Quantidade: " + qty;
+                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty;
                 }
                 else
                 {
-                    chilItem.Header = item.Replace("-", "") + " - " + description.Replace("-", "") + " - Quantidade: " + qty + " - OBS: " + obs.Replace("-", "");
+                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty + " | OBS: " + obs.Replace("|", "");
                 }
                 viewItem.Items.Add(chilItem);
                 return chilItem;
@@ -455,7 +581,7 @@ namespace BillsOfMaterial_App.View
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = item.Replace("-", "") + " - " + description.Replace("-", "") + "- Quantidade: " + qty },
+                                new TextBlock { Text = item.Replace("|", "") + " | " + description.Replace("|", "") + "| Quantidade: " + qty },
                                 btn
                             }
                         }
@@ -479,7 +605,7 @@ namespace BillsOfMaterial_App.View
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = item.Replace("-", "") + " - " + description.Replace("-", "") + "- Quantidade: " + qty + " - OBS: " + obs.Replace("-", "") },
+                                new TextBlock { Text = item.Replace("|", "") + " | " + description.Replace("|", "") + "| Quantidade: " + qty + " | OBS: " + obs.Replace("|", "") },
                                 btn
                             }
                         }
@@ -507,11 +633,11 @@ namespace BillsOfMaterial_App.View
                 chilItem.Name = "tvLevel3";
                 if(obs == string.Empty)
                 {
-                    chilItem.Header = item.Replace("-", "") + " - " + description.Replace("-", "") + "- Quantidade: " + qty;
+                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + "| Quantidade: " + qty;
                 }
                 else
                 {
-                    chilItem.Header = item.Replace("-", "") + " - " + description.Replace("-", "") + "- Quantidade: " + qty + " - OBS: " + obs.Replace("-", "");
+                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + "| Quantidade: " + qty + " | OBS: " + obs.Replace("|", "");
                 }
                 viewItem.Items.Add(chilItem);
                 this.Close();
@@ -537,7 +663,7 @@ namespace BillsOfMaterial_App.View
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = item.Replace("-", "") + " - " + description.Replace("-", "") + "- Quantidade: " + qty },
+                                new TextBlock { Text = item.Replace("|", "") + " | " + description.Replace("|", "") + "| Quantidade: " + qty },
                                 btn
                             }
                         }
@@ -556,7 +682,7 @@ namespace BillsOfMaterial_App.View
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = item.Replace("-", "") + " - " + description.Replace("-", "") + "- Quantidade: " + qty + " - OBS: " + obs.Replace("-", "") },
+                                new TextBlock { Text = item.Replace("|", "") + " | " + description.Replace("|", "") + "| Quantidade: " + qty + " | OBS: " + obs.Replace("|", "") },
                                 btn
                             }
                         }
@@ -579,11 +705,11 @@ namespace BillsOfMaterial_App.View
             chilItem.Name = "tvOpLevel1";
             if(obs == string.Empty)
             {
-                chilItem.Header = op.Replace("-", "") + " - " + description.Replace("-", "") + "- " + "Tempo de Processamento = " + timeStr;
+                chilItem.Header = op.Replace("|", "") + " | " + description.Replace("|", "") + "| " + "Tempo de Processamento = " + timeStr;
             }
             else
             {
-                chilItem.Header = op.Replace("-", "") + " - " + description.Replace("-", "") + "- " + "Tempo de Processamento = " + timeStr + " - OBS: " + obs.Replace("-", "");
+                chilItem.Header = op.Replace("|", "") + " | " + description.Replace("|", "") + "| " + "Tempo de Processamento = " + timeStr + " | OBS: " + obs.Replace("|", "");
             }
             
             _mainWindow.tvOperation.Items.Add(chilItem);
@@ -601,13 +727,23 @@ namespace BillsOfMaterial_App.View
             chilItem.Name = "tvOpLevel2";
             if (obs == string.Empty)
             {
-                chilItem.Header = op.Replace("-", "") + " - " + description.Replace("-", "") + "- " + "Tempo de Processamento = " + timeStr;
+                chilItem.Header = op.Replace("|", "") + " | " + description.Replace("|", "") + "| " + "Tempo de Processamento = " + timeStr;
             }
             else
             {
-                chilItem.Header = op.Replace("-", "") + " - " + description.Replace("-", "") + "- " + "Tempo de Processamento = " + timeStr + " - OBS: " + obs.Replace("-", "");
+                chilItem.Header = op.Replace("|", "") + " | " + description.Replace("|", "") + "| " + "Tempo de Processamento = " + timeStr + " | OBS: " + obs.Replace("|", "");
             }
             viewItem.Items.Add(chilItem);
+        }
+
+        private void RbEDPImport_Checked(object sender, RoutedEventArgs e)
+        {
+            LoadGrid();
+        }
+
+        private void RbSimulationImport_Checked(object sender, RoutedEventArgs e)
+        {
+            LoadGrid();
         }
     }
 }

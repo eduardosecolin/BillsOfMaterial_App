@@ -99,7 +99,7 @@ namespace BillsOfMaterial_App.View
                         var treeview = _mainWindow.tvBOM.SelectedItem as TreeViewItem;
                         if(treeview != null)
                         {
-                            treeview.Header = txtOperation.Text.Replace("-", "") + " - " + operationService.GetDescriptionOp(txtOperation.Text) + "- " + "Tempo de Processamento = " + Convert.ToDateTime(dpTimeProcess.SelectedTime.ToString()).ToString("HH:mm") + "- OBS: " + txtObs.Text.Replace("-", "");
+                            treeview.Header = txtOperation.Text.Replace("|", "") + " | " + operationService.GetDescriptionOp(txtOperation.Text) + "| " + "Tempo de Processamento = " + Convert.ToDateTime(dpTimeProcess.SelectedTime.ToString()).ToString("HH:mm") + "| OBS: " + txtObs.Text.Replace("|", "");
                             this.Close();
                         }
                     }
@@ -143,7 +143,7 @@ namespace BillsOfMaterial_App.View
         {
             TreeViewItem chilItem = new TreeViewItem();
             chilItem.Name = "tvOpLevel1";
-            chilItem.Header = txtOperation.Text.Replace("-", "") + " - " + description.Replace("-", "") + "- " + "Tempo de Processamento = " + Convert.ToDateTime(dpTimeProcess.SelectedTime.ToString()).ToString("HH:mm") + " - OBS: " + txtObs.Text.Replace("-", "");
+            chilItem.Header = txtOperation.Text.Replace("|", "") + " | " + description.Replace("|", "") + "| " + "Tempo de Processamento = " + Convert.ToDateTime(dpTimeProcess.SelectedTime.ToString()).ToString("HH:mm") + " | OBS: " + txtObs.Text.Replace("|", "");
             _mainWindow.tvOperation.Items.Add(chilItem);
             this.Close();
         }
@@ -153,7 +153,7 @@ namespace BillsOfMaterial_App.View
             TreeViewItem viewItem = _mainWindow.tvBOM.SelectedItem as TreeViewItem;
             TreeViewItem chilItem = new TreeViewItem();
             chilItem.Name = "tvOpLevel2";
-            chilItem.Header = txtOperation.Text.Replace("-", "") + " - " + description.Replace("-", "") + "- " + "Tempo de Processamento = " + Convert.ToDateTime(dpTimeProcess.SelectedTime.ToString()).ToString("HH:mm") + " - OBS: " + txtObs.Text.Replace("-", "");
+            chilItem.Header = txtOperation.Text.Replace("|", "") + " | " + description.Replace("|", "") + "| " + "Tempo de Processamento = " + Convert.ToDateTime(dpTimeProcess.SelectedTime.ToString()).ToString("HH:mm") + " | OBS: " + txtObs.Text.Replace("|", "");
             viewItem.Items.Add(chilItem);
             this.Close();
         }

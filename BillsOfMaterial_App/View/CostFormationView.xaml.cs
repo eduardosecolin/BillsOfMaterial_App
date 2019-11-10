@@ -144,17 +144,40 @@ namespace BillsOfMaterial_App.View
             txtCofins.Clear();
             txtIcms.Clear();
             txtIpi.Clear();
+            txtCustQuotaId.Clear();
+            txtISS.Clear();
+            txtIR.Clear();
+            txtCSLL.Clear();
+            cbItemGrid.Text = string.Empty;
+            txtSelectItem.Clear();
             txtFixedExpenses.Clear();
             txtVariableExpenses.Clear();
             txtPathFile1.Clear();
             txtPathFile2.Clear();
             txtPathFile3.Clear();
+            cbItemGrid.ItemsSource = null;
+            BlockFields();
         }
 
         private void BtnSaveAll_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                if (serviceCQ.ExistCostFormation(int.Parse(txtCustQuotaId.Text), cbItemGrid.Text))
+                {
+                    MessageBox.Show("Já existe formação de custo para a simulãção selecionada!", "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    ClearFields();
+                    return;
+                }
+
+                if (!serviceCompOp.ExistData(Convert.ToInt32(txtCustQuotaId.Text), cbItemGrid.Text))
+                {
+                    MessageBox.Show("Não existe simulação para o item da oferta selecionada!", "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    ClearFields();
+                    return;
+                }
+
+
                 // calculo da formação de custo               
                 int id = Convert.ToInt32(txtCustQuotaId.Text);
                 string item = cbItemGrid.Text;
@@ -170,7 +193,6 @@ namespace BillsOfMaterial_App.View
                 if (resultDialog == MessageBoxResult.Yes)
                 {
                     ClearFields();
-                    this.Close();
                 }
                 else
                 {
@@ -436,26 +458,30 @@ namespace BillsOfMaterial_App.View
 
         private void CbItemGrid_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (serviceCQ.ExistCostFormation(int.Parse(txtCustQuotaId.Text), cbItemGrid.Text))
+            try
             {
-                MessageBox.Show("Já existe formação de custo para a simulãção selecionada!", "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
-                BlockFields();
-                return;
-            }
-            EnabledFields();
-            double?[] vet = serviceItem.GetTaxValues(cbItemGrid.Text);
-            if(vet != null && vet.Length > 0)
+                EnabledFields();
+                double?[] vet = serviceItem.GetTaxValues(cbItemGrid.Text);
+                if (vet != null && vet.Length > 0)
+                {
+                    txtPis.Text = vet[0].ToString();
+                    txtCofins.Text = vet[1].ToString();
+                    txtIcms.Text = vet[2].ToString();
+                    txtIpi.Text = vet[3].ToString();
+                    txtISS.Text = vet[4].ToString();
+                    txtIR.Text = vet[5].ToString();
+                    txtCSLL.Text = vet[6].ToString();
+                }
+            }catch(Exception ex)
             {
-                txtPis.Text = vet[0].ToString();
-                txtCofins.Text = vet[1].ToString();
-                txtIcms.Text = vet[2].ToString();
-                txtIpi.Text = vet[3].ToString();
+                MessageBox.Show(ex.Message, "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void CbItemGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             positionLine = cbItemGrid.SelectedIndex + 1;
+
         }
 
         private void EnabledFields()
@@ -469,6 +495,9 @@ namespace BillsOfMaterial_App.View
             txtVariableExpenses.IsEnabled = true;
             txtMargin.IsEnabled = true;
             txtVariableMargin.IsEnabled = true;
+            txtISS.IsEnabled = true;
+            txtIR.IsEnabled = true;
+            txtCSLL.IsEnabled = true;
         }
 
         private void BlockFields()
@@ -482,12 +511,33 @@ namespace BillsOfMaterial_App.View
             txtVariableExpenses.IsEnabled = false;
             txtMargin.IsEnabled = false;
             txtVariableMargin.IsEnabled = false;
+            txtISS.IsEnabled = false;
+            txtIR.IsEnabled = false;
+            txtCSLL.IsEnabled = false;
         }
 
         private void BtnSerchOffer_Click(object sender, RoutedEventArgs e)
         {
             OfferSearchView window = new OfferSearchView(this);
             window.Show();
+        }
+
+        private void TxtISS_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9,]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void TxtIR_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9,]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void TxtCSLL_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9,]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

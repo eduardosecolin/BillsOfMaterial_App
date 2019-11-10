@@ -89,6 +89,9 @@ namespace BillsOfMaterial_App
             if (cbItemGrid.Text != string.Empty)
             {
                 tvBOM.Visibility = Visibility.Visible;
+                txtDrawing.Visibility = Visibility.Visible;
+                txtTecConclusion.Visibility = Visibility.Visible;
+                btnDrawing.Visibility = Visibility.Visible;
                 btnSaveSimulation.IsEnabled = true;
                 btnClear.IsEnabled = true;
             }
@@ -175,6 +178,7 @@ namespace BillsOfMaterial_App
                     comp.BOM = cbItemGrid.Text;
                     comp.Item = cbItemGrid.Text;
                     comp.Drawing = txtDrawing.Text;
+                    comp.TecConclusion = txtTecConclusion.Text;
                     if (selectedNode.Items.Count > 1)
                     {
                         foreach (var item2 in selectedNode.Items)
@@ -185,7 +189,7 @@ namespace BillsOfMaterial_App
                                 foreach (var child in stackPanel.Children)
                                 {
                                     TextBlock text = child as TextBlock;
-                                    string[] vetItem = text.Text.ToString().Split('-');
+                                    string[] vetItem = text.Text.ToString().Split('|');
                                     if (vetItem != null)
                                     {
                                         comp.Component = vetItem[0].Trim();
@@ -256,7 +260,7 @@ namespace BillsOfMaterial_App
                     }
                     else
                     {
-                        string[] vetItem = selectedNode.Header.ToString().Split('-');
+                        string[] vetItem = selectedNode.Header.ToString().Split('|');
                         if (vetItem != null)
                         {
                             comp.Component = vetItem[0].Trim();
@@ -345,7 +349,7 @@ namespace BillsOfMaterial_App
                     op.Id = int.Parse(lblCustQuotaId.Content.ToString());
                     op.BOM = cbItemGrid.Text;
                     op.Item = cbItemGrid.Text;
-                    string[] vetItem = selectedNode.Header.ToString().Split('-');
+                    string[] vetItem = selectedNode.Header.ToString().Split('|');
                     if (vetItem != null)
                     {
                         op.Operation = vetItem[0].Trim();
@@ -430,7 +434,7 @@ namespace BillsOfMaterial_App
                                                             foreach (var sti in st.Children)
                                                             {
                                                                 TextBlock tb = sti as TextBlock;
-                                                                string[] vet = tb.Text.Split('-');
+                                                                string[] vet = tb.Text.Split('|');
                                                                 if (vet != null)
                                                                 {
                                                                     comp.BOM = vet[0];
@@ -441,6 +445,7 @@ namespace BillsOfMaterial_App
                                                             comp.Id = int.Parse(lblCustQuotaId.Content.ToString());
                                                             comp.Item = cbItemGrid.Text;
                                                             comp.Drawing = txtDrawing.Text;
+                                                            comp.TecConclusion = txtTecConclusion.Text;
 
                                                             TreeViewItem components = comps as TreeViewItem;
 
@@ -452,7 +457,7 @@ namespace BillsOfMaterial_App
                                                                 foreach (var stack in stackPanel.Children)
                                                                 {
                                                                     TextBlock text = stack as TextBlock;
-                                                                    string[] vetItem = text.Text.ToString().Split('-');
+                                                                    string[] vetItem = text.Text.ToString().Split('|');
                                                                     if (vetItem != null)
                                                                     {
                                                                         comp.Component = vetItem[0].Trim();
@@ -517,7 +522,7 @@ namespace BillsOfMaterial_App
                                                             }
                                                             else
                                                             {
-                                                                string[] vetItem = components.Header.ToString().Split('-');
+                                                                string[] vetItem = components.Header.ToString().Split('|');
                                                                 if (vetItem != null)
                                                                 {
                                                                     comp.Component = vetItem[0].Trim();
@@ -590,26 +595,27 @@ namespace BillsOfMaterial_App
                                                     }
                                                     else if (lbl.Content.ToString().Equals("Operação nv.2", StringComparison.OrdinalIgnoreCase) && onlyOneIntered == true)
                                                     {
-                                                        CS_CustQuotasOperation op = new CS_CustQuotasOperation();
-                                                        foreach (var sti in st.Children)
-                                                        {
-                                                            TextBlock tb = sti as TextBlock;
-                                                            string[] vet = tb.Text.Split('-');
-                                                            if (vet != null)
-                                                            {
-                                                                op.BOM = vet[0];
-                                                                break;
-                                                            }
-                                                        }
-
-                                                        op.Line = compOpService.GetMaxLineOp();
-                                                        op.Id = int.Parse(lblCustQuotaId.Content.ToString());
-                                                        op.Item = cbItemGrid.Text;
 
                                                         foreach (var ops in compNode.Items)
                                                         {
+                                                            CS_CustQuotasOperation op = new CS_CustQuotasOperation();
+                                                            foreach (var sti in st.Children)
+                                                            {
+                                                                TextBlock tb = sti as TextBlock;
+                                                                string[] vet = tb.Text.Split('|');
+                                                                if (vet != null)
+                                                                {
+                                                                    op.BOM = vet[0];
+                                                                    break;
+                                                                }
+                                                            }
+
+                                                            op.Line = compOpService.GetMaxLineOp();
+                                                            op.Id = int.Parse(lblCustQuotaId.Content.ToString());
+                                                            op.Item = cbItemGrid.Text;
+
                                                             TreeViewItem operations = ops as TreeViewItem;
-                                                            string[] vetItem2 = operations.Header.ToString().Split('-');
+                                                            string[] vetItem2 = operations.Header.ToString().Split('|');
                                                             if (vetItem2 != null)
                                                             {
                                                                 op.Operation = vetItem2[0].Trim();
@@ -691,7 +697,7 @@ namespace BillsOfMaterial_App
                                         if (item3.Name == "tvLevel3")
                                         {
                                             CS_CustQuotasComponent comp = new CS_CustQuotasComponent();
-                                            string[] vet = content.Split('-');
+                                            string[] vet = content.Split('|');
                                             if (vet != null)
                                             {
                                                 comp.BOM = vet[0];
@@ -700,6 +706,7 @@ namespace BillsOfMaterial_App
                                             comp.Id = int.Parse(lblCustQuotaId.Content.ToString());
                                             comp.Item = cbItemGrid.Text;
                                             comp.Drawing = txtDrawing.Text;
+                                            comp.TecConclusion = txtTecConclusion.Text;
 
                                             if (item3.Header is StackPanel)
                                             {
@@ -709,7 +716,7 @@ namespace BillsOfMaterial_App
                                                     if (item4 is TextBlock)
                                                     {
                                                         TextBlock lbl2 = item4 as TextBlock;
-                                                        string[] vetItem = lbl2.Text.ToString().Split('-');
+                                                        string[] vetItem = lbl2.Text.ToString().Split('|');
                                                         if (vetItem != null)
                                                         {
                                                             comp.Component = vetItem[0].Trim();
@@ -773,7 +780,7 @@ namespace BillsOfMaterial_App
                                             }
                                             else
                                             {
-                                                string[] vetItem = item3.Header.ToString().Split('-');
+                                                string[] vetItem = item3.Header.ToString().Split('|');
                                                 if (vetItem != null)
                                                 {
                                                     comp.Component = vetItem[0].Trim();
@@ -898,7 +905,7 @@ namespace BillsOfMaterial_App
                                             if (item3.Name == "tvOpLevel2")
                                             {
                                                 CS_CustQuotasOperation op = new CS_CustQuotasOperation();
-                                                string[] vet = content.Split('-');
+                                                string[] vet = content.Split('|');
                                                 if (vet != null)
                                                 {
                                                     op.BOM = vet[0];
@@ -907,7 +914,7 @@ namespace BillsOfMaterial_App
                                                 op.Id = int.Parse(lblCustQuotaId.Content.ToString());
                                                 op.Item = cbItemGrid.Text;
 
-                                                string[] vetItem = item3.Header.ToString().Split('-');
+                                                string[] vetItem = item3.Header.ToString().Split('|');
                                                 if (vetItem != null)
                                                 {
                                                     op.Operation = vetItem[0].Trim();
@@ -979,10 +986,14 @@ namespace BillsOfMaterial_App
         {
             tvComponent.Items.Clear();
             tvOperation.Items.Clear();
+            txtTecConclusion.Clear();
+            txtDrawing.Clear();
             lblCustQuotaId.Content = string.Empty;
             lblNoCustQuota.Content = "Selecione a Oferta";
             cbItemGrid.Text = string.Empty;
             tvBOM.Visibility = Visibility.Hidden;
+            txtDrawing.Visibility = Visibility.Hidden;
+            txtTecConclusion.Visibility = Visibility.Hidden;
             btnNext.IsEnabled = false;
             btnClear.IsEnabled = false;
             txtDrawing.Clear();
@@ -1058,7 +1069,7 @@ namespace BillsOfMaterial_App
                                 if (item is TextBlock)
                                 {
                                     TextBlock txt = item as TextBlock;
-                                    string[] vet = txt.Text.Split('-');
+                                    string[] vet = txt.Text.Split('|');
                                     if (vet != null)
                                     {
                                         window.isEditmode = true;
@@ -1110,7 +1121,7 @@ namespace BillsOfMaterial_App
                     }
                     else
                     {
-                        string[] vet = treeview.Header.ToString().Split('-');
+                        string[] vet = treeview.Header.ToString().Split('|');
                         if (vet != null)
                         {
                             window.isEditmode = true;
@@ -1161,7 +1172,7 @@ namespace BillsOfMaterial_App
                 else if (treeview.Name == "tvOpLevel1" || treeview.Name == "tvOpLevel2")
                 {
                     OperationView window = new OperationView(this);
-                    string[] vet = treeview.Header.ToString().Split('-');
+                    string[] vet = treeview.Header.ToString().Split('|');
                     if (vet != null)
                     {
                         window.isEditmode = true;
@@ -1270,8 +1281,7 @@ namespace BillsOfMaterial_App
                 if(compOpService.ExistData(Convert.ToInt32(lblCustQuotaId.Content.ToString()), cbItemGrid.Text))
                 {
                     MessageBoxResult resultDialog = MessageBox.Show($"Já existe simulação para a oferta nº: { lblNoCustQuota.Content.ToString() } para o item nº: { cbItemGrid.Text }" +
-                        $"\n(SIM) Deletar a simulaçao existente e salvar a nova" +
-                        $"\n(Não) Fazer o calculo de formação de custo para a simulação existente",
+                        $"\n Deletar a simulaçao existente e salvar a nova?",
                         "Pergunta",
                         MessageBoxButton.YesNo,
                         MessageBoxImage.Question
@@ -1283,7 +1293,7 @@ namespace BillsOfMaterial_App
                     }
                     else
                     {
-                        return true;
+                        return false;
                     }
                 }
                 //Eng Level 1
@@ -1373,7 +1383,14 @@ namespace BillsOfMaterial_App
             if (SaveSimulation())
             {
                 MessageBox.Show("Simulação de Engenharia de Produtos salva com sucesso!", "Informação", MessageBoxButton.OK, MessageBoxImage.Information);
+                BtnClear_Click(sender, e);
             }
+        }
+
+        private void BtnRegisterItems_Click_1(object sender, RoutedEventArgs e)
+        {
+            RegisterItem window = new RegisterItem();
+            window.Show();
         }
     }
 }

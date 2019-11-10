@@ -54,6 +54,7 @@ namespace BillsOfMaterial_App.Model
         public virtual DbSet<MA_WCFamiliesDetails> MA_WCFamiliesDetails { get; set; }
         public virtual DbSet<MA_Drawings> MA_Drawings { get; set; }
         public virtual DbSet<MA_DrawingsDescription> MA_DrawingsDescription { get; set; }
+        public virtual DbSet<MA_BRNCM> MA_BRNCM { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -79,6 +80,10 @@ namespace BillsOfMaterial_App.Model
 
             modelBuilder.Entity<MA_BillOfMaterials>()
                 .Property(e => e.SalesDocOnly)
+                .IsFixedLength();
+
+            modelBuilder.Entity<MA_BillOfMaterials>()
+                .Property(e => e.TecConclusion)
                 .IsFixedLength();
 
             modelBuilder.Entity<MA_BillOfMaterials>()
@@ -163,6 +168,14 @@ namespace BillsOfMaterial_App.Model
             modelBuilder.Entity<MA_BillOfMaterialsTools>()
                 .Property(e => e.ExclusiveUse)
                 .IsFixedLength();
+
+            modelBuilder.Entity<MA_BRNCM>()
+                .Property(e => e.Description)
+                .IsFixedLength();
+
+            modelBuilder.Entity<MA_BRNCM>()
+               .Property(e => e.ICMSTaxRateCode)
+               .IsFixedLength();
 
             modelBuilder.Entity<MA_CostCenters>()
                 .Property(e => e.DummyCostCenter)
@@ -269,6 +282,10 @@ namespace BillsOfMaterial_App.Model
             modelBuilder.Entity<CS_CustQuotasComponent>()
                 .Property(e => e.Description)
                 .IsFixedLength();
+
+            modelBuilder.Entity<CS_CustQuotasComponent>()
+               .Property(e => e.TecConclusion)
+               .IsFixedLength();
 
             modelBuilder.Entity<CS_CustQuotasComponent>()
                 .Property(e => e.UoM)

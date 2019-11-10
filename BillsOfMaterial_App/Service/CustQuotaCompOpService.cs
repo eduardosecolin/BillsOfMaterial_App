@@ -95,6 +95,116 @@ namespace BillsOfMaterial_App.Service
             return _context.CS_CustQuotasOperation.Where(x => x.Id == id && x.Item == item).ToList();
         }
 
+        public List<CS_CustQuotasComponent> GetSimulationComponents2(int id, string item)
+        {
+
+            return _context.CS_CustQuotasComponent.Where(x => x.Id == id && x.BOM == item).ToList(); ;
+
+        }
+
+        public List<CS_CustQuotasOperation> GetSimulationOperations2(int id, string item)
+        {
+            return _context.CS_CustQuotasOperation.Where(x => x.Id == id && x.BOM == item).ToList();
+        }
+
+        public int? GetIdFromSimulationCompBOM(string item)
+        {
+            var sql = _context.CS_CustQuotasComponent.Where(x => x.Item == item).FirstOrDefault();
+            if(sql != null)
+            {
+                return sql.Id;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public int? GetIdFromSimulationOpBOM(string item)
+        {
+            var sql = _context.CS_CustQuotasOperation.Where(x => x.Item == item).FirstOrDefault();
+            if (sql != null)
+            {
+                return sql.Id;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public DateTime? GetTBCreatedFromSimulationCompBOM(string item)
+        {
+            var sql = _context.CS_CustQuotasComponent.Where(x => x.Item == item).FirstOrDefault();
+            if (sql != null)
+            {
+                return sql.TBCreated;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public DateTime? GetTBCreatedFromSimulationOpBOM(string item)
+        {
+            var sql = _context.CS_CustQuotasOperation.Where(x => x.Item == item).FirstOrDefault();
+            if (sql != null)
+            {
+                return sql.TBCreated;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public DateTime? GetTBModifiedFromSimulationCompBOM(string item)
+        {
+            var sql = _context.CS_CustQuotasComponent.Where(x => x.Item == item).FirstOrDefault();
+            if (sql != null)
+            {
+                return sql.TBModified;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public DateTime? GetTBModifiedFromSimulationOpBOM(string item)
+        {
+            var sql = _context.CS_CustQuotasOperation.Where(x => x.Item == item).FirstOrDefault();
+            if (sql != null)
+            {
+                return sql.TBModified;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public List<string> GetDistinctItemBOM()
+        {
+            List<string> list = new List<string>();
+            if (_context.CS_CustQuotasComponent.Any())
+            {
+                var sql = _context.CS_CustQuotasComponent.Select(x => x.Item).Distinct().ToList();
+                if(sql != null)
+                {
+                    foreach (var item in sql)
+                    {
+                        list.Add(item);
+                    }
+
+                    return list;
+                }
+            }
+
+            return list;
+        }
+
         public void Delete(int id, string item)
         {
             List<CS_CustQuotasComponent> listComp = GetSimulationComponents(id, item);

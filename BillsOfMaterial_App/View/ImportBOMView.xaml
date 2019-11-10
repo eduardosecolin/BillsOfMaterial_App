@@ -43,6 +43,8 @@
                 <DataGridTextColumn Binding="{Binding CreationDate, ConverterCulture=pt-BR, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}" Header="Data de Criação"/>
             </DataGrid.Columns>
         </DataGrid>
+        <RadioButton x:Name="rbEDPImport" Content="Importar Engenharia de Produtos" HorizontalAlignment="Left" Margin="306,46,0,0" VerticalAlignment="Top" Checked="RbEDPImport_Checked"/>
+        <RadioButton x:Name="rbSimulationImport" Content="Importar Simulação E.D.P" HorizontalAlignment="Left" Margin="640,46,0,0" VerticalAlignment="Top" Checked="RbSimulationImport_Checked"/>
 
     </Grid>
 </Window>

@@ -223,6 +223,42 @@
             VerticalAlignment="Top"
             TabIndex="1"
             Width="416" Height="39" IsReadOnly="True" LostFocus="CbItemGrid_LostFocus" SelectionChanged="CbItemGrid_SelectionChanged"/>
+        <TextBox 
+            x:Name="txtISS"
+            HorizontalAlignment="Left"
+            Height="42"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="150"
+            materialDesign:HintAssist.Hint="ISS %" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            MaxLength="10" TabIndex="10" Margin="94,300,0,0" IsEnabled="False" PreviewTextInput="TxtISS_PreviewTextInput"/>
+        <TextBox 
+            x:Name="txtIR"
+            HorizontalAlignment="Left"
+            Height="42"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="150"
+            materialDesign:HintAssist.Hint="IR %" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            MaxLength="10" TabIndex="11" Margin="265,300,0,0" IsEnabled="False" PreviewTextInput="TxtIR_PreviewTextInput"/>
+        <TextBox 
+            x:Name="txtCSLL"
+            HorizontalAlignment="Left"
+            Height="42"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="150"
+            materialDesign:HintAssist.Hint="CSLL %" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            MaxLength="10" TabIndex="12" Margin="441,300,0,0" IsEnabled="False" PreviewTextInput="TxtCSLL_PreviewTextInput"/>
 
     </Grid>
 </Window>

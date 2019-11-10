@@ -30,6 +30,10 @@ namespace BillsOfMaterial_App.Service
         public string GetUoMItem(string item)
         {
             var sql = _context.MA_Items.Where(x => x.Item == item).FirstOrDefault();
+            if(sql == null)
+            {
+                return string.Empty;
+            }
             return sql.BaseUoM;
         }
 
@@ -112,12 +116,25 @@ namespace BillsOfMaterial_App.Service
             var sql = _context.MA_Items.Where(x => x.Item == item).FirstOrDefault();
             if(sql != null)
             {
-                return new double?[] { sql.PIS, sql.COFINS, sql.ICMS, sql.IPI };
+                return new double?[] { sql.PIS, sql.COFINS, sql.ICMS, sql.IPI, sql.ISS, sql.IR, sql.CSLL };
             }
             else
             {
                 return null;
             }
         }
+
+        public bool ExistItem(string item)
+        {
+            if(_context.MA_Items.Any(x => x.Item == item))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
 }

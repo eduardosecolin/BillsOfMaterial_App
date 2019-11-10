@@ -60,6 +60,12 @@ namespace BillsOfMaterial_App.Model
 
         public double? IPI { get; set; }
 
+        public double? ISS { get; set; }
+
+        public double? IR { get; set; }
+
+        public double? CSLL { get; set; }
+
         [StringLength(8)]
         public string ItemType { get; set; }
 

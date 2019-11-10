@@ -73,6 +73,7 @@
     <Compile Include="Model\MA_BillOfMaterialsRouting.cs" />
     <Compile Include="Model\MA_BillOfMaterialsTools.cs" />
     <Compile Include="Model\MA_BOMLabour.cs" />
+    <Compile Include="Model\MA_BRNCM.cs" />
     <Compile Include="Model\MA_CostCenters.cs" />
     <Compile Include="Model\MA_CustQuotas.cs" />
     <Compile Include="Model\MA_CustQuotasDetail.cs" />
@@ -108,6 +109,7 @@
     <Compile Include="Service\CustQuotasService.cs" />
     <Compile Include="Service\DrawingService.cs" />
     <Compile Include="Service\ItemsService.cs" />
+    <Compile Include="Service\NCMService.cs" />
     <Compile Include="Service\OperationService.cs" />
     <Compile Include="Service\OPFamilyService.cs" />
     <Compile Include="Service\WorkersService.cs" />
@@ -135,6 +137,9 @@
     </Compile>
     <Compile Include="View\OperationView.xaml.cs">
       <DependentUpon>OperationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RegisterItem.xaml.cs">
+      <DependentUpon>RegisterItem.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -177,6 +182,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\OperationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RegisterItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

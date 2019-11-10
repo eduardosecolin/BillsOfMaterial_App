@@ -54,6 +54,9 @@ namespace BillsOfMaterial_App.Model
         [StringLength(1000)]
         public string PathFile3 { get; set; }
 
+        [StringLength(50)]
+        public string TecConclusion { get; set; }
+
         public DateTime TBCreated { get; set; }
 
         public DateTime TBModified { get; set; }

@@ -28,6 +28,9 @@ namespace BillsOfMaterial_App.Model
         [StringLength(8)]
         public string UoM { get; set; }
 
+        [StringLength(50)]
+        public string TecConclusion { get; set; }
+
         public DateTime? CreationDate { get; set; }
 
         public DateTime? LastModificationDate { get; set; }
