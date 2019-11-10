@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -136,5 +137,61 @@ namespace BillsOfMaterial_App.Service
             }
         }
 
+        public MA_Items GetItem(string item)
+        {
+            return _context.MA_Items.Where(x => x.Item == item).FirstOrDefault();
+        }
+
+        public MA_ItemsFiscalYearData GetItemFiscalYearData(string item)
+        {
+            return _context.MA_ItemsFiscalYearData.Where(x => x.Item == item && x.FiscalYear == DateTime.Now.Year).FirstOrDefault();
+        }
+
+        public MA_ItemsBRTaxes GetItemBRTaxes(string item)
+        {
+            return _context.MA_ItemsBRTaxes.Where(x => x.Item == item).FirstOrDefault();
+        }
+
+        public bool AddItem(MA_Items item)
+        {
+            _context.MA_Items.Add(item);
+            _context.SaveChanges();
+            return true;
+        }
+
+        public bool EditItem(MA_Items item)
+        {
+            _context.MA_Items.AddOrUpdate(item);
+            _context.SaveChanges();
+            return true;
+        }
+
+        public bool AddItemStandardCost(MA_ItemsFiscalYearData item)
+        {
+            _context.MA_ItemsFiscalYearData.Add(item);
+            _context.SaveChanges();
+            return true;
+        }
+
+        public bool EditItemStandardCost(MA_ItemsFiscalYearData item)
+        {
+            _context.MA_ItemsFiscalYearData.AddOrUpdate(item);
+            _context.SaveChanges();
+            return true;
+        }
+
+        public bool AddItemNCM(MA_ItemsBRTaxes item)
+        {
+            _context.MA_ItemsBRTaxes.Add(item);
+            _context.SaveChanges();
+            return true;
+        }
+
+        public bool EditItemNCM(MA_ItemsBRTaxes item)
+        {
+            _context.MA_ItemsBRTaxes.AddOrUpdate(item);
+            _context.SaveChanges();
+            return true;
+        }
     }
 }

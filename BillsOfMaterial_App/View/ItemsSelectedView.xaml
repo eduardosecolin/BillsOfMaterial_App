@@ -1,0 +1,49 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BillsOfMaterial_App.View"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="BillsOfMaterial_App.View.ItemsSelectedView"
+        mc:Ignorable="d"
+        Title="Itens" Height="450" Width="800" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid>
+
+        <TextBox 
+            x:Name="txtFilter"
+            HorizontalAlignment="Left"
+            Height="42"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="150"
+            materialDesign:HintAssist.Hint="Filtro" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            MaxLength="10" TabIndex="0" Margin="10,10,0,0" LostFocus="TxtFilter_LostFocus"/>
+        <TextBox 
+            x:Name="txtItem"
+            HorizontalAlignment="Left"
+            Height="42"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            IsReadOnly="True"
+            Width="150"
+            materialDesign:HintAssist.Hint="Item" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            MaxLength="10" TabIndex="15" Margin="10,352,0,0"/>
+        <Button x:Name="btnAdd" Content="Adicionar" HorizontalAlignment="Left" Margin="640,362,0,0" VerticalAlignment="Top" Width="119" Click="BtnAdd_Click"/>
+        <DataGrid x:Name="dgItems" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Left" Height="272" Margin="10,75,0,0" VerticalAlignment="Top" Width="749" MouseDoubleClick="DgItems_MouseDoubleClick">
+            <DataGrid.Columns>
+                <materialDesign:MaterialDataGridTextColumn Foreground="Gray" Header="Item" Binding="{Binding Item}"/>
+                <materialDesign:MaterialDataGridTextColumn Foreground="Gray" Header="Descrição" Binding="{Binding Description}"/>
+                <materialDesign:MaterialDataGridTextColumn Foreground="Gray" Header="U.de Medida" Binding="{Binding BaseUoM}"/>
+                <materialDesign:MaterialDataGridTextColumn Foreground="Gray" Header="Preço Base" Binding="{Binding BasePrice}"/>
+                <materialDesign:MaterialDataGridTextColumn Foreground="Gray" Header="Tipo do Item" Binding="{Binding ItemType}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</Window>

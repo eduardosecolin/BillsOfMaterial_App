@@ -47,23 +47,6 @@ namespace BillsOfMaterial_App.Model
         [StringLength(10)]
         public string FiscalBenefCode { get; set; }
 
-        [StringLength(1)]
-        public string PrevWithheldTaxApply { get; set; }
-
-        public double? PrevICMSST_Taxable { get; set; }
-
-        public double? PrevICMSST_Value { get; set; }
-
-        public double? PrevICMSST_Perc { get; set; }
-
-        public double? PrevICMSSub_Value { get; set; }
-
-        public double? PrevICMSSTFCP_Taxable { get; set; }
-
-        public double? PrevICMSSTFCP_Value { get; set; }
-
-        public double? PrevICMSSTFCP_Perc { get; set; }
-
         public DateTime TBCreated { get; set; }
 
         public DateTime TBModified { get; set; }

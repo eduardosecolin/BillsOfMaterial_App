@@ -12,14 +12,14 @@
             x:Name="btnNew" 
             Cursor="Hand" Margin="10,10,688,353" 
             TabIndex="15"
-            Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}">
+            Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnNew_Click">
             <materialDesign:PackIcon Foreground="#FF00BCD4" Height="42" Width="75" Kind="PlusBox"/>
         </Button>
         <Button 
             x:Name="btnEdit" 
             Cursor="Hand" Margin="120,14,578,349" 
             TabIndex="15"
-            Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}">
+            Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnEdit_Click">
             <materialDesign:PackIcon Foreground="#FF00BCD4" Height="42" Width="75" Kind="BorderColor"/>
         </Button>
         <Rectangle Fill="{x:Null}" HorizontalAlignment="Left" Height="73" Stroke="DarkCyan" VerticalAlignment="Top" Width="807" Margin="-13,0,0,0"/>
@@ -112,7 +112,7 @@
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
             MaxLength="10" TabIndex="5" Margin="417,220,0,0" PreviewTextInput="TxtStandardCost_PreviewTextInput"/>
-        <Button x:Name="btnSave" Cursor="Hand" HorizontalAlignment="Left" Margin="60,330,0,0" VerticalAlignment="Top" Width="622" Height="40">
+        <Button x:Name="btnSave" Cursor="Hand" HorizontalAlignment="Left" Margin="60,330,0,0" VerticalAlignment="Top" Width="622" Height="40" Click="BtnSave_Click">
             <StackPanel Orientation="Horizontal">
                 <materialDesign:PackIcon Kind="ContentSave" />
                 <TextBlock Margin="8 0 0 0"><Run Text="Salvar"/></TextBlock>
@@ -122,14 +122,14 @@
             x:Name="btnSerchUoM" 
             Cursor="Hand" Margin="650,77,48,286" 
             TabIndex="2"
-            Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}">
+            Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnSerchUoM_Click">
             <materialDesign:PackIcon Foreground="#FF00BCD4" Height="42" Width="75" Kind="Animation"/>
         </Button>
         <Button 
             x:Name="btnSerchNCM" 
             Cursor="Hand" Margin="650,171,48,192" 
             TabIndex="2"
-            Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}">
+            Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnSerchNCM_Click">
             <materialDesign:PackIcon Foreground="#FF00BCD4" Height="42" Width="75" Kind="Animation"/>
         </Button>
 

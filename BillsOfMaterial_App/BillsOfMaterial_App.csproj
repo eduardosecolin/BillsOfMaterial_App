@@ -95,6 +95,7 @@
     <Compile Include="Model\MA_OperationsLabour.cs" />
     <Compile Include="Model\MA_OperationsTools.cs" />
     <Compile Include="Model\MA_PriceLists.cs" />
+    <Compile Include="Model\MA_UnitsOfMeasure.cs" />
     <Compile Include="Model\MA_WCFamilies.cs" />
     <Compile Include="Model\MA_WCFamiliesDetails.cs" />
     <Compile Include="Model\MA_WorkCenters.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Service\NCMService.cs" />
     <Compile Include="Service\OperationService.cs" />
     <Compile Include="Service\OPFamilyService.cs" />
+    <Compile Include="Service\UoMService.cs" />
     <Compile Include="Service\WorkersService.cs" />
     <Compile Include="SplashScreen.xaml.cs">
       <DependentUpon>SplashScreen.xaml</DependentUpon>
@@ -129,6 +131,12 @@
     <Compile Include="View\ImportBOMView.xaml.cs">
       <DependentUpon>ImportBOMView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ItemsSelectedView.xaml.cs">
+      <DependentUpon>ItemsSelectedView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NCMView.xaml.cs">
+      <DependentUpon>NCMView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\OfferSearchView.xaml.cs">
       <DependentUpon>OfferSearchView.xaml</DependentUpon>
     </Compile>
@@ -140,6 +148,9 @@
     </Compile>
     <Compile Include="View\RegisterItem.xaml.cs">
       <DependentUpon>RegisterItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UoMView.xaml.cs">
+      <DependentUpon>UoMView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -173,6 +184,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\ItemsSelectedView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NCMView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\OfferSearchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -186,6 +205,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\RegisterItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UoMView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -241,5 +264,6 @@
     <Resource Include="Images\tubo retangular.png" />
     <Resource Include="Images\tubo sextavado.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -55,6 +55,7 @@ namespace BillsOfMaterial_App.Model
         public virtual DbSet<MA_Drawings> MA_Drawings { get; set; }
         public virtual DbSet<MA_DrawingsDescription> MA_DrawingsDescription { get; set; }
         public virtual DbSet<MA_BRNCM> MA_BRNCM { get; set; }
+        public virtual DbSet<MA_UnitsOfMeasure> MA_UnitsOfMeasure { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -602,10 +603,6 @@ namespace BillsOfMaterial_App.Model
                 .WithRequired(e => e.MA_Items)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<MA_ItemsBRTaxes>()
-                .Property(e => e.PrevWithheldTaxApply)
-                .IsFixedLength();
-
             modelBuilder.Entity<MA_ItemsFiscalYearData>()
                 .Property(e => e.NoABCValuation)
                 .IsFixedLength();
@@ -780,6 +777,30 @@ namespace BillsOfMaterial_App.Model
             modelBuilder.Entity<RM_WorkersFields>()
                 .Property(e => e.HideOnLayout)
                 .IsFixedLength();
+
+            modelBuilder.Entity<MA_UnitsOfMeasure>()
+               .Property(e => e.Description)
+               .IsFixedLength();
+
+            modelBuilder.Entity<MA_UnitsOfMeasure>()
+               .Property(e => e.Symbol)
+               .IsFixedLength();
+
+            modelBuilder.Entity<MA_UnitsOfMeasure>()
+               .Property(e => e.Notes)
+               .IsFixedLength();
+
+            modelBuilder.Entity<MA_UnitsOfMeasure>()
+               .Property(e => e.BarcodeSegment)
+               .IsFixedLength();
+
+            modelBuilder.Entity<MA_UnitsOfMeasure>()
+               .Property(e => e.Disabled)
+               .IsFixedLength();
+
+            modelBuilder.Entity<MA_UnitsOfMeasure>()
+               .Property(e => e.UoMForEI)
+               .IsFixedLength();
         }
     }
 }

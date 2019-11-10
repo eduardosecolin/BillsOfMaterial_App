@@ -20,5 +20,23 @@ namespace BillsOfMaterial_App.Service
         {
             return _context.MA_BRNCM.ToList();
         }
+
+        public List<MA_BRNCM> GetAllByParams(string param)
+        {
+            return _context.MA_BRNCM.Where(x => x.NCM.Contains(param) || x.Description.Contains(param)).ToList();
+        }
+
+        public string GetNCM(string item)
+        {
+            var sql = _context.MA_ItemsBRTaxes.Where(x => x.Item == item).FirstOrDefault();
+            if(sql != null)
+            {
+                return sql.NCM;
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
     }
 }

@@ -400,6 +400,9 @@ namespace BillsOfMaterial_App.View
                 double dv = (!string.IsNullOrEmpty(txtVariableExpenses.Text)) ? (costValue / 100) * Convert.ToDouble(txtVariableExpenses.Text) : 0;
                 double margin = (!string.IsNullOrEmpty(txtMargin.Text)) ? (costValue / 100) * Convert.ToDouble(txtMargin.Text) : 0;
                 double variableMargin = (!string.IsNullOrEmpty(txtVariableMargin.Text)) ? (costValue / 100) * Convert.ToDouble(txtVariableMargin.Text) : 0;
+                double iss = (!string.IsNullOrEmpty(txtISS.Text)) ? (costValue / 100) * Convert.ToDouble(txtISS.Text) : 0;
+                double ir = (!string.IsNullOrEmpty(txtIR.Text)) ? (costValue / 100) * Convert.ToDouble(txtIR.Text) : 0;
+                double csll = (!string.IsNullOrEmpty(txtCSLL.Text)) ? (costValue / 100) * Convert.ToDouble(txtCSLL.Text) : 0;
 
                 return costValue + (
                     freight +
@@ -410,7 +413,10 @@ namespace BillsOfMaterial_App.View
                     df +
                     dv +
                     margin +
-                    variableMargin
+                    variableMargin+
+                    iss+
+                    ir+
+                    csll
                     );
             }
             catch (Exception ex)
