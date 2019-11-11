@@ -129,7 +129,7 @@
             Margin="1118,70,10,0" 
             VerticalAlignment="Top" Height="38" Click="BtnRegisterItems_Click_1" >
             <StackPanel Orientation="Horizontal">
-                <materialDesign:PackIcon Kind="Cart" />
+                <materialDesign:PackIcon Kind="Settings" />
                 <TextBlock Margin="8 0 0 0"><Run Text="Gerenciar Itens"/></TextBlock>
             </StackPanel>
         </Button>

@@ -538,8 +538,22 @@ namespace BillsOfMaterial_App.View
                     return chilItem;
                 }
             }
+            else
+            {
+                TreeViewItem chilItem = new TreeViewItem();
+                chilItem.Name = "treeViewLv1";
+                if (obs == string.Empty)
+                {
+                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty;
+                }
+                else
+                {
+                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty + " | OBS: " + obs.Replace("|", "");
+                }
+                _mainWindow.tvComponent.Items.Add(chilItem);
+                return chilItem;
+            }
 
-            return null;
         }
 
         private TreeViewItem FillLevel2(string item, string description, string qty, string obs, TreeViewItem tvParam)
@@ -620,8 +634,22 @@ namespace BillsOfMaterial_App.View
                     return chilItem;
                 }
             }
-
-            return null;
+            else
+            {
+                TreeViewItem viewItem = tvParam;
+                TreeViewItem chilItem = new TreeViewItem();
+                chilItem.Name = "tvLevel2";
+                if (obs == string.Empty)
+                {
+                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty;
+                }
+                else
+                {
+                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty + " | OBS: " + obs.Replace("|", "");
+                }
+                viewItem.Items.Add(chilItem);
+                return chilItem;
+            }
         }
 
         private void FillLevel3(string item, string description, string qty, string obs, TreeViewItem tvParam)
@@ -691,6 +719,22 @@ namespace BillsOfMaterial_App.View
 
                     viewItem.Items.Add(chilItem);
                 }
+            }
+            else
+            {
+                TreeViewItem viewItem = tvParam;
+                TreeViewItem chilItem = new TreeViewItem();
+                chilItem.Name = "tvLevel3";
+                if (obs == string.Empty)
+                {
+                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + "| Quantidade: " + qty;
+                }
+                else
+                {
+                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + "| Quantidade: " + qty + " | OBS: " + obs.Replace("|", "");
+                }
+                viewItem.Items.Add(chilItem);
+                this.Close();
             }
         }
 

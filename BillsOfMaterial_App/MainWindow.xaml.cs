@@ -207,7 +207,14 @@ namespace BillsOfMaterial_App
                                                 string[] vetQty = o.Split(':');
                                                 if (vetQty.Length > 1)
                                                 {
-                                                    comp.Qty = Convert.ToDouble(vetQty[1]);
+                                                    if (vetQty[1] == "" || vetQty[1] == " " || vetQty[1] == "  ")
+                                                    {
+                                                        comp.Qty = 0;
+                                                    }
+                                                    else
+                                                    {
+                                                        comp.Qty = Convert.ToDouble(vetQty[1]);
+                                                    }
                                                 }
                                             }
                                             if (o.Contains("OBS:"))
@@ -218,9 +225,9 @@ namespace BillsOfMaterial_App
                                                     comp.Obs = vetObs[1];
                                                 }
                                             }
-                                            if (o.Contains("Imagem:"))
+                                            if (o.Contains("Imagem="))
                                             {
-                                                string[] vetDraw = o.Split(':');
+                                                string[] vetDraw = o.Split('=');
                                                 if (vetDraw.Length > 1)
                                                 {
                                                     comp.PathFile1 = vetDraw[1];
@@ -278,7 +285,14 @@ namespace BillsOfMaterial_App
                                     string[] vetQty = o.Split(':');
                                     if (vetQty.Length > 1)
                                     {
-                                        comp.Qty = Convert.ToDouble(vetQty[1]);
+                                        if (vetQty[1] == "" || vetQty[1] == " " || vetQty[1] == "  ")
+                                        {
+                                            comp.Qty = 0;
+                                        }
+                                        else
+                                        {
+                                            comp.Qty = Convert.ToDouble(vetQty[1]);
+                                        }
                                     }
                                 }
                                 if (o.Contains("OBS:"))
@@ -289,9 +303,9 @@ namespace BillsOfMaterial_App
                                         comp.Obs = vetObs[1];
                                     }
                                 }
-                                if (o.Contains("Imagem:"))
+                                if (o.Contains("Imagem="))
                                 {
-                                    string[] vetDraw = o.Split(':');
+                                    string[] vetDraw = o.Split('=');
                                     if (vetDraw.Length > 1)
                                     {
                                         comp.PathFile1 = vetDraw[1];
@@ -474,7 +488,14 @@ namespace BillsOfMaterial_App
                                                                                 string[] vetQty = o.Split(':');
                                                                                 if (vetQty.Length > 1)
                                                                                 {
-                                                                                    comp.Qty = Convert.ToDouble(vetQty[1]);
+                                                                                    if (vetQty[1] == "" || vetQty[1] == " " || vetQty[1] == "  ")
+                                                                                    {
+                                                                                        comp.Qty = 0;
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        comp.Qty = Convert.ToDouble(vetQty[1]);
+                                                                                    }
                                                                                 }
                                                                             }
                                                                             if (o.Contains("OBS:"))
@@ -485,9 +506,9 @@ namespace BillsOfMaterial_App
                                                                                     comp.Obs = vetObs[1];
                                                                                 }
                                                                             }
-                                                                            if (o.Contains("Imagem:"))
+                                                                            if (o.Contains("Imagem="))
                                                                             {
-                                                                                string[] vetDraw = o.Split(':');
+                                                                                string[] vetDraw = o.Split('=');
                                                                                 if (vetDraw.Length > 1)
                                                                                 {
                                                                                     comp.PathFile1 = vetDraw[1];
@@ -539,7 +560,14 @@ namespace BillsOfMaterial_App
                                                                             string[] vetQty = o.Split(':');
                                                                             if (vetQty.Length > 1)
                                                                             {
-                                                                                comp.Qty = Convert.ToDouble(vetQty[1]);
+                                                                                if (vetQty[1] == "" || vetQty[1] == " " || vetQty[1] == "  ")
+                                                                                {
+                                                                                    comp.Qty = 0;
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    comp.Qty = Convert.ToDouble(vetQty[1]);
+                                                                                }
                                                                             }
                                                                         }
                                                                         if (o.Contains("OBS:"))
@@ -550,9 +578,9 @@ namespace BillsOfMaterial_App
                                                                                 comp.Obs = vetObs[1];
                                                                             }
                                                                         }
-                                                                        if (o.Contains("Imagem:"))
+                                                                        if (o.Contains("Imagem="))
                                                                         {
-                                                                            string[] vetDraw = o.Split(':');
+                                                                            string[] vetDraw = o.Split('=');
                                                                             if (vetDraw.Length > 1)
                                                                             {
                                                                                 comp.PathFile1 = vetDraw[1];
@@ -733,7 +761,14 @@ namespace BillsOfMaterial_App
                                                                     string[] vetQty = o.Split(':');
                                                                     if (vetQty.Length > 1)
                                                                     {
-                                                                        comp.Qty = Convert.ToDouble(vetQty[1]);
+                                                                        if (vetQty[1] == "" || vetQty[1] == " " || vetQty[1] == "  ")
+                                                                        {
+                                                                            comp.Qty = 0;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            comp.Qty = Convert.ToDouble(vetQty[1]);
+                                                                        }
                                                                     }
                                                                 }
                                                                 if (o.Contains("OBS:"))
@@ -744,9 +779,9 @@ namespace BillsOfMaterial_App
                                                                         comp.Obs = vetObs[1];
                                                                     }
                                                                 }
-                                                                if (o.Contains("Imagem:"))
+                                                                if (o.Contains("Imagem="))
                                                                 {
-                                                                    string[] vetDraw = o.Split(':');
+                                                                    string[] vetDraw = o.Split('=');
                                                                     if (vetDraw.Length > 1)
                                                                     {
                                                                         comp.PathFile1 = vetDraw[1];
@@ -797,7 +832,14 @@ namespace BillsOfMaterial_App
                                                             string[] vetQty = o.Split(':');
                                                             if (vetQty.Length > 1)
                                                             {
-                                                                comp.Qty = Convert.ToDouble(vetQty[1]);
+                                                                if (vetQty[1] == "" || vetQty[1] == " " || vetQty[1] == "  ")
+                                                                {
+                                                                    comp.Qty = 0;
+                                                                }
+                                                                else
+                                                                {
+                                                                    comp.Qty = Convert.ToDouble(vetQty[1]);
+                                                                }
                                                             }
                                                         }
                                                         if (o.Contains("OBS:"))
@@ -808,9 +850,9 @@ namespace BillsOfMaterial_App
                                                                 comp.Obs = vetObs[1];
                                                             }
                                                         }
-                                                        if (o.Contains("Imagem:"))
+                                                        if (o.Contains("Imagem="))
                                                         {
-                                                            string[] vetDraw = o.Split(':');
+                                                            string[] vetDraw = o.Split('=');
                                                             if (vetDraw.Length > 1)
                                                             {
                                                                 comp.PathFile1 = vetDraw[1];
@@ -977,7 +1019,6 @@ namespace BillsOfMaterial_App
 
         private void BtnNext_Click(object sender, RoutedEventArgs e)
         {
-            tvBOM.IsEnabled = false;
             CostFormationView window = new CostFormationView();
             window.Show();
         }
@@ -991,16 +1032,13 @@ namespace BillsOfMaterial_App
             lblCustQuotaId.Content = string.Empty;
             lblNoCustQuota.Content = "Selecione a Oferta";
             cbItemGrid.Text = string.Empty;
+            cbItemGrid.ItemsSource = null;
             tvBOM.Visibility = Visibility.Hidden;
             txtDrawing.Visibility = Visibility.Hidden;
             txtTecConclusion.Visibility = Visibility.Hidden;
-            btnNext.IsEnabled = false;
+            btnDrawing.Visibility = Visibility.Hidden;
             btnClear.IsEnabled = false;
-            txtDrawing.Clear();
-            if(tvBOM.IsEnabled == false)
-            {
-                tvBOM.IsEnabled = true;
-            }
+            btnSaveSimulation.IsEnabled = false;
         }
 
         private void BtnImport_Click(object sender, RoutedEventArgs e)
@@ -1094,7 +1132,7 @@ namespace BillsOfMaterial_App
                                                         window.txtObs.Text = vetObs[1];
                                                     }
                                                 }
-                                                if (item2.Contains("Imagem:"))
+                                                if (item2.Contains("Imagem="))
                                                 {
                                                     string[] vetDraw = item2.Split(':');
                                                     if (vetDraw.Length > 1)
@@ -1146,7 +1184,7 @@ namespace BillsOfMaterial_App
                                             window.txtObs.Text = vetObs[1];
                                         }
                                     }
-                                    if (item.Contains("Imagem:"))
+                                    if (item.Contains("Imagem="))
                                     {
                                         string[] vetDraw = item.Split(':');
                                         if (vetDraw.Length > 1)
