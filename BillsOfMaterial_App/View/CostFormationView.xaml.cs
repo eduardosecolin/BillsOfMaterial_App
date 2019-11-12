@@ -29,10 +29,11 @@ namespace BillsOfMaterial_App.View
         ItemsService serviceItem;
         WorkersService serviceWorkers;
         OPFamilyService familyService;
+        CompanyService companyService;
         private string pathFile1 = string.Empty;
         private string pathFile2 = string.Empty;
         private string pathFile3 = string.Empty;
-        public int positionLine;
+        public int? positionLine;
 
         public CostFormationView()
         {
@@ -43,6 +44,7 @@ namespace BillsOfMaterial_App.View
             serviceOp = new OperationService();
             serviceWorkers = new WorkersService();
             familyService = new OPFamilyService();
+            companyService = new CompanyService();
         }
 
         #region Preview text input regex
@@ -178,26 +180,35 @@ namespace BillsOfMaterial_App.View
                 }
 
 
-                // calculo da formação de custo               
+                // calculo da formação de custo      
                 int id = Convert.ToInt32(txtCustQuotaId.Text);
                 string item = cbItemGrid.Text;
-                double? unitValue = serviceCQ.GetUnitValueItem(id, positionLine);
+                positionLine = serviceCQ.GetPositionLine(id, item);
+                double? unitValue = serviceCQ.GetUnitValueItem(id, Convert.ToInt32(positionLine));
                 double?[] vet = CalculateOperations(id, item);
                 unitValue += CalculateComponents(id, item) + vet[0] + vet[1];
                 double? costValue = CalculateFieldsView(Convert.ToDouble(unitValue));
-                serviceCQ.UpdateCostFormationCustQuatas(id, positionLine, costValue);
-                MessageBox.Show($"Formação de Custo (R$ { Math.Round(Convert.ToDouble(costValue), 2) }) e Simulação de Engenharia de Produtos salva com sucesso!",
-                    "Informação", MessageBoxButton.OK, MessageBoxImage.Information);
-                MessageBoxResult resultDialog = MessageBox.Show("Deseja realizar outra simulação?", "Pergunta",
-                    MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (resultDialog == MessageBoxResult.Yes)
+                if (serviceCQ.UpdateCostFormationCustQuatas(id, Convert.ToInt32(positionLine), costValue))
                 {
-                    ClearFields();
+                    MessageBox.Show($"Formação de Custo (R$ { Math.Round(Convert.ToDouble(costValue), 2) }) e Simulação de Engenharia de Produtos salva com sucesso!",
+                          "Informação", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBoxResult resultDialog = MessageBox.Show("Deseja realizar outra simulação?", "Pergunta",
+                        MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (resultDialog == MessageBoxResult.Yes)
+                    {
+                        ClearFields();
+                    }
+                    else
+                    {
+                        Environment.Exit(0);
+                    }
                 }
                 else
                 {
-                    Environment.Exit(0);
+                    MessageBox.Show("Não existe dados!", "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
                 }
+
             }
             catch (Exception ex)
             {
@@ -396,8 +407,8 @@ namespace BillsOfMaterial_App.View
                 double cofins = (!string.IsNullOrEmpty(txtCofins.Text)) ? (costValue / 100) * Convert.ToDouble(txtCofins.Text) : 0;
                 double icms = (!string.IsNullOrEmpty(txtIcms.Text)) ? (costValue / 100) * Convert.ToDouble(txtIcms.Text) : 0;
                 double ipi = (!string.IsNullOrEmpty(txtIpi.Text)) ? (costValue / 100) * Convert.ToDouble(txtIpi.Text) : 0;
-                double df = (!string.IsNullOrEmpty(txtFixedExpenses.Text)) ? (costValue / 100) * Convert.ToDouble(txtFixedExpenses.Text) : 0;
-                double dv = (!string.IsNullOrEmpty(txtVariableExpenses.Text)) ? (costValue / 100) * Convert.ToDouble(txtVariableExpenses.Text) : 0;
+                double df = (!string.IsNullOrEmpty(txtFixedExpenses.Text)) ? Convert.ToDouble(txtFixedExpenses.Text) : 0;
+                double dv = (!string.IsNullOrEmpty(txtVariableExpenses.Text)) ? Convert.ToDouble(txtVariableExpenses.Text) : 0;
                 double margin = (!string.IsNullOrEmpty(txtMargin.Text)) ? (costValue / 100) * Convert.ToDouble(txtMargin.Text) : 0;
                 double variableMargin = (!string.IsNullOrEmpty(txtVariableMargin.Text)) ? (costValue / 100) * Convert.ToDouble(txtVariableMargin.Text) : 0;
                 double iss = (!string.IsNullOrEmpty(txtISS.Text)) ? (costValue / 100) * Convert.ToDouble(txtISS.Text) : 0;
@@ -413,9 +424,9 @@ namespace BillsOfMaterial_App.View
                     df +
                     dv +
                     margin +
-                    variableMargin+
-                    iss+
-                    ir+
+                    variableMargin +
+                    iss +
+                    ir +
                     csll
                     );
             }
@@ -477,8 +488,11 @@ namespace BillsOfMaterial_App.View
                     txtISS.Text = vet[4].ToString();
                     txtIR.Text = vet[5].ToString();
                     txtCSLL.Text = vet[6].ToString();
+                    LoadDFDV();
+                    CalculateMarkup(Convert.ToInt32(txtCustQuotaId.Text), cbItemGrid.Text);
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -486,7 +500,7 @@ namespace BillsOfMaterial_App.View
 
         private void CbItemGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            positionLine = cbItemGrid.SelectedIndex + 1;
+            // positionLine = cbItemGrid.SelectedIndex + 1;
 
         }
 
@@ -544,6 +558,58 @@ namespace BillsOfMaterial_App.View
         {
             Regex regex = new Regex("[^0-9,]+");
             e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void LoadDFDV()
+        {
+            try
+            {
+                txtFixedExpenses.Text = companyService.GetFixedExpenses().ToString();
+                txtVariableExpenses.Text = companyService.GetVariableExpenses().ToString();
+            }
+            catch (Exception)
+            {
+
+                MessageBox.Show("Erro ao consultar despesas fixas e variaveis", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void CalculateMarkup(int id, string item)
+        {
+            try
+            {
+                int? position = serviceCQ.GetPositionLine(id, item);
+                double? unitvalue = serviceCQ.GetUnitValueItem(id, Convert.ToInt32(position));
+                double? margin = (!string.IsNullOrEmpty(txtMargin.Text)) ? (unitvalue / 100) * Convert.ToDouble(txtMargin.Text) : 0;
+                double df = (!string.IsNullOrEmpty(txtFixedExpenses.Text)) ? Convert.ToDouble(txtFixedExpenses.Text) : 0;
+                double dv = (!string.IsNullOrEmpty(txtVariableExpenses.Text)) ? Convert.ToDouble(txtVariableExpenses.Text) : 0;
+                double sum = (df + dv + Convert.ToDouble(margin));
+                double sub = (100 - sum);
+                double markup = (100 / sub);
+
+                txtMarkup.Text = Math.Round(markup, 4).ToString();
+
+                double totalMarkup = (Convert.ToDouble(unitvalue) * markup);
+
+                txtTotalMarkup.Text = Math.Round(totalMarkup, 2).ToString();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void TxtMargin_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CalculateMarkup(Convert.ToInt32(txtCustQuotaId.Text), cbItemGrid.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao calcular Markup" + "\n" + ex.InnerException.Message,
+                    "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

@@ -57,6 +57,9 @@ namespace BillsOfMaterial_App.Model
         [StringLength(50)]
         public string TecConclusion { get; set; }
 
+        [StringLength(500)]
+        public string TecConclusion2 { get; set; }
+
         public DateTime TBCreated { get; set; }
 
         public DateTime TBModified { get; set; }

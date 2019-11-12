@@ -28,7 +28,7 @@
             IsReadOnly="True"
             TabIndex="1"
             Width="210" Height="39" LostFocus="CbItemGrid_LostFocus" SelectionChanged="CbItemGrid_SelectionChanged"/>
-        <TreeView HorizontalAlignment="Left" Visibility="Hidden" BorderBrush="DarkCyan" BorderThickness="1,1,1,1" x:Name="tvBOM" Height="429" Margin="34,145,0,0" VerticalAlignment="Top" Width="1284" MouseDoubleClick="TvBOM_MouseDoubleClick" MouseRightButtonDown="TvBOM_MouseRightButtonDown">
+        <TreeView HorizontalAlignment="Left" Visibility="Hidden" BorderBrush="DarkCyan" BorderThickness="1,1,1,1" x:Name="tvBOM" Height="397" Margin="34,129,0,0" VerticalAlignment="Top" Width="1284" MouseDoubleClick="TvBOM_MouseDoubleClick" MouseRightButtonDown="TvBOM_MouseRightButtonDown">
             <TreeViewItem IsExpanded="True">
                 <TreeViewItem.Header>
                     <StackPanel Orientation="Horizontal">
@@ -109,20 +109,7 @@
                 <TextBlock Margin="8 0 0 0"><Run Text="Salvar Simulação"/></TextBlock>
             </StackPanel>
         </Button>
-        <Rectangle HorizontalAlignment="Left" Height="517" Margin="10,121,0,0" Stroke="DarkCyan" VerticalAlignment="Top" Width="1338"/>
-        <TextBox 
-            x:Name="txtTecConclusion"
-            Visibility="Hidden"
-            HorizontalAlignment="Left"
-            Height="42"
-            TextWrapping="Wrap"
-            VerticalAlignment="Top"
-            Width="317"
-            materialDesign:HintAssist.Hint="Conclusão tecnica" 
-            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-            FontFamily="champagne &amp; Limousines"
-            FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="50" TabIndex="14" Margin="1001,584,0,0"/>
+        <Rectangle HorizontalAlignment="Left" Height="521" Margin="10,117,0,0" Stroke="DarkCyan" VerticalAlignment="Top" Width="1338" RenderTransformOrigin="0.5,0.5"/>
         <Button x:Name="btnRegisterItems" 
             Cursor="Hand" 
             IsEnabled="True" 
@@ -133,5 +120,19 @@
                 <TextBlock Margin="8 0 0 0"><Run Text="Gerenciar Itens"/></TextBlock>
             </StackPanel>
         </Button>
+        <TextBox 
+            x:Name="txtTecConclusion" 
+            HorizontalAlignment="Left"
+            Visibility="Hidden"
+            Width="771" 
+            Height="86" 
+            Margin="547,540,0,0" 
+            TextWrapping="Wrap" 
+            VerticalAlignment="Top" 
+            materialDesign:HintAssist.Hint="Conclusão Tecnica" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+            FontFamily="champagne &amp; Limousines" 
+            FontSize="14" Foreground="#FF060606" 
+            TabIndex="1" MaxLength="500" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" AcceptsReturn="True"/>
     </Grid>
 </Window>

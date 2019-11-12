@@ -74,6 +74,7 @@
     <Compile Include="Model\MA_BillOfMaterialsTools.cs" />
     <Compile Include="Model\MA_BOMLabour.cs" />
     <Compile Include="Model\MA_BRNCM.cs" />
+    <Compile Include="Model\MA_Company.cs" />
     <Compile Include="Model\MA_CostCenters.cs" />
     <Compile Include="Model\MA_CustQuotas.cs" />
     <Compile Include="Model\MA_CustQuotasDetail.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Model\RM_WorkersDetails.cs" />
     <Compile Include="Model\RM_WorkersFields.cs" />
     <Compile Include="Service\BOMService.cs" />
+    <Compile Include="Service\CompanyService.cs" />
     <Compile Include="Service\CQBOMService.cs" />
     <Compile Include="Service\CustQuotaCompOpService.cs" />
     <Compile Include="Service\CustQuotasService.cs" />

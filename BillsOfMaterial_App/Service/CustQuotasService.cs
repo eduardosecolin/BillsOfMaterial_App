@@ -52,7 +52,7 @@ namespace BillsOfMaterial_App.Service
             }
         }
 
-        public void UpdateCostFormationCustQuatas(int id, int position, double? costValue)
+        public bool UpdateCostFormationCustQuatas(int id, int position, double? costValue)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace BillsOfMaterial_App.Service
                     {
                         MessageBox.Show("O valor de formação de custo é NaN (Not a NUmber) revise o calculo!",
                             "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
+                        return false;
                     }
                     else
                     {
@@ -72,6 +72,11 @@ namespace BillsOfMaterial_App.Service
 
                     _context.MA_CustQuotasDetail.AddOrUpdate(sql);
                     _context.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
             catch (Exception ex)
@@ -97,6 +102,19 @@ namespace BillsOfMaterial_App.Service
             else
             {
                 return false;
+            }
+        }
+
+        public int? GetPositionLine(int id, string item)
+        {
+            var sql = _context.MA_CustQuotasDetail.Where(x => x.CustQuotaId == id && x.Item == item.Trim()).FirstOrDefault();
+            if(sql != null)
+            {
+                return sql.Position;
+            }
+            else
+            {
+                return 0;
             }
         }
     }

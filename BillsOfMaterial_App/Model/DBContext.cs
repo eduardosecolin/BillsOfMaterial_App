@@ -56,6 +56,7 @@ namespace BillsOfMaterial_App.Model
         public virtual DbSet<MA_DrawingsDescription> MA_DrawingsDescription { get; set; }
         public virtual DbSet<MA_BRNCM> MA_BRNCM { get; set; }
         public virtual DbSet<MA_UnitsOfMeasure> MA_UnitsOfMeasure { get; set; }
+        public virtual DbSet<MA_Company> MA_Company { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -85,6 +86,10 @@ namespace BillsOfMaterial_App.Model
 
             modelBuilder.Entity<MA_BillOfMaterials>()
                 .Property(e => e.TecConclusion)
+                .IsFixedLength();
+
+            modelBuilder.Entity<MA_BillOfMaterials>()
+                .Property(e => e.TecConclusion2)
                 .IsFixedLength();
 
             modelBuilder.Entity<MA_BillOfMaterials>()
@@ -286,6 +291,10 @@ namespace BillsOfMaterial_App.Model
 
             modelBuilder.Entity<CS_CustQuotasComponent>()
                .Property(e => e.TecConclusion)
+               .IsFixedLength();
+
+            modelBuilder.Entity<CS_CustQuotasComponent>()
+               .Property(e => e.TecConclusion2)
                .IsFixedLength();
 
             modelBuilder.Entity<CS_CustQuotasComponent>()

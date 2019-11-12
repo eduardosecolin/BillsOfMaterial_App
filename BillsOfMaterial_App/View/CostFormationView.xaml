@@ -75,7 +75,7 @@
             TextWrapping="Wrap"
             VerticalAlignment="Top"
             Width="150"
-            materialDesign:HintAssist.Hint="Despesas Fixas %" 
+            materialDesign:HintAssist.Hint="Despesas Fixas R$" 
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
@@ -87,7 +87,7 @@
             TextWrapping="Wrap"
             VerticalAlignment="Top"
             Width="150"
-            materialDesign:HintAssist.Hint="Despesas Variaveis %" 
+            materialDesign:HintAssist.Hint="Despesas Variaveis R$" 
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
@@ -157,7 +157,7 @@
             Height="53" Width="80" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnFile3_Click">
             <materialDesign:PackIcon Foreground="#FF00BCD4" Height="29" Width="27" Kind="FileImport"/>
         </Button>
-        <Button x:Name="btnSaveAll" Cursor="Hand" HorizontalAlignment="Left" Margin="94,402,0,0" VerticalAlignment="Top" Width="497" Height="40" Click="BtnSaveAll_Click">
+        <Button x:Name="btnSaveAll" Cursor="Hand" HorizontalAlignment="Left" Margin="94,452,0,0" VerticalAlignment="Top" Width="497" Height="40" Click="BtnSaveAll_Click">
             <StackPanel Orientation="Horizontal">
                 <materialDesign:PackIcon Kind="ContentSave" />
                 <TextBlock Margin="8 0 0 0"><Run Text="Salvar formação de custo"/></TextBlock>
@@ -174,7 +174,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="8" Margin="265,253,0,0" PreviewTextInput="TxtMargin_PreviewTextInput" IsEnabled="False"/>
+            MaxLength="10" TabIndex="8" Margin="265,253,0,0" PreviewTextInput="TxtMargin_PreviewTextInput" IsEnabled="False" LostFocus="TxtMargin_LostFocus"/>
         <TextBox 
             x:Name="txtVariableMargin"
             HorizontalAlignment="Left"
@@ -259,6 +259,30 @@
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
             MaxLength="10" TabIndex="12" Margin="441,300,0,0" IsEnabled="False" PreviewTextInput="TxtCSLL_PreviewTextInput"/>
+        <TextBox 
+            x:Name="txtMarkup"
+            HorizontalAlignment="Left"
+            Height="42"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="150"
+            materialDesign:HintAssist.Hint="Markup" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            MaxLength="10" TabIndex="13" Margin="94,366,0,0" IsEnabled="False"/>
+        <TextBox 
+            x:Name="txtTotalMarkup"
+            HorizontalAlignment="Left"
+            Height="42"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="150"
+            materialDesign:HintAssist.Hint="Total Markup" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            MaxLength="10" TabIndex="13" Margin="441,366,0,0" IsEnabled="False"/>
 
     </Grid>
 </Window>
