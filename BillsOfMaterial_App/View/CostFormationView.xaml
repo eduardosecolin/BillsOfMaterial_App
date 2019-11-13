@@ -19,7 +19,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="1" Margin="94,159,0,0" PreviewTextInput="TxtFreightValue_PreviewTextInput" IsEnabled="False"/>
+            MaxLength="10" TabIndex="1" Margin="94,159,0,0" PreviewTextInput="TxtFreightValue_PreviewTextInput" IsEnabled="False" LostFocus="TxtFreightValue_LostFocus"/>
         <TextBox 
             x:Name="txtPis"
             HorizontalAlignment="Left"
@@ -31,7 +31,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="2" Margin="265,159,0,0" PreviewTextInput="TxtPis_PreviewTextInput" IsEnabled="False"/>
+            MaxLength="10" TabIndex="2" Margin="265,159,0,0" PreviewTextInput="TxtPis_PreviewTextInput" IsEnabled="False" LostFocus="TxtPis_LostFocus"/>
         <TextBox 
             x:Name="txtCofins"
             HorizontalAlignment="Left"
@@ -43,7 +43,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="3" Margin="441,159,0,0" PreviewTextInput="TxtCofins_PreviewTextInput" IsEnabled="False"/>
+            MaxLength="10" TabIndex="3" Margin="441,159,0,0" PreviewTextInput="TxtCofins_PreviewTextInput" IsEnabled="False" LostFocus="TxtCofins_LostFocus"/>
         <TextBox 
             x:Name="txtIcms"
             HorizontalAlignment="Left"
@@ -55,7 +55,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="4" Margin="94,206,0,0" PreviewTextInput="TxtIcms_PreviewTextInput" IsEnabled="False" />
+            MaxLength="10" TabIndex="4" Margin="94,206,0,0" PreviewTextInput="TxtIcms_PreviewTextInput" IsEnabled="False" LostFocus="TxtIcms_LostFocus" />
         <TextBox 
             x:Name="txtIpi"
             HorizontalAlignment="Left"
@@ -67,7 +67,19 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="5" Margin="265,206,0,0" PreviewTextInput="TxtIpi_PreviewTextInput" IsEnabled="False"/>
+            MaxLength="10" TabIndex="5" Margin="265,206,0,0" PreviewTextInput="TxtIpi_PreviewTextInput" IsEnabled="False" LostFocus="TxtIpi_LostFocus"/>
+        <TextBox 
+            x:Name="txtComissions"
+            HorizontalAlignment="Left"
+            Height="42"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="150"
+            materialDesign:HintAssist.Hint="Comissões %" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            MaxLength="10" TabIndex="6" Margin="441,206,0,0" PreviewTextInput="TxtFixedExpenses_PreviewTextInput" LostFocus="TxtComissions_LostFocus"/>
         <TextBox 
             x:Name="txtFixedExpenses"
             HorizontalAlignment="Left"
@@ -75,23 +87,11 @@
             TextWrapping="Wrap"
             VerticalAlignment="Top"
             Width="150"
-            materialDesign:HintAssist.Hint="Despesas Fixas R$" 
+            materialDesign:HintAssist.Hint="Despesas Fixas %" 
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="6" Margin="441,206,0,0" PreviewTextInput="TxtFixedExpenses_PreviewTextInput" IsEnabled="False"/>
-        <TextBox 
-            x:Name="txtVariableExpenses"
-            HorizontalAlignment="Left"
-            Height="42"
-            TextWrapping="Wrap"
-            VerticalAlignment="Top"
-            Width="150"
-            materialDesign:HintAssist.Hint="Despesas Variaveis R$" 
-            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-            FontFamily="champagne &amp; Limousines"
-            FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="7" Margin="94,253,0,0" PreviewTextInput="TxtVariableExpenses_PreviewTextInput" IsEnabled="False"/>
+            MaxLength="10" TabIndex="7" Margin="94,253,0,0" PreviewTextInput="TxtVariableExpenses_PreviewTextInput" IsEnabled="False" LostFocus="TxtFixedExpenses_LostFocus"/>
         <TextBox 
             Visibility="Hidden"
             x:Name="txtPathFile1"
@@ -234,7 +234,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="10" Margin="94,300,0,0" IsEnabled="False" PreviewTextInput="TxtISS_PreviewTextInput"/>
+            MaxLength="10" TabIndex="10" Margin="94,300,0,0" IsEnabled="False" PreviewTextInput="TxtISS_PreviewTextInput" LostFocus="TxtISS_LostFocus"/>
         <TextBox 
             x:Name="txtIR"
             HorizontalAlignment="Left"
@@ -246,7 +246,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="11" Margin="265,300,0,0" IsEnabled="False" PreviewTextInput="TxtIR_PreviewTextInput"/>
+            MaxLength="10" TabIndex="11" Margin="265,300,0,0" IsEnabled="False" PreviewTextInput="TxtIR_PreviewTextInput" LostFocus="TxtIR_LostFocus"/>
         <TextBox 
             x:Name="txtCSLL"
             HorizontalAlignment="Left"
@@ -258,7 +258,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="12" Margin="441,300,0,0" IsEnabled="False" PreviewTextInput="TxtCSLL_PreviewTextInput"/>
+            MaxLength="10" TabIndex="12" Margin="441,300,0,0" IsEnabled="False" PreviewTextInput="TxtCSLL_PreviewTextInput" LostFocus="TxtCSLL_LostFocus"/>
         <TextBox 
             x:Name="txtMarkup"
             HorizontalAlignment="Left"
@@ -282,7 +282,19 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="13" Margin="441,366,0,0" IsEnabled="False"/>
+            MaxLength="10" TabIndex="13" Margin="265,366,0,0" IsEnabled="False"/>
+        <TextBox 
+            x:Name="txtVariableExpenses"
+            HorizontalAlignment="Left"
+            Height="42"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="150"
+            materialDesign:HintAssist.Hint="Despesas Variaveis R$" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            MaxLength="10" TabIndex="15" Margin="441,366,0,0" PreviewTextInput="TxtFixedExpenses_PreviewTextInput" IsEnabled="False"/>
 
     </Grid>
 </Window>

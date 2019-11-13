@@ -117,7 +117,7 @@ namespace BillsOfMaterial_App.Service
             var sql = _context.MA_Items.Where(x => x.Item == item).FirstOrDefault();
             if(sql != null)
             {
-                return new double?[] { sql.PIS, sql.COFINS, sql.ICMS, sql.IPI, sql.ISS, sql.IR, sql.CSLL };
+                return new double?[] { sql.PIS, sql.COFINS, sql.ICMS, sql.IPI, sql.ISS, sql.IR, sql.CSLL, sql.COMISSION };
             }
             else
             {

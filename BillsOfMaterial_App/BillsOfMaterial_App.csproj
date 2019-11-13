@@ -64,6 +64,7 @@
     <Compile Include="Model\CS_CQSubBOM.cs" />
     <Compile Include="Model\CS_CustQuotasComponent.cs" />
     <Compile Include="Model\CS_CustQuotasOperation.cs" />
+    <Compile Include="Model\CS_DBDefaultOBS.cs" />
     <Compile Include="Model\DBContext.cs" />
     <Compile Include="Model\MA_BillOfMaterials.cs" />
     <Compile Include="Model\MA_BillOfMaterialsComp.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="Service\CQBOMService.cs" />
     <Compile Include="Service\CustQuotaCompOpService.cs" />
     <Compile Include="Service\CustQuotasService.cs" />
+    <Compile Include="Service\DefaultObsService.cs" />
     <Compile Include="Service\DrawingService.cs" />
     <Compile Include="Service\ItemsService.cs" />
     <Compile Include="Service\NCMService.cs" />
@@ -126,6 +128,9 @@
     </Compile>
     <Compile Include="View\CostFormationView.xaml.cs">
       <DependentUpon>CostFormationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DefaultOBSView.xaml.cs">
+      <DependentUpon>DefaultOBSView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\DrawingView.xaml.cs">
       <DependentUpon>DrawingView.xaml</DependentUpon>
@@ -175,6 +180,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\CostFormationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DefaultOBSView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

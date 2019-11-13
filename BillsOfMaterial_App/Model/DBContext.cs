@@ -57,9 +57,18 @@ namespace BillsOfMaterial_App.Model
         public virtual DbSet<MA_BRNCM> MA_BRNCM { get; set; }
         public virtual DbSet<MA_UnitsOfMeasure> MA_UnitsOfMeasure { get; set; }
         public virtual DbSet<MA_Company> MA_Company { get; set; }
+        public virtual DbSet<CS_DBDefaultOBS> CS_DBDefaultOBS { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<CS_DBDefaultOBS>()
+                .Property(e => e.Title)
+                .IsFixedLength();
+
+            modelBuilder.Entity<CS_DBDefaultOBS>()
+                .Property(e => e.Observation)
+                .IsFixedLength();
+
             modelBuilder.Entity<MA_BillOfMaterials>()
                 .Property(e => e.UsePercQty)
                 .IsFixedLength();

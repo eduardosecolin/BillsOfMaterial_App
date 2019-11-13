@@ -66,6 +66,8 @@ namespace BillsOfMaterial_App.Model
 
         public double? CSLL { get; set; }
 
+        public double? COMISSION { get; set; }
+
         [StringLength(8)]
         public string ItemType { get; set; }
 

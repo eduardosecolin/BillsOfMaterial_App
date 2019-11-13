@@ -99,7 +99,7 @@ namespace BillsOfMaterial_App.View
                         var treeview = _mainWindow.tvBOM.SelectedItem as TreeViewItem;
                         if(treeview != null)
                         {
-                            treeview.Header = txtOperation.Text.Replace("|", "") + " | " + operationService.GetDescriptionOp(txtOperation.Text) + "| " + "Tempo de Processamento = " + Convert.ToDateTime(dpTimeProcess.SelectedTime.ToString()).ToString("HH:mm") + "| OBS: " + txtObs.Text.Replace("|", "");
+                            treeview.Header = txtOperation.Text.Replace("|", "") + " | " + operationService.GetDescriptionOp(txtOperation.Text) + "| " + "Tempo de Processamento = " + Convert.ToDateTime(dpTimeProcess.Text).ToString("HH:mm") + "| OBS: " + txtObs.Text.Replace("|", "");
                             this.Close();
                         }
                     }
@@ -172,6 +172,12 @@ namespace BillsOfMaterial_App.View
             }
 
             return true;
+        }
+
+        private void BtnAddOBS_Click(object sender, RoutedEventArgs e)
+        {
+            DefaultOBSView window = new DefaultOBSView(this);
+            window.Show();
         }
     }
 }

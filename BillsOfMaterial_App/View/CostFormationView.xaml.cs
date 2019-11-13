@@ -34,6 +34,7 @@ namespace BillsOfMaterial_App.View
         private string pathFile2 = string.Empty;
         private string pathFile3 = string.Empty;
         public int? positionLine;
+        double? unitValue;
 
         public CostFormationView()
         {
@@ -183,11 +184,10 @@ namespace BillsOfMaterial_App.View
                 // calculo da formação de custo      
                 int id = Convert.ToInt32(txtCustQuotaId.Text);
                 string item = cbItemGrid.Text;
-                positionLine = serviceCQ.GetPositionLine(id, item);
-                double? unitValue = serviceCQ.GetUnitValueItem(id, Convert.ToInt32(positionLine));
                 double?[] vet = CalculateOperations(id, item);
                 unitValue += CalculateComponents(id, item) + vet[0] + vet[1];
-                double? costValue = CalculateFieldsView(Convert.ToDouble(unitValue));
+                CalculateFieldsView(Convert.ToDouble(unitValue));
+                double? costValue = Convert.ToDouble(txtVariableExpenses.Text);
                 if (serviceCQ.UpdateCostFormationCustQuatas(id, Convert.ToInt32(positionLine), costValue))
                 {
                     MessageBox.Show($"Formação de Custo (R$ { Math.Round(Convert.ToDouble(costValue), 2) }) e Simulação de Engenharia de Produtos salva com sucesso!",
@@ -398,37 +398,39 @@ namespace BillsOfMaterial_App.View
             }
         }
 
-        private double CalculateFieldsView(double costValue)
+        private void CalculateFieldsView(double costValue)
         {
             try
             {
-                double freight = (!string.IsNullOrEmpty(txtFreightValue.Text)) ? Convert.ToDouble(txtFreightValue.Text) : 0;
+                double freight = (!string.IsNullOrEmpty(txtFreightValue.Text)) ? (costValue / 100) * Convert.ToDouble(txtFreightValue.Text) : 0;
                 double pis = (!string.IsNullOrEmpty(txtPis.Text)) ? (costValue / 100) * Convert.ToDouble(txtPis.Text) : 0;
                 double cofins = (!string.IsNullOrEmpty(txtCofins.Text)) ? (costValue / 100) * Convert.ToDouble(txtCofins.Text) : 0;
                 double icms = (!string.IsNullOrEmpty(txtIcms.Text)) ? (costValue / 100) * Convert.ToDouble(txtIcms.Text) : 0;
                 double ipi = (!string.IsNullOrEmpty(txtIpi.Text)) ? (costValue / 100) * Convert.ToDouble(txtIpi.Text) : 0;
-                double df = (!string.IsNullOrEmpty(txtFixedExpenses.Text)) ? Convert.ToDouble(txtFixedExpenses.Text) : 0;
-                double dv = (!string.IsNullOrEmpty(txtVariableExpenses.Text)) ? Convert.ToDouble(txtVariableExpenses.Text) : 0;
+                double df = (!string.IsNullOrEmpty(txtFixedExpenses.Text)) ? (costValue / 100) * Convert.ToDouble(txtFixedExpenses.Text) : 0;
+                double commision = (!string.IsNullOrEmpty(txtComissions.Text)) ? (costValue / 100) * Convert.ToDouble(txtComissions.Text) : 0;
                 double margin = (!string.IsNullOrEmpty(txtMargin.Text)) ? (costValue / 100) * Convert.ToDouble(txtMargin.Text) : 0;
                 double variableMargin = (!string.IsNullOrEmpty(txtVariableMargin.Text)) ? (costValue / 100) * Convert.ToDouble(txtVariableMargin.Text) : 0;
                 double iss = (!string.IsNullOrEmpty(txtISS.Text)) ? (costValue / 100) * Convert.ToDouble(txtISS.Text) : 0;
                 double ir = (!string.IsNullOrEmpty(txtIR.Text)) ? (costValue / 100) * Convert.ToDouble(txtIR.Text) : 0;
                 double csll = (!string.IsNullOrEmpty(txtCSLL.Text)) ? (costValue / 100) * Convert.ToDouble(txtCSLL.Text) : 0;
 
-                return costValue + (
+                double result = costValue + (
                     freight +
                     pis +
                     cofins +
                     icms +
                     ipi +
                     df +
-                    dv +
+                    commision +
                     margin +
                     variableMargin +
                     iss +
                     ir +
                     csll
                     );
+
+                txtVariableExpenses.Text = Math.Round(result, 2).ToString();
             }
             catch (Exception ex)
             {
@@ -488,9 +490,15 @@ namespace BillsOfMaterial_App.View
                     txtISS.Text = vet[4].ToString();
                     txtIR.Text = vet[5].ToString();
                     txtCSLL.Text = vet[6].ToString();
+                    txtComissions.Text = vet[7].ToString();
                     LoadDFDV();
                     CalculateMarkup(Convert.ToInt32(txtCustQuotaId.Text), cbItemGrid.Text);
                 }
+                int id = Convert.ToInt32(txtCustQuotaId.Text);
+                string item = cbItemGrid.Text;
+                positionLine = serviceCQ.GetPositionLine(id, item);
+                unitValue = serviceCQ.GetUnitValueItem(id, Convert.ToInt32(positionLine));
+                CalculateFieldsView(Convert.ToDouble(unitValue));
             }
             catch (Exception ex)
             {
@@ -565,7 +573,6 @@ namespace BillsOfMaterial_App.View
             try
             {
                 txtFixedExpenses.Text = companyService.GetFixedExpenses().ToString();
-                txtVariableExpenses.Text = companyService.GetVariableExpenses().ToString();
             }
             catch (Exception)
             {
@@ -599,11 +606,14 @@ namespace BillsOfMaterial_App.View
             }
         }
 
+        #region FIELDS LOST FOCUS
+
         private void TxtMargin_LostFocus(object sender, RoutedEventArgs e)
         {
             try
             {
                 CalculateMarkup(Convert.ToInt32(txtCustQuotaId.Text), cbItemGrid.Text);
+                CalculateFieldsView(Convert.ToDouble(unitValue));
             }
             catch (Exception ex)
             {
@@ -611,5 +621,57 @@ namespace BillsOfMaterial_App.View
                     "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void TxtFreightValue_LostFocus(object sender, RoutedEventArgs e)
+        {
+            CalculateFieldsView(Convert.ToDouble(unitValue));
+        }
+
+        private void TxtPis_LostFocus(object sender, RoutedEventArgs e)
+        {
+            CalculateFieldsView(Convert.ToDouble(unitValue));
+        }
+
+        private void TxtCofins_LostFocus(object sender, RoutedEventArgs e)
+        {
+            CalculateFieldsView(Convert.ToDouble(unitValue));
+        }
+
+        private void TxtIcms_LostFocus(object sender, RoutedEventArgs e)
+        {
+            CalculateFieldsView(Convert.ToDouble(unitValue));
+        }
+
+        private void TxtIpi_LostFocus(object sender, RoutedEventArgs e)
+        {
+            CalculateFieldsView(Convert.ToDouble(unitValue));
+        }
+
+        private void TxtComissions_LostFocus(object sender, RoutedEventArgs e)
+        {
+            CalculateFieldsView(Convert.ToDouble(unitValue));
+        }
+
+        private void TxtFixedExpenses_LostFocus(object sender, RoutedEventArgs e)
+        {
+            CalculateFieldsView(Convert.ToDouble(unitValue));
+        }
+
+        private void TxtISS_LostFocus(object sender, RoutedEventArgs e)
+        {
+            CalculateFieldsView(Convert.ToDouble(unitValue));
+        }
+
+        private void TxtIR_LostFocus(object sender, RoutedEventArgs e)
+        {
+            CalculateFieldsView(Convert.ToDouble(unitValue));
+        }
+
+        private void TxtCSLL_LostFocus(object sender, RoutedEventArgs e)
+        {
+            CalculateFieldsView(Convert.ToDouble(unitValue));
+        }
+
+        #endregion
     }
 }
