@@ -1,4 +1,5 @@
-﻿using BillsOfMaterial_App.Model;
+﻿using BillsOfMaterial_App.AuxView;
+using BillsOfMaterial_App.Model;
 using BillsOfMaterial_App.Service;
 using System;
 using System.Collections.Generic;
@@ -21,10 +22,10 @@ namespace BillsOfMaterial_App.View
     /// </summary>
     public partial class DrawingView : Window
     {
-        MainWindow _window;
+        SimulationEDP _window;
         BOMService bomService;
 
-        public DrawingView(MainWindow window)
+        public DrawingView(SimulationEDP window)
         {
             InitializeComponent();
             _window = window;

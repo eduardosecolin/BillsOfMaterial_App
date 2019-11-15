@@ -47,6 +47,9 @@ namespace BillsOfMaterial_App.Model
         [StringLength(64)]
         public string Notes { get; set; }
 
+        [StringLength(2000)]
+        public string ImageReceivePath { get; set; }
+
         [StringLength(1)]
         public string InProduction { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using BillsOfMaterial_App.Model;
+﻿using BillsOfMaterial_App.AuxView;
+using BillsOfMaterial_App.Model;
 using BillsOfMaterial_App.Service;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
@@ -25,14 +26,14 @@ namespace BillsOfMaterial_App.View
     /// </summary>
     public partial class ItemsView : Window
     {
-        MainWindow _mainWindow;
+        SimulationEDP _mainWindow;
         ItemsService itemsService;
         private string description = string.Empty;
         public bool isEditmode = false;
         private bool isException = false;
         public string longPath = string.Empty;
 
-        public ItemsView(MainWindow window)
+        public ItemsView(SimulationEDP window)
         {
             InitializeComponent();
             _mainWindow = window;

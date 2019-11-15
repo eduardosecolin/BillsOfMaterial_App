@@ -52,7 +52,7 @@ namespace BillsOfMaterial_App
             CreateConstruction();
             try
             {
-                MainWindow window = new MainWindow();
+                Menu window = new Menu();
                 window.Show();
                 this.Hide();
                 Close();

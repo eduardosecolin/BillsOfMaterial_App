@@ -1,4 +1,5 @@
-﻿using BillsOfMaterial_App.Model;
+﻿using BillsOfMaterial_App.AuxView;
+using BillsOfMaterial_App.Model;
 using BillsOfMaterial_App.Service;
 using MaterialDesignThemes.Wpf;
 using System;
@@ -22,12 +23,12 @@ namespace BillsOfMaterial_App.View
     /// </summary>
     public partial class ImportBOMView : Window
     {
-        MainWindow _mainWindow;
+        SimulationEDP _mainWindow;
         BOMService bomService;
         ItemsService itemsService;
         OperationService opService;
 
-        public ImportBOMView(MainWindow mainWindow)
+        public ImportBOMView(SimulationEDP mainWindow)
         {
             InitializeComponent();
             _mainWindow = mainWindow;

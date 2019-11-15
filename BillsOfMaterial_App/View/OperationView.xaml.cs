@@ -1,4 +1,5 @@
-﻿using BillsOfMaterial_App.Model;
+﻿using BillsOfMaterial_App.AuxView;
+using BillsOfMaterial_App.Model;
 using BillsOfMaterial_App.Service;
 using System;
 using System.Collections.Generic;
@@ -21,13 +22,13 @@ namespace BillsOfMaterial_App.View
     /// </summary>
     public partial class OperationView : Window
     {
-        MainWindow _mainWindow;
+        SimulationEDP _mainWindow;
         OperationService operationService;
         private string description = string.Empty;
         public bool isEditmode = false;
         private bool isException = false;
 
-        public OperationView(MainWindow mainWindow)
+        public OperationView(SimulationEDP mainWindow)
         {
             InitializeComponent();
             _mainWindow = mainWindow;

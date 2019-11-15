@@ -1,4 +1,5 @@
-﻿using BillsOfMaterial_App.Model;
+﻿using BillsOfMaterial_App.AuxView;
+using BillsOfMaterial_App.Model;
 using BillsOfMaterial_App.Service;
 using System;
 using System.Collections.Generic;
@@ -21,11 +22,11 @@ namespace BillsOfMaterial_App.View
     /// </summary>
     public partial class OfferSearchView : Window
     {
-        MainWindow _mainWindow;
+        SimulationEDP _mainWindow;
         CostFormationView _viewCostFormation;
         CustQuotasService service;
 
-        public OfferSearchView(MainWindow mainWindow)
+        public OfferSearchView(SimulationEDP mainWindow)
         {
             InitializeComponent();
             _mainWindow = mainWindow;

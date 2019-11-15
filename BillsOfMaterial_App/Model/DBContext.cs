@@ -102,6 +102,10 @@ namespace BillsOfMaterial_App.Model
                 .IsFixedLength();
 
             modelBuilder.Entity<MA_BillOfMaterials>()
+                .Property(e => e.ImageReceivePath)
+                .IsFixedLength();
+
+            modelBuilder.Entity<MA_BillOfMaterials>()
                 .HasMany(e => e.MA_BillOfMaterialsComp)
                 .WithRequired(e => e.MA_BillOfMaterials)
                 .WillCascadeOnDelete(false);

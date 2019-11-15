@@ -625,51 +625,61 @@ namespace BillsOfMaterial_App.View
         private void TxtFreightValue_LostFocus(object sender, RoutedEventArgs e)
         {
             CalculateFieldsView(Convert.ToDouble(unitValue));
+            CalculateMarkup(Convert.ToInt32(txtCustQuotaId.Text), cbItemGrid.Text);
         }
 
         private void TxtPis_LostFocus(object sender, RoutedEventArgs e)
         {
             CalculateFieldsView(Convert.ToDouble(unitValue));
+            CalculateMarkup(Convert.ToInt32(txtCustQuotaId.Text), cbItemGrid.Text);
         }
 
         private void TxtCofins_LostFocus(object sender, RoutedEventArgs e)
         {
             CalculateFieldsView(Convert.ToDouble(unitValue));
+            CalculateMarkup(Convert.ToInt32(txtCustQuotaId.Text), cbItemGrid.Text);
         }
 
         private void TxtIcms_LostFocus(object sender, RoutedEventArgs e)
         {
             CalculateFieldsView(Convert.ToDouble(unitValue));
+            CalculateMarkup(Convert.ToInt32(txtCustQuotaId.Text), cbItemGrid.Text);
         }
 
         private void TxtIpi_LostFocus(object sender, RoutedEventArgs e)
         {
             CalculateFieldsView(Convert.ToDouble(unitValue));
+            CalculateMarkup(Convert.ToInt32(txtCustQuotaId.Text), cbItemGrid.Text);
         }
 
         private void TxtComissions_LostFocus(object sender, RoutedEventArgs e)
         {
             CalculateFieldsView(Convert.ToDouble(unitValue));
+            CalculateMarkup(Convert.ToInt32(txtCustQuotaId.Text), cbItemGrid.Text);
         }
 
         private void TxtFixedExpenses_LostFocus(object sender, RoutedEventArgs e)
         {
             CalculateFieldsView(Convert.ToDouble(unitValue));
+            CalculateMarkup(Convert.ToInt32(txtCustQuotaId.Text), cbItemGrid.Text);
         }
 
         private void TxtISS_LostFocus(object sender, RoutedEventArgs e)
         {
             CalculateFieldsView(Convert.ToDouble(unitValue));
+            CalculateMarkup(Convert.ToInt32(txtCustQuotaId.Text), cbItemGrid.Text);
         }
 
         private void TxtIR_LostFocus(object sender, RoutedEventArgs e)
         {
             CalculateFieldsView(Convert.ToDouble(unitValue));
+            CalculateMarkup(Convert.ToInt32(txtCustQuotaId.Text), cbItemGrid.Text);
         }
 
         private void TxtCSLL_LostFocus(object sender, RoutedEventArgs e)
         {
             CalculateFieldsView(Convert.ToDouble(unitValue));
+            CalculateMarkup(Convert.ToInt32(txtCustQuotaId.Text), cbItemGrid.Text);
         }
 
         #endregion
