@@ -113,6 +113,10 @@ namespace BillsOfMaterial_App.Service
                     comp.Description = item.Description.Trim();
                     comp.UoM = item.UoM.Trim();
                     comp.Qty = item.Qty;
+                    comp.Drawing = item.PathFile1;
+                    comp.TempDrawing = item.Drawing;
+                    comp.PathFile = item.PathFile2;
+                    comp.CompTecConclusion = item.TecConclusion2;
                     if(item.Obs == null)
                     {
                         comp.Notes = string.Empty;
@@ -145,7 +149,7 @@ namespace BillsOfMaterial_App.Service
                     TimeSpan ts = new TimeSpan(Convert.ToInt32(vTime[0]), Convert.ToInt32(vTime[1]), 0);
                     double result = ts.TotalMilliseconds;
                     op.ProcessingTime = Convert.ToInt32(result.ToString().Substring(0, result.ToString().Length - 3)); ;
-                    if (item.Obs == null)
+                    if (string.IsNullOrEmpty(item.Obs))
                     {
                         op.Notes = string.Empty;
                     }

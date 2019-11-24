@@ -58,6 +58,7 @@ namespace BillsOfMaterial_App.Model
         public virtual DbSet<MA_UnitsOfMeasure> MA_UnitsOfMeasure { get; set; }
         public virtual DbSet<MA_Company> MA_Company { get; set; }
         public virtual DbSet<CS_DBDefaultOBS> CS_DBDefaultOBS { get; set; }
+        public virtual DbSet<CS_UserManager> CS_UserManager { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -127,6 +128,18 @@ namespace BillsOfMaterial_App.Model
             modelBuilder.Entity<MA_BillOfMaterialsComp>()
                 .Property(e => e.FixedComponent)
                 .IsFixedLength();
+
+            modelBuilder.Entity<MA_BillOfMaterialsComp>()
+               .Property(e => e.TempDrawing)
+               .IsFixedLength();
+
+            modelBuilder.Entity<MA_BillOfMaterialsComp>()
+               .Property(e => e.PathFile)
+               .IsFixedLength();
+
+            modelBuilder.Entity<MA_BillOfMaterialsComp>()
+               .Property(e => e.CompTecConclusion)
+               .IsFixedLength();
 
             modelBuilder.Entity<MA_BillOfMaterialsComp>()
                 .Property(e => e.ToExplode)
@@ -284,6 +297,14 @@ namespace BillsOfMaterial_App.Model
 
             modelBuilder.Entity<MA_CustQuotasDetail>()
                 .Property(e => e.InEI)
+                .IsFixedLength();
+
+            modelBuilder.Entity<CS_UserManager>()
+                .Property(e => e.UserName)
+                .IsFixedLength();
+
+            modelBuilder.Entity<CS_UserManager>()
+                .Property(e => e.Password)
                 .IsFixedLength();
 
             modelBuilder.Entity<CS_CustQuotasComponent>()

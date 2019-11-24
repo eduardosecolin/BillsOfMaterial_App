@@ -24,7 +24,7 @@ namespace BillsOfMaterial_App.Service
             }
             else
             {
-                return _context.CS_DBDefaultOBS.Where(x => x.Title == param).ToList();
+                return _context.CS_DBDefaultOBS.Where(x => x.Title.Contains(param)).ToList();
             }
         }
     }

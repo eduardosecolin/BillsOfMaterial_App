@@ -40,7 +40,7 @@ namespace BillsOfMaterial_App.Service
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 var result = cmd.ExecuteScalar();
                 int line = 0;
-                if(result != null)
+                if (result != null)
                 {
                     line = Convert.ToInt32(result.ToString());
                 }
@@ -104,13 +104,40 @@ namespace BillsOfMaterial_App.Service
 
         public List<CS_CustQuotasOperation> GetSimulationOperations2(int id, string item)
         {
-            return _context.CS_CustQuotasOperation.Where(x => x.Id == id && x.BOM == item).ToList();
+            //return _context.CS_CustQuotasOperation.Where(x => x.Id == id && x.BOM == item).ToList();
+            try
+            {
+                List<CS_CustQuotasOperation> listOp = new List<CS_CustQuotasOperation>();
+                conn.Open();
+                string sql = $"SELECT * FROM CS_CustQuotasOperation WHERE id = { id } AND BOM = '{ item }'";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    CS_CustQuotasOperation op = new CS_CustQuotasOperation();
+                    op.Id = Convert.ToInt32(reader["Id"]);
+                    op.Line = Convert.ToInt32(reader["Line"]);
+                    op.Operation = reader["Operation"].ToString().Trim();
+                    op.DescriptionOperation = reader["DescriptionOperation"].ToString().Trim();
+                    op.TimeProcess = Convert.ToDateTime(reader["TimeProcess"]);
+                    op.Item = reader["Item"].ToString().Trim();
+                    op.BOM = reader["BOM"].ToString().Trim();
+                    op.Obs = reader["Obs"].ToString().Trim();
+                    listOp.Add(op);
+                }
+                conn.Close();
+                return listOp;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public int? GetIdFromSimulationCompBOM(string item)
         {
             var sql = _context.CS_CustQuotasComponent.Where(x => x.Item == item).FirstOrDefault();
-            if(sql != null)
+            if (sql != null)
             {
                 return sql.Id;
             }
@@ -191,7 +218,7 @@ namespace BillsOfMaterial_App.Service
             if (_context.CS_CustQuotasComponent.Any())
             {
                 var sql = _context.CS_CustQuotasComponent.Select(x => x.Item).Distinct().ToList();
-                if(sql != null)
+                if (sql != null)
                 {
                     foreach (var item in sql)
                     {
@@ -224,7 +251,7 @@ namespace BillsOfMaterial_App.Service
         public bool ExistData(int id, string item)
         {
             var sql = _context.CS_CustQuotasComponent.Any(x => x.Id == id && x.Item == item);
-            if(sql)
+            if (sql)
             {
                 return true;
             }

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using BillsOfMaterial_App.View;
 
 namespace BillsOfMaterial_App
 {
@@ -52,7 +53,7 @@ namespace BillsOfMaterial_App
             CreateConstruction();
             try
             {
-                Menu window = new Menu();
+                LoginView window = new LoginView();
                 window.Show();
                 this.Hide();
                 Close();

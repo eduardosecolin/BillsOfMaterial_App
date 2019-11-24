@@ -110,6 +110,15 @@ namespace BillsOfMaterial_App.Model
         [StringLength(12)]
         public string PickingSpecificator { get; set; }
 
+        [StringLength(500)]
+        public string CompTecConclusion { get; set; }
+
+        [StringLength(21)]
+        public string TempDrawing { get; set; }
+
+        [StringLength(1000)]
+        public string PathFile { get; set; }
+
         public DateTime TBCreated { get; set; }
 
         public DateTime TBModified { get; set; }

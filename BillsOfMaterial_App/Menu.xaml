@@ -56,6 +56,12 @@
                                 <TextBlock Text="Simulação E.D.P" VerticalAlignment="Center" Margin="20 10" Foreground="#FFF9FAFB"/>
                             </StackPanel>
                         </ListViewItem>
+                        <ListViewItem x:Name="CostFormation" Height="60">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="CashMultiple" Width="25" Height="25" Margin="10" VerticalAlignment="Center" Foreground="#FFF7FAFB"/>
+                                <TextBlock Text="Formação de Custo" VerticalAlignment="Center" Margin="20 10" Foreground="#FFF9FAFB"/>
+                            </StackPanel>
+                        </ListViewItem>
                     </ListView>
                 </StackPanel>
             </Grid>

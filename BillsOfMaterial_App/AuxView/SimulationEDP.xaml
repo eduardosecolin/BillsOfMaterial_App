@@ -215,18 +215,13 @@
                 </Button>
             </Border>
             <Border BorderBrush="White" BorderThickness="0 0 1 0" Grid.Column="2">
-                <Button x:Name="btnSaveSimulation" Cursor="Hand" IsEnabled="False" VerticalAlignment="Top" Height="38" Click="BtnSaveSimulation_Click" Width="178" Margin="38,12,38,0">
+               
+            </Border>
+            <Border BorderBrush="White" BorderThickness="0 0 1 0" Grid.Column="3">
+                <Button x:Name="btnSaveSimulation" Cursor="Hand" IsEnabled="False" VerticalAlignment="Top" Height="38" Click="BtnSaveSimulation_Click" Width="178" Margin="24,12,22,0">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="ContentSave" />
                         <TextBlock Margin="8 0 0 0"><Run Text="Salvar Simulação"/></TextBlock>
-                    </StackPanel>
-                </Button>
-            </Border>
-            <Border BorderBrush="White" BorderThickness="0 0 1 0" Grid.Column="3">
-                <Button x:Name="btnNext" Cursor="Hand" IsEnabled="True"  VerticalAlignment="Top" Height="38" Click="BtnNext_Click" Width="178" Margin="35,12,11,0">
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Cash100" />
-                        <TextBlock Margin="8 0 0 0">Formação de Custo</TextBlock>
                     </StackPanel>
                 </Button>
             </Border>

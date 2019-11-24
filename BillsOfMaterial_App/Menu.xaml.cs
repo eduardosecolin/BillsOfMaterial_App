@@ -1,4 +1,5 @@
 ﻿using BillsOfMaterial_App.AuxView;
+using BillsOfMaterial_App.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,6 +62,13 @@ namespace BillsOfMaterial_App
                 case "EDPSimulation":
                     usc = new SimulationEDP();
                     GridMain.Children.Add(usc);
+                    break;
+                case "CostFormation":
+                    usc = new HomeView();
+                    GridMain.Children.Add(usc);
+                    CostFormationView window = new CostFormationView();
+                    window.ShowDialog();
+                    window.Activate();
                     break;
                 default:
                     break;

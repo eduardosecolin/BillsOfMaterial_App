@@ -37,7 +37,7 @@ namespace BillsOfMaterial_App.View
         {
             try
             {
-                dgDrawing.ItemsSource = bomService.GetAllDrawing(txtDrawing.Text);
+                dgDrawing.ItemsSource = bomService.GetAllDrawing(txtFilter.Text);
 
             }
             catch (Exception ex)
