@@ -36,6 +36,8 @@
             MaxLength="10" TabIndex="1" Margin="8,541,0,0"/>
         <DataGrid x:Name="dgBOM" IsReadOnly="True" HorizontalAlignment="Left" Height="414" Margin="10,89,0,0" VerticalAlignment="Top" Width="872" AutoGenerateColumns="False" MouseDoubleClick="DgBOM_MouseDoubleClick">
             <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding LastSubId}" ClipboardContentBinding="{x:Null}" Header="Id" Visibility="Hidden"/>
+                <DataGridTextColumn Binding="{Binding TecConclusion}" ClipboardContentBinding="{x:Null}" Header="Nº da Oferta"/>
                 <DataGridTextColumn Binding="{Binding BOM}" ClipboardContentBinding="{x:Null}" Header="Item (BOM)"/>
                 <DataGridTextColumn Binding="{Binding Description}" ClipboardContentBinding="{x:Null}" Header="Description"/>
                 <DataGridTextColumn Binding="{Binding UoM}" ClipboardContentBinding="{x:Null}" Header="Unidade de Medida"/>
@@ -45,6 +47,20 @@
         </DataGrid>
         <RadioButton x:Name="rbEDPImport" Content="Importar Engenharia de Produtos" HorizontalAlignment="Left" Margin="306,46,0,0" VerticalAlignment="Top" Checked="RbEDPImport_Checked"/>
         <RadioButton x:Name="rbSimulationImport" Content="Importar Simulação E.D.P" HorizontalAlignment="Left" Margin="640,46,0,0" VerticalAlignment="Top" Checked="RbSimulationImport_Checked"/>
+        <TextBox 
+            x:Name="txtQuotationNo"
+            HorizontalAlignment="Left"
+            Height="42"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            IsReadOnly="True"
+            Visibility="Hidden"
+            Width="150"
+            materialDesign:HintAssist.Hint="Nº da Oferta" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            MaxLength="10" TabIndex="20" Margin="210,542,0,0"/>
 
     </Grid>
 </Window>

@@ -19,7 +19,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="1" Margin="94,159,0,0" PreviewTextInput="TxtFreightValue_PreviewTextInput" IsEnabled="False" LostFocus="TxtFreightValue_LostFocus"/>
+            MaxLength="10" TabIndex="1" Margin="94,150,0,0" PreviewTextInput="TxtFreightValue_PreviewTextInput" IsEnabled="False" LostFocus="TxtFreightValue_LostFocus"/>
         <TextBox 
             x:Name="txtPis"
             HorizontalAlignment="Left"
@@ -31,7 +31,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="2" Margin="265,159,0,0" PreviewTextInput="TxtPis_PreviewTextInput" IsEnabled="False" LostFocus="TxtPis_LostFocus"/>
+            MaxLength="10" TabIndex="2" Margin="265,150,0,0" PreviewTextInput="TxtPis_PreviewTextInput" IsEnabled="False" LostFocus="TxtPis_LostFocus"/>
         <TextBox 
             x:Name="txtCofins"
             HorizontalAlignment="Left"
@@ -43,7 +43,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="3" Margin="441,159,0,0" PreviewTextInput="TxtCofins_PreviewTextInput" IsEnabled="False" LostFocus="TxtCofins_LostFocus"/>
+            MaxLength="10" TabIndex="3" Margin="441,150,0,0" PreviewTextInput="TxtCofins_PreviewTextInput" IsEnabled="False" LostFocus="TxtCofins_LostFocus"/>
         <TextBox 
             x:Name="txtIcms"
             HorizontalAlignment="Left"
@@ -55,7 +55,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="4" Margin="94,206,0,0" PreviewTextInput="TxtIcms_PreviewTextInput" IsEnabled="False" LostFocus="TxtIcms_LostFocus" />
+            MaxLength="10" TabIndex="4" Margin="94,197,0,0" PreviewTextInput="TxtIcms_PreviewTextInput" IsEnabled="False" LostFocus="TxtIcms_LostFocus" />
         <TextBox 
             x:Name="txtIpi"
             HorizontalAlignment="Left"
@@ -67,7 +67,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="5" Margin="265,206,0,0" PreviewTextInput="TxtIpi_PreviewTextInput" IsEnabled="False" LostFocus="TxtIpi_LostFocus"/>
+            MaxLength="10" TabIndex="5" Margin="265,197,0,0" PreviewTextInput="TxtIpi_PreviewTextInput" IsEnabled="False" LostFocus="TxtIpi_LostFocus"/>
         <TextBox 
             x:Name="txtComissions"
             HorizontalAlignment="Left"
@@ -75,11 +75,12 @@
             TextWrapping="Wrap"
             VerticalAlignment="Top"
             Width="150"
+            IsEnabled="False"
             materialDesign:HintAssist.Hint="Comissões %" 
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="6" Margin="441,206,0,0" PreviewTextInput="TxtFixedExpenses_PreviewTextInput" LostFocus="TxtComissions_LostFocus"/>
+            MaxLength="10" TabIndex="6" Margin="441,197,0,0" PreviewTextInput="TxtFixedExpenses_PreviewTextInput" LostFocus="TxtComissions_LostFocus"/>
         <TextBox 
             x:Name="txtFixedExpenses"
             HorizontalAlignment="Left"
@@ -91,7 +92,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="7" Margin="94,253,0,0" PreviewTextInput="TxtVariableExpenses_PreviewTextInput" IsEnabled="False" LostFocus="TxtFixedExpenses_LostFocus"/>
+            MaxLength="10" TabIndex="7" Margin="94,244,0,0" PreviewTextInput="TxtVariableExpenses_PreviewTextInput" IsEnabled="False" LostFocus="TxtFixedExpenses_LostFocus"/>
         <TextBox 
             Visibility="Hidden"
             x:Name="txtPathFile1"
@@ -139,7 +140,7 @@
         </Button>
         <Button 
             x:Name="btnSerchOffer" Visibility="Visible" 
-            Cursor="Hand" Margin="515,40,297,427" 
+            Cursor="Hand" Margin="515,18,297,449" 
             Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnSerchOffer_Click">
             <materialDesign:PackIcon Foreground="#FF00BCD4" Height="29" Width="27" Kind="FilterOutline"/>
         </Button>
@@ -157,7 +158,7 @@
             Height="53" Width="80" Background="{x:Null}" BorderBrush="{x:Null}" Click="BtnFile3_Click">
             <materialDesign:PackIcon Foreground="#FF00BCD4" Height="29" Width="27" Kind="FileImport"/>
         </Button>
-        <Button x:Name="btnSaveAll" Cursor="Hand" HorizontalAlignment="Left" Margin="94,452,0,0" VerticalAlignment="Top" Width="497" Height="40" Click="BtnSaveAll_Click">
+        <Button x:Name="btnSaveAll" Cursor="Hand" HorizontalAlignment="Left" Margin="94,469,0,0" VerticalAlignment="Top" Width="390" Height="40" Click="BtnSaveAll_Click">
             <StackPanel Orientation="Horizontal">
                 <materialDesign:PackIcon Kind="ContentSave" />
                 <TextBlock Margin="8 0 0 0"><Run Text="Salvar formação de custo"/></TextBlock>
@@ -174,7 +175,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="8" Margin="265,253,0,0" PreviewTextInput="TxtMargin_PreviewTextInput" IsEnabled="False" LostFocus="TxtMargin_LostFocus"/>
+            MaxLength="10" TabIndex="8" Margin="265,244,0,0" PreviewTextInput="TxtMargin_PreviewTextInput" IsEnabled="False" LostFocus="TxtMargin_LostFocus"/>
         <TextBox 
             x:Name="txtVariableMargin"
             HorizontalAlignment="Left"
@@ -186,7 +187,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="9" Margin="441,253,0,0" PreviewTextInput="TxtVariableMargin_PreviewTextInput" IsEnabled="False"/>
+            MaxLength="10" TabIndex="9" Margin="441,244,0,0" PreviewTextInput="TxtVariableMargin_PreviewTextInput" IsEnabled="False"/>
         <TextBox 
             x:Name="txtSelectItem"
             HorizontalAlignment="Left"
@@ -198,7 +199,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="0" Margin="94,40,0,0" IsReadOnly="True" />
+            MaxLength="10" TabIndex="0" Margin="94,18,0,0" IsReadOnly="True" />
         <TextBox 
             x:Name="txtCustQuotaId"
             HorizontalAlignment="Left"
@@ -219,10 +220,10 @@
             FontSize="14" 
             Foreground="#FF0A0A0A" 
             HorizontalAlignment="Left" 
-            Margin="94,87,0,0" 
+            Margin="94,65,0,0" 
             VerticalAlignment="Top"
             TabIndex="1"
-            Width="416" Height="39" IsReadOnly="True" LostFocus="CbItemGrid_LostFocus" SelectionChanged="CbItemGrid_SelectionChanged"/>
+            Width="416" Height="39" IsReadOnly="True"  DropDownClosed="cbItemGrid_DropDownClosed"/>
         <TextBox 
             x:Name="txtISS"
             HorizontalAlignment="Left"
@@ -234,7 +235,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="10" Margin="94,300,0,0" IsEnabled="False" PreviewTextInput="TxtISS_PreviewTextInput" LostFocus="TxtISS_LostFocus"/>
+            MaxLength="10" TabIndex="10" Margin="94,291,0,0" IsEnabled="False" PreviewTextInput="TxtISS_PreviewTextInput" LostFocus="TxtISS_LostFocus"/>
         <TextBox 
             x:Name="txtIR"
             HorizontalAlignment="Left"
@@ -246,7 +247,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="11" Margin="265,300,0,0" IsEnabled="False" PreviewTextInput="TxtIR_PreviewTextInput" LostFocus="TxtIR_LostFocus"/>
+            MaxLength="10" TabIndex="11" Margin="265,291,0,0" IsEnabled="False" PreviewTextInput="TxtIR_PreviewTextInput" LostFocus="TxtIR_LostFocus"/>
         <TextBox 
             x:Name="txtCSLL"
             HorizontalAlignment="Left"
@@ -258,7 +259,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="12" Margin="441,300,0,0" IsEnabled="False" PreviewTextInput="TxtCSLL_PreviewTextInput" LostFocus="TxtCSLL_LostFocus"/>
+            MaxLength="10" TabIndex="12" Margin="441,291,0,0" IsEnabled="False" PreviewTextInput="TxtCSLL_PreviewTextInput" LostFocus="TxtCSLL_LostFocus"/>
         <TextBox 
             x:Name="txtMarkup"
             HorizontalAlignment="Left"
@@ -270,7 +271,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="13" Margin="94,366,0,0" IsEnabled="False"/>
+            MaxLength="10" TabIndex="13" Margin="94,357,0,0" IsEnabled="False"/>
         <TextBox 
             x:Name="txtTotalMarkup"
             HorizontalAlignment="Left"
@@ -282,7 +283,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="13" Margin="265,366,0,0" IsEnabled="False"/>
+            MaxLength="10" TabIndex="13" Margin="265,357,0,0" IsEnabled="False"/>
         <TextBox 
             x:Name="txtVariableExpenses"
             HorizontalAlignment="Left"
@@ -290,11 +291,38 @@
             TextWrapping="Wrap"
             VerticalAlignment="Top"
             Width="150"
-            materialDesign:HintAssist.Hint="Despesas Variaveis R$" 
+            materialDesign:HintAssist.Hint="Despesas Variaveis %" 
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="15" Margin="441,366,0,0" PreviewTextInput="TxtFixedExpenses_PreviewTextInput" IsEnabled="False"/>
+            MaxLength="10" TabIndex="15" Margin="441,357,0,0" PreviewTextInput="TxtFixedExpenses_PreviewTextInput" IsEnabled="False"/>
+        <Button 
+            x:Name="btnChart" Visibility="Visible" 
+            Cursor="Hand" Margin="515,456,297,11" 
+            Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" Click="btnChart_Click">
+            <materialDesign:PackIcon Foreground="#FF00BCD4" Height="29" Width="27" Kind="ChartPie"/>
+        </Button>
+        <TextBox 
+            x:Name="txtTotalSimulation"
+            HorizontalAlignment="Left"
+            Height="42"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="150"
+            materialDesign:HintAssist.Hint="Total Simulação" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            MaxLength="10" TabIndex="13" Margin="94,404,0,0" IsEnabled="False"/>
+        <CheckBox x:Name="ckSumIcmsIpi" Content="Soma valor IPI na base ICMS" HorizontalAlignment="Left" Margin="94,127,0,0" VerticalAlignment="Top" Checked="ckSumIcmsIpi_Checked" Unchecked="ckSumIcmsIpi_Unchecked"/>
+        <Button 
+            x:Name="btnClear" Visibility="Visible" 
+            Cursor="Hand" Margin="515,105,297,362" 
+            Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" Click="btnClear_Click" >
+            <materialDesign:PackIcon Foreground="#FF00BCD4" Height="29" Width="27" Kind="Broom"/>
+        </Button>
+        <RadioButton x:Name="rb100PercentServices" Content="100% Serviço" HorizontalAlignment="Left" Margin="265,428,0,0" VerticalAlignment="Top" Checked="rb100PercentServices_Checked"/>
+        <RadioButton x:Name="rbServicePlusMaterial" Content="Serviço + Material" HorizontalAlignment="Left" Margin="441,428,0,0" VerticalAlignment="Top" Checked="rbServicePlusMaterial_Checked"/>
 
     </Grid>
 </Window>

@@ -37,7 +37,13 @@ namespace BillsOfMaterial_App.Model
         [StringLength(1000)]
         public string Obs { get; set; }
 
+        [StringLength(8)]
+        public string UoM { get; set; }
+
         public DateTime? TimeProcess { get; set; }
+
+        [StringLength(10)]
+        public string TimeProcessStr { get; set; }
 
         public DateTime TBCreated { get; set; }
 
@@ -46,5 +52,9 @@ namespace BillsOfMaterial_App.Model
         public int TBCreatedID { get; set; }
 
         public int TBModifiedID { get; set; }
+
+        public double? CostOperation { get; set; }
+
+        public double? Qty { get; set; }
     }
 }

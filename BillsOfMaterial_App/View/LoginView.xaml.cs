@@ -23,6 +23,10 @@ namespace BillsOfMaterial_App.View
 
         private readonly UserManagerService usService;
 
+
+        public static string userLogon;
+        public static string pwdLogon;
+
         public LoginView()
         {
             InitializeComponent();
@@ -72,8 +76,21 @@ namespace BillsOfMaterial_App.View
                 {
                     if (usService.ExistData(txtUser.Text, txtPassword.Password))
                     {
-                        Menu window = new Menu();
-                        window.ShowDialog();
+                        userLogon = txtUser.Text;
+                        pwdLogon = txtPassword.Password;
+
+                        int typeUser = usService.GetTypeUser(txtUser.Text, txtPassword.Password);
+                        if (typeUser == 2057371649)
+                        {
+                            Menu window = new Menu();
+                            window.Show();
+                        }
+                        else
+                        {
+                            ChooseDataBaseView window = new ChooseDataBaseView();
+                            window.Show();
+                        }
+
                         this.Hide();
                         this.Close();
                     }

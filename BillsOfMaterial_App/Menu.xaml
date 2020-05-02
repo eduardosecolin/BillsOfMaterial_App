@@ -13,7 +13,7 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
 		FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="Menu" Height="740" Width="1289" ResizeMode="CanResize" Grid.IsSharedSizeScope="True" WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen">
+        Title="Menu" Height="740" Width="1289" ResizeMode="CanResize" Grid.IsSharedSizeScope="True" WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Closed="Window_Closed" Closing="Window_Closing">
     <Window.Resources>
         <Storyboard x:Key="CloseMenu">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Grid.Width)" Storyboard.TargetName="grid">
@@ -60,6 +60,12 @@
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="CashMultiple" Width="25" Height="25" Margin="10" VerticalAlignment="Center" Foreground="#FFF7FAFB"/>
                                 <TextBlock Text="Formação de Custo" VerticalAlignment="Center" Margin="20 10" Foreground="#FFF9FAFB"/>
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem x:Name="Settings" Height="60">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Settings" Width="25" Height="25" Margin="10" VerticalAlignment="Center" Foreground="#FFF7FAFB"/>
+                                <TextBlock Text="Configurações" VerticalAlignment="Center" Margin="20 10" Foreground="#FFF9FAFB"/>
                             </StackPanel>
                         </ListViewItem>
                     </ListView>

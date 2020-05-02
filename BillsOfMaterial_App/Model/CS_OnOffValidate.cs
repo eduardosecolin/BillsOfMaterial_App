@@ -7,18 +7,20 @@ using System.Threading.Tasks;
 
 namespace BillsOfMaterial_App.Model
 {
-    public class CS_UserManager
+    public class CS_OnOffValidate
     {
         [Key]
         public int Id { get; set; }
 
-        [StringLength(30)]
-        public string UserName { get; set; }
+        public int? Id_Offer { get; set; }
 
-        [StringLength(30)]
-        public string Password { get; set; }
+        [StringLength(10)]
+        public string OfferNo { get; set; }
 
-        public int? UserManagerType { get; set; }
+        [StringLength(21)]
+        public string Item { get; set; }
+
+        public bool On_Off { get; set; }
 
         public DateTime TBCreated { get; set; }
 

@@ -21,6 +21,9 @@ namespace BillsOfMaterial_App.Model
         [StringLength(21)]
         public string Component { get; set; }
 
+        [StringLength(21)]
+        public string DrawingComp { get; set; }
+
         public int? ComponentType { get; set; }
 
         [StringLength(128)]

@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -35,19 +36,26 @@ namespace BillsOfMaterial_App.AuxView
         private readonly BOMService bomService = new BOMService();
         private readonly ItemsService itemsService = new ItemsService();
         private readonly OperationService opService = new OperationService();
+        private readonly OnOffService onoffService = new OnOffService();
         private string longPath;
 
         public bool level1 = false;
         public bool level2 = false;
         public bool level3 = false;
 
+        public static bool hasAccess = true;
+        public static bool isClear = false;
         public int positionLine;
+        public static int id_Offer = 0;
+        public static string offerNo = string.Empty;
+        public static string itemOffer = string.Empty;
 
         #endregion
 
         public SimulationEDP()
         {
             InitializeComponent();
+            rbAnalize.IsChecked = true;
         }
 
         public void LoadCbItemGrid()
@@ -76,7 +84,7 @@ namespace BillsOfMaterial_App.AuxView
 
         #region CREATE COMPOENENTS TREEVIEW
 
-        private TreeViewItem FillLevel1(string item, string description, string qty, string obs, string image)
+        private TreeViewItem FillLevel1(string item, string description, string qty, string obs, string image, string drawing, string costvalue, double? r1costvalue)
         {
             if (itemsService.GetNatureItem(item) == 22413314)
             {
@@ -84,11 +92,11 @@ namespace BillsOfMaterial_App.AuxView
                 chilItem.Name = "treeViewLv1";
                 if (obs == string.Empty)
                 {
-                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty + " | Imagem= " + image;
+                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty + " | Valor R$: " + costvalue + " | Custo R1: " + r1costvalue.ToString() + " | Imagem= " + image + " | Desenho: " + drawing;
                 }
                 else
                 {
-                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty + " | OBS: " + obs.Replace("|", "") + " | Imagem= " + image;
+                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty + " | Valor R$: " + costvalue + " | Custo R1: " + r1costvalue.ToString() + " | OBS: " + obs.Replace("|", "") + " | Imagem= " + image + " | Desenho: " + drawing;
                 }
                 tvComponent.Items.Add(chilItem);
                 return chilItem;
@@ -113,7 +121,7 @@ namespace BillsOfMaterial_App.AuxView
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty + " | Imagem= " + image },
+                                new TextBlock { Text = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty + " | Valor R$: " + costvalue + " | Custo R1: " + r1costvalue.ToString() + " | Imagem= " + image + " | Desenho: " + drawing },
                                 btn
                             }
                         }
@@ -137,7 +145,7 @@ namespace BillsOfMaterial_App.AuxView
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty + " | OBS: " + obs.Replace("|", "") + " | Imagem= " + image },
+                                new TextBlock { Text = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty + " | Valor R$: " + costvalue + " | Custo R1: " + r1costvalue.ToString() + " | OBS: " + obs.Replace("|", "") + " | Imagem= " + image + " | Desenho: " + drawing },
                                 btn
                             }
                         }
@@ -158,11 +166,11 @@ namespace BillsOfMaterial_App.AuxView
                 chilItem.Name = "treeViewLv1";
                 if (obs == string.Empty)
                 {
-                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty + " | Imagem= " + image;
+                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty + " | Valor R$: " + costvalue + " | Custo R1: " + r1costvalue.ToString() + " | Imagem= " + image + " | Desenho: " + drawing;
                 }
                 else
                 {
-                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty + " | OBS: " + obs.Replace("|", "") + " | Imagem= " + image;
+                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty + " | Valor R$: " + costvalue + " | Custo R1: " + r1costvalue.ToString() + " | OBS: " + obs.Replace("|", "") + " | Imagem= " + image + " | Desenho: " + drawing;
                 }
                 tvComponent.Items.Add(chilItem);
                 return chilItem;
@@ -170,7 +178,7 @@ namespace BillsOfMaterial_App.AuxView
 
         }
 
-        private TreeViewItem FillLevel2(string item, string description, string qty, string obs, TreeViewItem tvParam, string image)
+        private TreeViewItem FillLevel2(string item, string description, string qty, string obs, TreeViewItem tvParam, string image, string drawing, string costvalue, double? r1costvalue)
         {
             if (itemsService.GetNatureItem(item) == 22413314)
             {
@@ -179,11 +187,11 @@ namespace BillsOfMaterial_App.AuxView
                 chilItem.Name = "tvLevel2";
                 if (obs == string.Empty)
                 {
-                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty + " | Imagem= " + image;
+                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty + " | Valor R$: " + costvalue + " | Custo R1: " + r1costvalue.ToString() + " | Imagem= " + image + " | Desenho: " + drawing;
                 }
                 else
                 {
-                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty + " | OBS: " + obs.Replace("|", "") + " | Imagem= " + image;
+                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty + " | Valor R$: " + costvalue + " | Custo R1: " + r1costvalue.ToString() + " | OBS: " + obs.Replace("|", "") + " | Imagem= " + image + " | Desenho: " + drawing;
                 }
                 viewItem.Items.Add(chilItem);
                 return chilItem;
@@ -209,7 +217,7 @@ namespace BillsOfMaterial_App.AuxView
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = item.Replace("|", "") + " | " + description.Replace("|", "") + "| Quantidade: " + qty + " | Imagem= " + image },
+                                new TextBlock { Text = item.Replace("|", "") + " | " + description.Replace("|", "") + "| Quantidade: " + qty + " | Valor R$: " + costvalue +  " | Custo R1: " + r1costvalue.ToString() + " | Imagem= " + image + " | Desenho: " + drawing },
                                 btn
                             }
                         }
@@ -233,7 +241,7 @@ namespace BillsOfMaterial_App.AuxView
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = item.Replace("|", "") + " | " + description.Replace("|", "") + "| Quantidade: " + qty + " | OBS: " + obs.Replace("|", "") + " | Imagem= " + image },
+                                new TextBlock { Text = item.Replace("|", "") + " | " + description.Replace("|", "") + "| Quantidade: " + qty + " | Valor R$: " + costvalue +  " | Custo R1: " + r1costvalue.ToString() + " | OBS: " + obs.Replace("|", "") + " | Imagem= " + image + " | Desenho: " + drawing },
                                 btn
                             }
                         }
@@ -255,18 +263,18 @@ namespace BillsOfMaterial_App.AuxView
                 chilItem.Name = "tvLevel2";
                 if (obs == string.Empty)
                 {
-                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty + " | Imagem= " + image;
+                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty + " | Valor R$: " + costvalue + " | Custo R1: " + r1costvalue.ToString() + " | Imagem= " + image + " | Desenho: " + drawing;
                 }
                 else
                 {
-                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty + " | OBS: " + obs.Replace("|", "") + " | Imagem= " + image;
+                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + qty + " | Valor R$: " + costvalue + " | Custo R1: " + r1costvalue.ToString() + " | OBS: " + obs.Replace("|", "") + " | Imagem= " + image + " | Desenho: " + drawing;
                 }
                 viewItem.Items.Add(chilItem);
                 return chilItem;
             }
         }
 
-        private void FillLevel3(string item, string description, string qty, string obs, TreeViewItem tvParam, string image)
+        private void FillLevel3(string item, string description, string qty, string obs, TreeViewItem tvParam, string image, string drawing, string costvalue, double? r1costvalue)
         {
             if (itemsService.GetNatureItem(item) == 22413314)
             {
@@ -275,11 +283,11 @@ namespace BillsOfMaterial_App.AuxView
                 chilItem.Name = "tvLevel3";
                 if (obs == string.Empty)
                 {
-                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + "| Quantidade: " + qty + " | Imagem= " + image;
+                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + "| Quantidade: " + qty + " | Valor R$: " + costvalue + " | Custo R1: " + r1costvalue.ToString() + " | Imagem= " + image + " | Desenho: " + drawing;
                 }
                 else
                 {
-                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + "| Quantidade: " + qty + " | OBS: " + obs.Replace("|", "") + " | Imagem= " + image;
+                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + "| Quantidade: " + qty + " | Valor R$: " + costvalue + " | Custo R1: " + r1costvalue.ToString() + " | OBS: " + obs.Replace("|", "") + " | Imagem= " + image + " | Desenho: " + drawing;
                 }
                 viewItem.Items.Add(chilItem);
             }
@@ -304,7 +312,7 @@ namespace BillsOfMaterial_App.AuxView
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = item.Replace("|", "") + " | " + description.Replace("|", "") + "| Quantidade: " + qty + " | Imagem= " + image },
+                                new TextBlock { Text = item.Replace("|", "") + " | " + description.Replace("|", "") + "| Quantidade: " + qty + " | Valor R$: " + costvalue + " | Custo R1: " + r1costvalue.ToString() + " | Imagem= " + image + " | Desenho: " + drawing },
                                 btn
                             }
                         }
@@ -323,7 +331,7 @@ namespace BillsOfMaterial_App.AuxView
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = item.Replace("|", "") + " | " + description.Replace("|", "") + "| Quantidade: " + qty + " | OBS: " + obs.Replace("|", "") + " | Imagem= " + image },
+                                new TextBlock { Text = item.Replace("|", "") + " | " + description.Replace("|", "") + "| Quantidade: " + qty + " | Valor R$: " + costvalue + " | Custo R1: " + r1costvalue.ToString() + " | OBS: " + obs.Replace("|", "") + " | Imagem= " + image + " | Desenho: " + drawing },
                                 btn
                             }
                         }
@@ -340,53 +348,76 @@ namespace BillsOfMaterial_App.AuxView
                 chilItem.Name = "tvLevel3";
                 if (obs == string.Empty)
                 {
-                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + "| Quantidade: " + qty + " | Imagem= " + image;
+                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + "| Quantidade: " + qty + " | Valor R$: " + costvalue + " | Custo R1: " + r1costvalue.ToString() + " | Imagem= " + image + " | Desenho: " + drawing;
                 }
                 else
                 {
-                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + "| Quantidade: " + qty + " | OBS: " + obs.Replace("|", "") + " | Imagem= " + image;
+                    chilItem.Header = item.Replace("|", "") + " | " + description.Replace("|", "") + "| Quantidade: " + qty + " | Valor R$: " + costvalue + " | Custo R1: " + r1costvalue.ToString() + " | OBS: " + obs.Replace("|", "") + " | Imagem= " + image + " | Desenho: " + drawing;
                 }
                 viewItem.Items.Add(chilItem);
             }
         }
 
-        private void FillLevel2(string op, string description, int? timeProcess, string obs, TreeViewItem tvOp2)
+        private void FillLevel2(string op, string description, int? timeProcess, string obs, TreeViewItem tvOp2, double? costoperation, string uom, double? qty)
         {
             string timeString = timeProcess.ToString() + "000";
             double timeDouble = Convert.ToDouble(timeString);
             double time = TimeSpan.FromMilliseconds(timeDouble).TotalHours;
-            string timeStr = TimeSpan.FromHours(time).ToString("h\\:mm");
+            string timeStr = string.Empty;
+            string timeTemp = TimeSpan.FromHours(time).ToString("h\\:mm");
+            string[] vet2 = timeTemp.Split(':');
+            if (time.ToString().Contains(","))
+            {
+                string[] vet = time.ToString().Split(',');
+                timeStr = vet[0] + ":" + vet2[1];
+            }
+            else
+            {
+                timeStr = time.ToString() + ":" + vet2[1];
+            }
             if (timeStr.Length == 4) { timeStr = "0" + timeStr; }
             TreeViewItem viewItem = tvOp2;
             TreeViewItem chilItem = new TreeViewItem();
             chilItem.Name = "tvOpLevel2";
             if (obs == string.Empty)
             {
-                chilItem.Header = op.Replace("|", "") + " | " + description.Replace("|", "") + "| " + "Tempo de Processamento = " + timeStr;
+                chilItem.Header = op.Replace("|", "") + " | " + description.Replace("|", "") + "| " + "Tempo de Processamento = " + timeStr + " | Custo: " + costoperation.ToString() + " | U.Medida: " + uom + " | Quantidade: " + qty;
             }
             else
             {
-                chilItem.Header = op.Replace("|", "") + " | " + description.Replace("|", "") + "| " + "Tempo de Processamento = " + timeStr + " | OBS: " + obs.Replace("|", "");
+                chilItem.Header = op.Replace("|", "") + " | " + description.Replace("|", "") + "| " + "Tempo de Processamento = " + timeStr + " | Custo: " + costoperation.ToString() + " | OBS: " + obs.Replace("|", "") + " | U.Medida: " + uom + " | Quantidade: " + qty;
             }
             viewItem.Items.Add(chilItem);
         }
 
-        private void FillLevel1(string op, string description, int? timeProcess, string obs)
+        private void FillLevel1(string op, string description, int? timeProcess, string obs, double? costoperation, string uom, double? qty)
         {
             string timeString = timeProcess.ToString() + "000";
             double timeDouble = Convert.ToDouble(timeString);
             double time = TimeSpan.FromMilliseconds(timeDouble).TotalHours;
-            string timeStr = TimeSpan.FromHours(time).ToString("h\\:mm");
+            string timeStr = string.Empty;
+            string timeTemp = TimeSpan.FromHours(time).ToString("h\\:mm");
+            string[] vet2 = timeTemp.Split(':');
+            if (time.ToString().Contains(","))
+            {
+                string[] vet = time.ToString().Split(',');
+                timeStr = vet[0] + ":" + vet2[1];
+            }
+            else
+            {
+                timeStr = time.ToString() + ":" + vet2[1];
+            }
+
             if (timeStr.Length == 4) { timeStr = "0" + timeStr; }
             TreeViewItem chilItem = new TreeViewItem();
             chilItem.Name = "tvOpLevel1";
             if (obs == string.Empty)
             {
-                chilItem.Header = op.Replace("|", "") + " | " + description.Replace("|", "") + "| " + "Tempo de Processamento = " + timeStr;
+                chilItem.Header = op.Replace("|", "") + " | " + description.Replace("|", "") + "| " + "Tempo de Processamento = " + timeStr + " | Custo: " + costoperation.ToString() + " | U.Medida: " + uom + " | Quantidade: " + qty;
             }
             else
             {
-                chilItem.Header = op.Replace("|", "") + " | " + description.Replace("|", "") + "| " + "Tempo de Processamento = " + timeStr + " | OBS: " + obs.Replace("|", "");
+                chilItem.Header = op.Replace("|", "") + " | " + description.Replace("|", "") + "| " + "Tempo de Processamento = " + timeStr + " | Custo: " + costoperation.ToString() + " | OBS: " + obs.Replace("|", "") + " | U.Medida: " + uom + " | Quantidade: " + qty; ;
             }
 
             tvOperation.Items.Add(chilItem);
@@ -513,85 +544,94 @@ namespace BillsOfMaterial_App.AuxView
 
         private void LoadSimulationEng()
         {
+
+            #region LoadSimulationEng
+
             try
             {
+
+                int? id = Convert.ToInt32(lblCustQuotaId.Content.ToString());
                 tvComponent.Items.Clear();
                 tvOperation.Items.Clear();
 
-                // Components Level 1
-                foreach (var item in bomService.GetComponentsBOMFromSimulation(cbItemGrid.Text, cbItemGrid.Text))
+                if (rbAnalize.IsChecked == true)
                 {
-                    TreeViewItem tvItem1 = FillLevel1(item.Component, item.Description.Replace(",", ""), item.Qty.ToString().Replace(",", "."), item.Notes, item.Drawing);
-                    txtDrawing.Text = item.TempDrawing;
-                    txtImage.Text = System.IO.Path.GetFileName(item.PathFile);
-                    longPath = item.PathFile;
-                    txtTecConclusion.Text = item.CompTecConclusion;
 
-                    #region Level 2
-
-                    List<MA_BillOfMaterialsComp> listComp = bomService.GetComponentsBOMFromSimulation(item.BOM, item.Component);
-                    List<MA_BillOfMaterialsRouting> listOp = bomService.GetOperationsBOMFromSimulation(item.BOM, item.Component);
-
-                    if (listComp.Count > 0)
+                    // Components Level 1
+                    foreach (var item in bomService.GetComponentsBOMFromSimulation(cbItemGrid.Text, cbItemGrid.Text, id, true))
                     {
-                        if (tvItem1.Name == "treeViewLv1")
+                        TreeViewItem tvItem1 = FillLevel1(item.Component, item.Description.Replace(",", ""), item.Qty.ToString().Replace(",", "."), item.Notes, item.Drawing, item.DrawingComp, item.ScrapQty.ToString().Replace(",", "."), item.WastePerc);
+                        txtDrawing.Text = item.TempDrawing;
+                        txtImage.Text = System.IO.Path.GetFileName(item.PathFile);
+                        longPath = item.PathFile;
+                        txtTecConclusion.Text = item.CompTecConclusion;
+
+                        #region Level 2
+
+                        List<MA_BillOfMaterialsComp> listComp = bomService.GetComponentsBOMFromSimulation(item.BOM, item.Component, id, true);
+                        List<MA_BillOfMaterialsRouting> listOp = bomService.GetOperationsBOMFromSimulation(item.BOM, item.Component, id, true);
+
+                        if (listComp.Count > 0)
                         {
-                            foreach (var itemTv1 in tvItem1.Items)
+                            if (tvItem1.Name == "treeViewLv1")
                             {
-                                TreeViewItem isComp = itemTv1 as TreeViewItem;
-
-                                if (isComp.Header is StackPanel)
+                                foreach (var itemTv1 in tvItem1.Items)
                                 {
-                                    StackPanel panel1 = isComp.Header as StackPanel;
-                                    if (panel1.Children.Count > 0)
+                                    TreeViewItem isComp = itemTv1 as TreeViewItem;
+
+                                    if (isComp.Header is StackPanel)
                                     {
-                                        foreach (var child in panel1.Children)
+                                        StackPanel panel1 = isComp.Header as StackPanel;
+                                        if (panel1.Children.Count > 0)
                                         {
-                                            if (child is Label)
+                                            foreach (var child in panel1.Children)
                                             {
-                                                Label lbl = child as Label;
-                                                if (lbl.Content.ToString().Equals("Componente nv.2"))
+                                                if (child is Label)
                                                 {
-                                                    foreach (var comp2 in listComp)
+                                                    Label lbl = child as Label;
+                                                    if (lbl.Content.ToString().Equals("Componente nv.2"))
                                                     {
-                                                        TreeViewItem tvItem2 = FillLevel2(comp2.Component, comp2.Description.Replace(",", ""), comp2.Qty.ToString().Replace(",", "."), comp2.Notes, isComp, comp2.Drawing);
-
-                                                        #region Level 3
-
-                                                        List<MA_BillOfMaterialsComp> listComp2 = bomService.GetComponentsBOMFromSimulation(comp2.BOM, comp2.Component);
-                                                        List<MA_BillOfMaterialsRouting> listOp2 = bomService.GetOperationsBOMFromSimulation(comp2.BOM, comp2.Component);
-
-                                                        if (listComp2.Count > 0)
+                                                        foreach (var comp2 in listComp)
                                                         {
-                                                            if (tvItem2.Name == "tvLevel2")
+                                                            TreeViewItem tvItem2 = FillLevel2(comp2.Component.Trim(), comp2.Description.Replace(",", "").Trim(), comp2.Qty.ToString().Replace(",", ".").Trim(), comp2.Notes.Trim(), isComp, comp2.Drawing.Trim(), comp2.DrawingComp.Trim(), comp2.ScrapQty.ToString().Replace(",", "."), comp2.WastePerc);
+
+                                                            #region Level 3
+
+                                                            List<MA_BillOfMaterialsComp> listComp2 = bomService.GetComponentsBOMFromSimulation(comp2.BOM, comp2.Component, id, true);
+                                                            List<MA_BillOfMaterialsRouting> listOp2 = bomService.GetOperationsBOMFromSimulation(comp2.BOM, comp2.Component, id, true);
+
+                                                            if (listComp2.Count > 0)
                                                             {
-                                                                foreach (var itemTv2 in tvItem2.Items)
+                                                                if (tvItem2.Name == "tvLevel2")
                                                                 {
-                                                                    TreeViewItem isComp2 = itemTv2 as TreeViewItem;
-                                                                    if (isComp2.Header is StackPanel)
+                                                                    foreach (var itemTv2 in tvItem2.Items)
                                                                     {
-                                                                        StackPanel panel2 = isComp2.Header as StackPanel;
-                                                                        if (panel2.Children.Count > 0)
+                                                                        TreeViewItem isComp2 = itemTv2 as TreeViewItem;
+                                                                        if (isComp2.Header is StackPanel)
                                                                         {
-                                                                            foreach (var child2 in panel2.Children)
+                                                                            StackPanel panel2 = isComp2.Header as StackPanel;
+                                                                            if (panel2.Children.Count > 0)
                                                                             {
-                                                                                if (child2 is Label)
+                                                                                foreach (var child2 in panel2.Children)
                                                                                 {
-                                                                                    Label lbl2 = child2 as Label;
-                                                                                    if (lbl2.Content.ToString().Equals("Componente nv.3"))
+                                                                                    if (child2 is Label)
                                                                                     {
-                                                                                        foreach (var comp3 in listComp2)
+                                                                                        Label lbl2 = child2 as Label;
+                                                                                        if (lbl2.Content.ToString().Equals("Componente nv.3"))
                                                                                         {
-                                                                                            FillLevel3(comp3.Component, comp3.Description.Replace(",", ""), comp3.Qty.ToString().Replace(",", "."), comp3.Notes, isComp2, comp3.Drawing);
-                                                                                        }
-                                                                                    }
-                                                                                    else if (lbl2.Content.ToString().Equals("Operação nv.3"))
-                                                                                    {
-                                                                                        if (listOp2.Count > 0)
-                                                                                        {
-                                                                                            foreach (var comp3 in listOp2)
+                                                                                            foreach (var comp3 in listComp2)
                                                                                             {
-                                                                                                FillLevel2(comp3.Operation, opService.GetDescriptionOp(comp3.Operation).Replace(",", ""), comp3.ProcessingTime, comp3.Notes, isComp2);
+                                                                                                FillLevel3(comp3.Component.Trim(), comp3.Description.Replace(",", "").Trim(), comp3.Qty.ToString().Replace(",", ".").Trim(), comp3.Notes, isComp2, comp3.Drawing.Trim(), comp3.Drawing.Trim(), comp3.ScrapQty.ToString().Replace(",", "."), comp3.WastePerc);
+                                                                                            }
+                                                                                        }
+                                                                                        else if (lbl2.Content.ToString().Equals("Operação nv.3"))
+                                                                                        {
+                                                                                            if (listOp2.Count > 0)
+                                                                                            {
+                                                                                                foreach (var comp3 in listOp2)
+                                                                                                {
+                                                                                                    FillLevel2(comp3.Operation, opService.GetDescriptionOp(comp3.Operation).Replace(",", ""), comp3.ProcessingTime, comp3.Notes, isComp2, comp3.SetupAttendancePerc, comp3.WC, comp3.Qty);
+                                                                                                }
                                                                                             }
                                                                                         }
                                                                                     }
@@ -601,19 +641,19 @@ namespace BillsOfMaterial_App.AuxView
                                                                     }
                                                                 }
                                                             }
+
+                                                            #endregion
                                                         }
 
-                                                        #endregion
                                                     }
-
-                                                }
-                                                else if (lbl.Content.ToString().Equals("Operação nv.2"))
-                                                {
-                                                    if (listOp.Count > 0)
+                                                    else if (lbl.Content.ToString().Equals("Operação nv.2"))
                                                     {
-                                                        foreach (var comp2 in listOp)
+                                                        if (listOp.Count > 0)
                                                         {
-                                                            FillLevel2(comp2.Operation, opService.GetDescriptionOp(comp2.Operation).Replace(",", ""), comp2.ProcessingTime, comp2.Notes, isComp);
+                                                            foreach (var comp2 in listOp)
+                                                            {
+                                                                FillLevel2(comp2.Operation, opService.GetDescriptionOp(comp2.Operation).Replace(",", ""), comp2.ProcessingTime, comp2.Notes, isComp, comp2.SetupAttendancePerc, comp2.WC, comp2.Qty);
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -623,16 +663,134 @@ namespace BillsOfMaterial_App.AuxView
                                 }
                             }
                         }
+
+                        #endregion
+
                     }
 
-                    #endregion
-
+                    // Operations Level 1
+                    foreach (var item in bomService.GetOperationsBOMFromSimulation(cbItemGrid.Text, cbItemGrid.Text, id, true))
+                    {
+                        FillLevel1(item.Operation, opService.GetDescriptionOp(item.Operation).Replace(",", ""), item.ProcessingTime, item.Notes, item.SetupAttendancePerc, item.WC, item.Qty);
+                    }
                 }
-
-                // Operations Level 1
-                foreach (var item in bomService.GetOperationsBOMFromSimulation(cbItemGrid.Text, cbItemGrid.Text))
+                else
                 {
-                    FillLevel1(item.Operation, opService.GetDescriptionOp(item.Operation).Replace(",", ""), item.ProcessingTime, item.Notes);
+                    foreach (var item in bomService.GetComponentsBOMFromSimulation(cbItemGrid.Text, cbItemGrid.Text, id, false))
+                    {
+                        TreeViewItem tvItem1 = FillLevel1(item.Component, item.Description.Replace(",", ""), item.Qty.ToString().Replace(",", "."), item.Notes, item.Drawing, item.DrawingComp, item.ScrapQty.ToString().Replace(",", "."), item.WastePerc);
+                        txtDrawing.Text = item.TempDrawing;
+                        txtImage.Text = System.IO.Path.GetFileName(item.PathFile);
+                        longPath = item.PathFile;
+                        txtTecConclusion.Text = item.CompTecConclusion;
+
+                        #region Level 2
+
+                        List<MA_BillOfMaterialsComp> listComp = bomService.GetComponentsBOMFromSimulation(item.BOM, item.Component, id, false);
+                        List<MA_BillOfMaterialsRouting> listOp = bomService.GetOperationsBOMFromSimulation(item.BOM, item.Component, id, false);
+
+                        if (listComp.Count > 0)
+                        {
+                            if (tvItem1.Name == "treeViewLv1")
+                            {
+                                foreach (var itemTv1 in tvItem1.Items)
+                                {
+                                    TreeViewItem isComp = itemTv1 as TreeViewItem;
+
+                                    if (isComp.Header is StackPanel)
+                                    {
+                                        StackPanel panel1 = isComp.Header as StackPanel;
+                                        if (panel1.Children.Count > 0)
+                                        {
+                                            foreach (var child in panel1.Children)
+                                            {
+                                                if (child is Label)
+                                                {
+                                                    Label lbl = child as Label;
+                                                    if (lbl.Content.ToString().Equals("Componente nv.2"))
+                                                    {
+                                                        foreach (var comp2 in listComp)
+                                                        {
+                                                            TreeViewItem tvItem2 = FillLevel2(comp2.Component.Trim(), comp2.Description.Replace(",", "").Trim(), comp2.Qty.ToString().Replace(",", ".").Trim(), comp2.Notes.Trim(), isComp, comp2.Drawing.Trim(), comp2.DrawingComp.Trim(), comp2.ScrapQty.ToString().Replace(",", "."), comp2.WastePerc);
+
+                                                            #region Level 3
+
+                                                            List<MA_BillOfMaterialsComp> listComp2 = bomService.GetComponentsBOMFromSimulation(comp2.BOM, comp2.Component, id, false);
+                                                            List<MA_BillOfMaterialsRouting> listOp2 = bomService.GetOperationsBOMFromSimulation(comp2.BOM, comp2.Component, id, false);
+
+                                                            if (listComp2.Count > 0)
+                                                            {
+                                                                if (tvItem2.Name == "tvLevel2")
+                                                                {
+                                                                    foreach (var itemTv2 in tvItem2.Items)
+                                                                    {
+                                                                        TreeViewItem isComp2 = itemTv2 as TreeViewItem;
+                                                                        if (isComp2.Header is StackPanel)
+                                                                        {
+                                                                            StackPanel panel2 = isComp2.Header as StackPanel;
+                                                                            if (panel2.Children.Count > 0)
+                                                                            {
+                                                                                foreach (var child2 in panel2.Children)
+                                                                                {
+                                                                                    if (child2 is Label)
+                                                                                    {
+                                                                                        Label lbl2 = child2 as Label;
+                                                                                        if (lbl2.Content.ToString().Equals("Componente nv.3"))
+                                                                                        {
+                                                                                            foreach (var comp3 in listComp2)
+                                                                                            {
+                                                                                                FillLevel3(comp3.Component.Trim(), comp3.Description.Replace(",", "").Trim(), comp3.Qty.ToString().Replace(",", ".").Trim(), comp3.Notes, isComp2, comp3.Drawing.Trim(), comp3.Drawing.Trim(), comp3.ScrapQty.ToString().Replace(",", "."), comp3.WastePerc);
+                                                                                            }
+                                                                                        }
+                                                                                        else if (lbl2.Content.ToString().Equals("Operação nv.3"))
+                                                                                        {
+                                                                                            if (listOp2.Count > 0)
+                                                                                            {
+                                                                                                foreach (var comp3 in listOp2)
+                                                                                                {
+                                                                                                    FillLevel2(comp3.Operation, opService.GetDescriptionOp(comp3.Operation).Replace(",", ""), comp3.ProcessingTime, comp3.Notes, isComp2, comp3.SetupAttendancePerc, comp3.WC, comp3.Qty);
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+
+                                                            #endregion
+                                                        }
+
+                                                    }
+                                                    else if (lbl.Content.ToString().Equals("Operação nv.2"))
+                                                    {
+                                                        if (listOp.Count > 0)
+                                                        {
+                                                            foreach (var comp2 in listOp)
+                                                            {
+                                                                FillLevel2(comp2.Operation, opService.GetDescriptionOp(comp2.Operation).Replace(",", ""), comp2.ProcessingTime, comp2.Notes, isComp, comp2.SetupAttendancePerc, comp2.WC, comp2.Qty);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        #endregion
+
+                    }
+
+                    // Operations Level 1
+                    foreach (var item in bomService.GetOperationsBOMFromSimulation(cbItemGrid.Text, cbItemGrid.Text, id, false))
+                    {
+                        FillLevel1(item.Operation, opService.GetDescriptionOp(item.Operation).Replace(",", ""), item.ProcessingTime, item.Notes, item.SetupAttendancePerc, item.WC, item.Qty);
+                    }
                 }
             }
             catch (Exception ex)
@@ -640,6 +798,8 @@ namespace BillsOfMaterial_App.AuxView
 
                 MessageBox.Show(ex.InnerException.Message, "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+            #endregion
         }
 
         #endregion
@@ -760,6 +920,31 @@ namespace BillsOfMaterial_App.AuxView
                                                     }
                                                 }
                                             }
+                                            if (o.Contains("Desenho:"))
+                                            {
+                                                string[] vetDraw = o.Split(':');
+                                                if (vetDraw.Length > 1)
+                                                {
+                                                    comp.DrawingComponent = vetDraw[1];
+                                                }
+                                            }
+                                            if (o.Contains("Valor R$:"))
+                                            {
+                                                string[] vetR1 = o.Split(':');
+                                                if (vetR1.Length > 1)
+                                                {
+                                                    string vet1 = vetR1[0];
+                                                    string vet2 = vetR1[1].Trim();
+                                                    if (vet2 != "")
+                                                    {
+                                                        comp.Costvalue = Convert.ToDouble(vet2.Replace(".", ","));
+                                                    }
+                                                    else
+                                                    {
+                                                        comp.Costvalue = 0;
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                     else
@@ -838,6 +1023,31 @@ namespace BillsOfMaterial_App.AuxView
                                         }
                                     }
                                 }
+                                if (o.Contains("Desenho:"))
+                                {
+                                    string[] vetDraw = o.Split(':');
+                                    if (vetDraw.Length > 1)
+                                    {
+                                        comp.DrawingComponent = vetDraw[1];
+                                    }
+                                }
+                                if (o.Contains("Valor R$:"))
+                                {
+                                    string[] vetR1 = o.Split(':');
+                                    if (vetR1.Length > 1)
+                                    {
+                                        string vet1 = vetR1[0];
+                                        string vet2 = vetR1[1].Trim();
+                                        if (vet2 != "")
+                                        {
+                                            comp.Costvalue = Convert.ToDouble(vet2.Replace(".", ","));
+                                        }
+                                        else
+                                        {
+                                            comp.Costvalue = 0;
+                                        }
+                                    }
+                                }
                             }
                         }
                         else
@@ -849,7 +1059,7 @@ namespace BillsOfMaterial_App.AuxView
                     comp.TBModified = DateTime.Now;
                     comp.TBCreatedID = 1;
 
-                    compOpService.SaveComp(comp);
+                    compOpService.SaveComp2(comp);
                 }
 
                 return true;
@@ -898,7 +1108,40 @@ namespace BillsOfMaterial_App.AuxView
                                 string[] vetObs = o.Split('=');
                                 if (vetObs.Length > 1)
                                 {
-                                    op.TimeProcess = Convert.ToDateTime(vetObs[1]);
+                                    op.TimeProcessStr = vetObs[1];
+                                }
+                            }
+
+                            if (o.Contains("Custo:"))
+                            {
+                                string[] vetCost = o.Split(':');
+                                if (vetCost.Length > 1)
+                                {
+                                    op.CostOperation = Convert.ToDouble(vetCost[1]);
+                                }
+                                else
+                                {
+                                    op.CostOperation = 0;
+                                }
+                            }
+                            if (o.Contains("U.Medida:"))
+                            {
+                                string[] vetUoM = o.Split(':');
+                                if (vetUoM.Length > 1)
+                                {
+                                    op.UoM = vetUoM[1];
+                                }
+                            }
+                            if (o.Contains("Quantidade:"))
+                            {
+                                string[] vetQ = o.Split(':');
+                                if (vetQ.Length > 1)
+                                {
+                                    op.Qty = Convert.ToDouble(vetQ[1]);
+                                }
+                                else
+                                {
+                                    op.Qty = 0;
                                 }
                             }
                         }
@@ -907,7 +1150,7 @@ namespace BillsOfMaterial_App.AuxView
                     op.TBCreated = DateTime.Now;
                     op.TBModified = DateTime.Now;
 
-                    compOpService.SaveOp(op);
+                    compOpService.SaveOp2(op);
                 }
 
                 return true;
@@ -1042,6 +1285,31 @@ namespace BillsOfMaterial_App.AuxView
                                                                                     }
                                                                                 }
                                                                             }
+                                                                            if (o.Contains("Desenho:"))
+                                                                            {
+                                                                                string[] vetDraw = o.Split(':');
+                                                                                if (vetDraw.Length > 1)
+                                                                                {
+                                                                                    comp.DrawingComponent = vetDraw[1];
+                                                                                }
+                                                                            }
+                                                                            if (o.Contains("Valor R$:"))
+                                                                            {
+                                                                                string[] vetR1 = o.Split(':');
+                                                                                if (vetR1.Length > 1)
+                                                                                {
+                                                                                    string vet1 = vetR1[0];
+                                                                                    string vet2 = vetR1[1].Trim();
+                                                                                    if (vet2 != "")
+                                                                                    {
+                                                                                        comp.Costvalue = Convert.ToDouble(vet2.Replace(".", ","));
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        comp.Costvalue = 0;
+                                                                                    }
+                                                                                }
+                                                                            }
                                                                         }
                                                                     }
                                                                     else
@@ -1114,6 +1382,31 @@ namespace BillsOfMaterial_App.AuxView
                                                                                 }
                                                                             }
                                                                         }
+                                                                        if (o.Contains("Desenho:"))
+                                                                        {
+                                                                            string[] vetDraw = o.Split(':');
+                                                                            if (vetDraw.Length > 1)
+                                                                            {
+                                                                                comp.DrawingComponent = vetDraw[1];
+                                                                            }
+                                                                        }
+                                                                        if (o.Contains("Valor R$:"))
+                                                                        {
+                                                                            string[] vetR1 = o.Split(':');
+                                                                            if (vetR1.Length > 1)
+                                                                            {
+                                                                                string vet1 = vetR1[0];
+                                                                                string vet2 = vetR1[1].Trim();
+                                                                                if (vet2 != "")
+                                                                                {
+                                                                                    comp.Costvalue = Convert.ToDouble(vet2.Replace(".", ","));
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    comp.Costvalue = 0;
+                                                                                }
+                                                                            }
+                                                                        }
                                                                     }
                                                                 }
                                                                 else
@@ -1125,7 +1418,7 @@ namespace BillsOfMaterial_App.AuxView
                                                             comp.TBModified = DateTime.Now;
                                                             comp.TBCreatedID = 2;
 
-                                                            compOpService.SaveComp(comp);
+                                                            compOpService.SaveComp2(comp);
 
                                                             onlyOneIntered = true;
                                                         }
@@ -1179,7 +1472,40 @@ namespace BillsOfMaterial_App.AuxView
                                                                         string[] vetObs = o.Split('=');
                                                                         if (vetObs.Length > 1)
                                                                         {
-                                                                            op.TimeProcess = Convert.ToDateTime(vetObs[1]);
+                                                                            op.TimeProcessStr = vetObs[1];
+                                                                        }
+                                                                    }
+
+                                                                    if (o.Contains("Custo:"))
+                                                                    {
+                                                                        string[] vetCost = o.Split(':');
+                                                                        if (vetCost.Length > 1)
+                                                                        {
+                                                                            op.CostOperation = Convert.ToDouble(vetCost[1]);
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            op.CostOperation = 0;
+                                                                        }
+                                                                    }
+                                                                    if (o.Contains("UoM:"))
+                                                                    {
+                                                                        string[] vetUoM = o.Split(':');
+                                                                        if (vetUoM.Length > 1)
+                                                                        {
+                                                                            op.UoM = vetUoM[1];
+                                                                        }
+                                                                    }
+                                                                    if (o.Contains("Quantidade:"))
+                                                                    {
+                                                                        string[] vetQ = o.Split(':');
+                                                                        if (vetQ.Length > 1)
+                                                                        {
+                                                                            op.Qty = Convert.ToDouble(vetQ[1]);
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            op.Qty = 0;
                                                                         }
                                                                     }
                                                                 }
@@ -1188,7 +1514,7 @@ namespace BillsOfMaterial_App.AuxView
                                                             op.TBCreated = DateTime.Now;
                                                             op.TBModified = DateTime.Now;
 
-                                                            compOpService.SaveOp(op);
+                                                            compOpService.SaveOp2(op);
 
                                                             onlyOneIntered = false;
                                                         }
@@ -1316,6 +1642,31 @@ namespace BillsOfMaterial_App.AuxView
                                                                         }
                                                                     }
                                                                 }
+                                                                if (o.Contains("Desenho:"))
+                                                                {
+                                                                    string[] vetDraw = o.Split(':');
+                                                                    if (vetDraw.Length > 1)
+                                                                    {
+                                                                        comp.DrawingComponent = vetDraw[1];
+                                                                    }
+                                                                }
+                                                                if (o.Contains("Valor R$:"))
+                                                                {
+                                                                    string[] vetR1 = o.Split(':');
+                                                                    if (vetR1.Length > 1)
+                                                                    {
+                                                                        string vet1 = vetR1[0];
+                                                                        string vet2 = vetR1[1].Trim();
+                                                                        if (vet2 != "")
+                                                                        {
+                                                                            comp.Costvalue = Convert.ToDouble(vet2.Replace(".", ","));
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            comp.Costvalue = 0;
+                                                                        }
+                                                                    }
+                                                                }
                                                             }
                                                         }
                                                         else
@@ -1387,6 +1738,31 @@ namespace BillsOfMaterial_App.AuxView
                                                                 }
                                                             }
                                                         }
+                                                        if (o.Contains("Desenho:"))
+                                                        {
+                                                            string[] vetDraw = o.Split(':');
+                                                            if (vetDraw.Length > 1)
+                                                            {
+                                                                comp.DrawingComponent = vetDraw[1];
+                                                            }
+                                                        }
+                                                        if (o.Contains("Valor R$:"))
+                                                        {
+                                                            string[] vetR1 = o.Split(':');
+                                                            if (vetR1.Length > 1)
+                                                            {
+                                                                string vet1 = vetR1[0];
+                                                                string vet2 = vetR1[1].Trim();
+                                                                if (vet2 != "")
+                                                                {
+                                                                    comp.Costvalue = Convert.ToDouble(vet2.Replace(".", ","));
+                                                                }
+                                                                else
+                                                                {
+                                                                    comp.Costvalue = 0;
+                                                                }
+                                                            }
+                                                        }
                                                     }
                                                 }
                                                 else
@@ -1398,7 +1774,7 @@ namespace BillsOfMaterial_App.AuxView
                                             comp.TBModified = DateTime.Now;
                                             comp.TBCreatedID = 3;
 
-                                            compOpService.SaveComp(comp);
+                                            compOpService.SaveComp2(comp);
                                         }
                                     }
                                 }
@@ -1493,7 +1869,40 @@ namespace BillsOfMaterial_App.AuxView
                                                             string[] vetObs = o.Split('=');
                                                             if (vetObs.Length > 1)
                                                             {
-                                                                op.TimeProcess = Convert.ToDateTime(vetObs[1]);
+                                                                op.TimeProcessStr = vetObs[1];
+                                                            }
+                                                        }
+
+                                                        if (o.Contains("Custo:"))
+                                                        {
+                                                            string[] vetCost = o.Split(':');
+                                                            if (vetCost.Length > 1)
+                                                            {
+                                                                op.CostOperation = Convert.ToDouble(vetCost[1]);
+                                                            }
+                                                            else
+                                                            {
+                                                                op.CostOperation = 0;
+                                                            }
+                                                        }
+                                                        if (o.Contains("UoM:"))
+                                                        {
+                                                            string[] vetUoM = o.Split(':');
+                                                            if (vetUoM.Length > 1)
+                                                            {
+                                                                op.UoM = vetUoM[1];
+                                                            }
+                                                        }
+                                                        if (o.Contains("Quantidade:"))
+                                                        {
+                                                            string[] vetQ = o.Split(':');
+                                                            if (vetQ.Length > 1)
+                                                            {
+                                                                op.Qty = Convert.ToDouble(vetQ[1]);
+                                                            }
+                                                            else
+                                                            {
+                                                                op.Qty = 0;
                                                             }
                                                         }
                                                     }
@@ -1502,7 +1911,7 @@ namespace BillsOfMaterial_App.AuxView
                                                 op.TBCreated = DateTime.Now;
                                                 op.TBModified = DateTime.Now;
 
-                                                compOpService.SaveOp(op);
+                                                compOpService.SaveOp2(op);
                                             }
                                         }
                                     }
@@ -1610,31 +2019,6 @@ namespace BillsOfMaterial_App.AuxView
             window.Show();
         }
 
-        private void CbItemGrid_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (cbItemGrid.Text != string.Empty)
-            {
-                tvBOM.Visibility = Visibility.Visible;
-                txtDrawing.Visibility = Visibility.Visible;
-                txtTecConclusion.Visibility = Visibility.Visible;
-                btnDrawing.Visibility = Visibility.Visible;
-                txtImage.Visibility = Visibility.Visible;
-                btnImg.Visibility = Visibility.Visible;
-                btnSaveSimulation.IsEnabled = true;
-                btnClear.IsEnabled = true;
-
-                if (compOpService.ExistData(Convert.ToInt32(lblCustQuotaId.Content.ToString()), cbItemGrid.Text))
-                {
-                    LoadSimulationEng();
-                }
-                else
-                {
-                    tvComponent.Items.Clear();
-                    tvOperation.Items.Clear();
-                }
-            }
-        }
-
         private void CbItemGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             positionLine = cbItemGrid.SelectedIndex + 1;
@@ -1655,6 +2039,11 @@ namespace BillsOfMaterial_App.AuxView
 
         private void BtnRegisterItems_Click_1(object sender, RoutedEventArgs e)
         {
+            if (!hasAccess)
+            {
+                MessageBox.Show("Acesso Negado! contacte o gerente!", "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
             RegisterItem window = new RegisterItem();
             window.Show();
         }
@@ -1767,6 +2156,7 @@ namespace BillsOfMaterial_App.AuxView
                                     {
                                         window.isEditmode = true;
                                         window.txtItem.Text = vet[0];
+                                        window.txtStandardCost.Text = itemsService.GetStandardCost(vet[0]).ToString();
                                         if (vet.Length > 0)
                                         {
                                             foreach (var item2 in vet)
@@ -1789,10 +2179,11 @@ namespace BillsOfMaterial_App.AuxView
                                                 }
                                                 if (item2.Contains("Imagem="))
                                                 {
-                                                    string[] vetDraw = item2.Split(':');
+                                                    string[] vetDraw = item2.Split('=');
                                                     if (vetDraw.Length > 1)
                                                     {
                                                         window.txtDrawing.Text = vetDraw[1];
+                                                        window.longPath = vetDraw[1];
                                                     }
                                                 }
                                                 if (item2.Contains("Custo R1:"))
@@ -1801,6 +2192,22 @@ namespace BillsOfMaterial_App.AuxView
                                                     if (vetR1.Length > 1)
                                                     {
                                                         window.txtResultValue.Text = vetR1[1];
+                                                    }
+                                                }
+                                                if (item2.Contains("Desenho:"))
+                                                {
+                                                    string[] vetDraw = item2.Split(':');
+                                                    if (vetDraw.Length > 1)
+                                                    {
+                                                        window.txtDrawingComponent.Text = vetDraw[1];
+                                                    }
+                                                }
+                                                if (item2.Contains("Valor R$:"))
+                                                {
+                                                    string[] vetR1 = item2.Split(':');
+                                                    if (vetR1.Length > 1)
+                                                    {
+                                                        window.txtCostValue.Text = vetR1[1];
                                                     }
                                                 }
 
@@ -1819,6 +2226,7 @@ namespace BillsOfMaterial_App.AuxView
                         {
                             window.isEditmode = true;
                             window.txtItem.Text = vet[0];
+                            window.txtStandardCost.Text = itemsService.GetStandardCost(vet[0]).ToString();
                             if (vet.Length > 0)
                             {
                                 foreach (var item in vet)
@@ -1841,10 +2249,11 @@ namespace BillsOfMaterial_App.AuxView
                                     }
                                     if (item.Contains("Imagem="))
                                     {
-                                        string[] vetDraw = item.Split(':');
+                                        string[] vetDraw = item.Split('=');
                                         if (vetDraw.Length > 1)
                                         {
                                             window.txtDrawing.Text = vetDraw[1];
+                                            window.longPath = vetDraw[1];
                                         }
                                     }
                                     if (item.Contains("Custo R1:"))
@@ -1890,10 +2299,40 @@ namespace BillsOfMaterial_App.AuxView
                                         window.txtObs.Text = vetObs[1];
                                     }
                                 }
+                                if (item.Contains("Custo:"))
+                                {
+                                    string[] vetCost = item.Split(':');
+                                    if (vetCost.Length > 1)
+                                    {
+                                        window.txtCostOperation.Text = opService.GetOpTotalCost(vet[0]).ToString();
+                                    }
+                                }
+                                if (item.Contains("U.Medida:"))
+                                {
+                                    string[] vetUoM = item.Split(':');
+                                    if (vetUoM.Length > 1)
+                                    {
+                                        window.txtUoM.Visibility = Visibility.Visible;
+                                        window.txtUoM.Text = vetUoM[1];
+                                    }
+                                }
+                                if (item.Contains("Quantidade:"))
+                                {
+                                    string[] vetQ = item.Split(':');
+                                    if (vetQ.Length > 1)
+                                    {
+                                        if (vetQ[1] != "0" && vetQ[1] != "")
+                                        {
+                                            window.txtQuantity.Visibility = Visibility.Visible;
+                                        }
+                                        window.txtQuantity.Text = vetQ[1];
+                                    }
+                                }
                             }
                         }
 
                         window.Show();
+                        window.FillCostValueOperation();
                     }
                 }
             }
@@ -2010,6 +2449,62 @@ namespace BillsOfMaterial_App.AuxView
 
         private void BtnClear_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                tvComponent.Items.Clear();
+                tvOperation.Items.Clear();
+                txtTecConclusion.Clear();
+                txtDrawing.Clear();
+                lblCustQuotaId.Content = string.Empty;
+                lblNoCustQuota.Content = "Selecione a Oferta";
+                cbItemGrid.Text = string.Empty;
+                cbItemGrid.ItemsSource = null;
+                tvBOM.Visibility = Visibility.Hidden;
+                txtDrawing.Visibility = Visibility.Hidden;
+                txtTecConclusion.Visibility = Visibility.Hidden;
+                btnDrawing.Visibility = Visibility.Hidden;
+                txtImage.Visibility = Visibility.Hidden;
+                btnImg.Visibility = Visibility.Hidden;
+                btnClear.IsEnabled = false;
+                btnSaveSimulation.IsEnabled = false;
+                rbAnalize.IsChecked = true;
+                isClear = false;
+
+                UpdateOnOffFalse();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro " + ex.Message, "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void BtnSaveSimulation_Click(object sender, RoutedEventArgs e)
+        {
+            if (SaveSimulation())
+            {
+                MessageBox.Show("Simulação de Engenharia de Produtos salva com sucesso!", "Informação", MessageBoxButton.OK, MessageBoxImage.Information);
+                BtnClear_Click(sender, e);
+            }
+        }
+
+        public static void UpdateOnOffFalse()
+        {
+            try
+            {
+                if (itemOffer != string.Empty && id_Offer > 0 && offerNo != string.Empty)
+                {
+                    OnOffService.Update(id_Offer, offerNo, itemOffer, false);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void ClearFields()
+        {
             tvComponent.Items.Clear();
             tvOperation.Items.Clear();
             txtTecConclusion.Clear();
@@ -2026,14 +2521,115 @@ namespace BillsOfMaterial_App.AuxView
             btnImg.Visibility = Visibility.Hidden;
             btnClear.IsEnabled = false;
             btnSaveSimulation.IsEnabled = false;
+            rbAnalize.IsChecked = true;
+            isClear = false;
         }
 
-        private void BtnSaveSimulation_Click(object sender, RoutedEventArgs e)
+        private void cbItemGrid_DropDownClosed(object sender, EventArgs e)
         {
-            if (SaveSimulation())
+            try
             {
-                MessageBox.Show("Simulação de Engenharia de Produtos salva com sucesso!", "Informação", MessageBoxButton.OK, MessageBoxImage.Information);
-                BtnClear_Click(sender, e);
+                if (cbItemGrid.Text != string.Empty)
+                {
+
+                    if(tvBOM.Visibility == Visibility.Visible)
+                    {
+                        MessageBox.Show("Linpe a simulação para carregar novamente!", "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                    tvBOM.Visibility = Visibility.Visible;
+                    txtDrawing.Visibility = Visibility.Visible;
+                    txtTecConclusion.Visibility = Visibility.Visible;
+                    btnDrawing.Visibility = Visibility.Visible;
+                    txtImage.Visibility = Visibility.Visible;
+                    btnImg.Visibility = Visibility.Visible;
+                    btnSaveSimulation.IsEnabled = true;
+                    btnClear.IsEnabled = true;
+
+                    #region Verify Double Intance
+
+                    string offerno = string.Empty;
+                    bool isUpdatable = false;
+                    if (lblNoCustQuota.Content.ToString().Contains(":"))
+                    {
+                        string[] vet = lblNoCustQuota.Content.ToString().Split(':');
+                        if (vet.Length > 1)
+                        {
+                            offerno = vet[1].Trim();
+                        }
+                    }
+                    var OnOffObj = onoffService.GetData(Convert.ToInt32(lblCustQuotaId.Content.ToString()), offerno, cbItemGrid.Text);
+                    if (OnOffObj != null)
+                    {
+                        if (OnOffObj.On_Off)
+                        {
+                            MessageBox.Show("Simulação de EDP já esta aberta em outra instância!", "Aviso",
+                                MessageBoxButton.OK, MessageBoxImage.Warning);
+                            ClearFields();
+                            return;
+                        }
+                        else
+                        {
+                            isUpdatable = true;
+                        }
+                    }
+                    else
+                    {
+                        CS_OnOffValidate on_off = new CS_OnOffValidate();
+                        on_off.Id = onoffService.GetMaxId();
+                        on_off.Id_Offer = Convert.ToInt32(lblCustQuotaId.Content.ToString());
+                        on_off.OfferNo = offerno;
+                        on_off.Item = cbItemGrid.Text;
+                        on_off.On_Off = true;
+                        on_off.TBCreated = DateTime.Now;
+                        on_off.TBModified = DateTime.Now;
+                        on_off.TBCreatedID = 1;
+                        onoffService.Insert(on_off);
+                    }
+
+                    #endregion
+
+                    id_Offer = Convert.ToInt32(lblCustQuotaId.Content.ToString());
+                    offerNo = offerno;
+                    itemOffer = cbItemGrid.Text;
+
+                    if (compOpService.ExistData(Convert.ToInt32(lblCustQuotaId.Content.ToString()), cbItemGrid.Text))
+                    {
+                        LoadSimulationEng();
+                        if (isUpdatable)
+                        {
+                            OnOffService.Update(Convert.ToInt32(lblCustQuotaId.Content.ToString()), offerno, cbItemGrid.Text, true);
+                        }
+                    }
+                    else
+                    {
+                        tvComponent.Items.Clear();
+                        tvOperation.Items.Clear();
+                    }
+                }
+
+                isClear = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro" + ex.Message, "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void rbAnalize_Checked(object sender, RoutedEventArgs e)
+        {
+            if (rbAnalize.IsChecked == true)
+            {
+                rbProduction.IsChecked = !rbAnalize.IsChecked;
+            }
+        }
+
+        private void rbProduction_Checked(object sender, RoutedEventArgs e)
+        {
+            if (rbProduction.IsChecked == true)
+            {
+                rbAnalize.IsChecked = !rbProduction.IsChecked;
             }
         }
     }

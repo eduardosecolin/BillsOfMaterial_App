@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BillsOfMaterial_App.View;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -43,6 +44,12 @@ namespace BillsOfMaterial_App.Utilities
                     MultipleARS = "MultipleActiveResultSets=True";
                     app = "App=EntityFramework\" providerName=\"System.Data.SqlClient";
                 }
+
+                if(ChooseDataBaseView.DataBaseString != string.Empty)
+                {
+                    initialCatalog = $"Initial Catalog='{ ChooseDataBaseView.DataBaseString }'";
+                }
+
                 string conStr = dataSource + ";" + initialCatalog.Replace("'", "") + ";" + userId.Replace("'", "") + ";" + password.Replace("'", "") + ";" + MultipleARS + ";" + app;
                 vet[0] = conStr;
                 vet[1] = id;

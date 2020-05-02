@@ -122,6 +122,7 @@ namespace BillsOfMaterial_App.View
                                     item.Nature = 22413312;
                                 }
 
+                                item.Disabled = "0";
                                 item.TBCreated = DateTime.Now;
                                 item.TBModified = DateTime.Now;
 
@@ -183,6 +184,7 @@ namespace BillsOfMaterial_App.View
                                     item.Nature = 22413312;
                                 }
 
+                                item.Disabled = "0";
                                 item.TBModified = DateTime.Now;
 
                                 if (itemService.EditItem(item))

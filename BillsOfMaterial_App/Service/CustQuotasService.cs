@@ -13,10 +13,12 @@ namespace BillsOfMaterial_App.Service
     public class CustQuotasService
     {
         private readonly DBContext _context;
+        SqlConnection conn;
 
         public CustQuotasService()
         {
             _context = new DBContext();
+            conn = new SqlConnection(_context.Database.Connection.ConnectionString);
         }
 
         public MA_CustQuotas GetById(int id)
@@ -52,36 +54,23 @@ namespace BillsOfMaterial_App.Service
             }
         }
 
-        public bool UpdateCostFormationCustQuatas(int id, int position, double? costValue)
+        public bool UpdateCostFormationCustQuatas(int id, double? costValue)
         {
             try
             {
-                var sql = _context.MA_CustQuotasDetail.Where(x => x.CustQuotaId == id && x.Position == position).FirstOrDefault();
-                if (sql != null)
-                {
-                    if (double.IsNaN(Convert.ToDouble(costValue)))
-                    {
-                        MessageBox.Show("O valor de formação de custo é NaN (Not a NUmber) revise o calculo!",
-                            "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return false;
-                    }
-                    else
-                    {
-                        sql.FinalCostFormation = costValue;
-                    }
-
-                    _context.MA_CustQuotasDetail.AddOrUpdate(sql);
-                    _context.SaveChanges();
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                int position = GetPositionOffer(id);
+                string costValueStr = costValue.ToString().Replace(",", ".");
+                conn.Open();
+                string sql = $"UPDATE MA_CustQuotasDetail SET FinalCostFormation = { costValueStr } WHERE CustQuotaId = { id } AND Position = { position }";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                return true;
+                
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                return false;
             }
         }
 
@@ -115,6 +104,56 @@ namespace BillsOfMaterial_App.Service
             else
             {
                 return 0;
+            }
+        }
+
+        private int GetPositionOffer(int id)
+        {
+            try
+            {
+                int valor = 0;
+                conn.Open();
+                string sql = $"SELECT Position FROM MA_CustQuotasDetail WHERE CustQuotaId = { id }";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                var result = cmd.ExecuteScalar();
+                if(result != null)
+                {
+                    valor = Convert.ToInt32(result.ToString());
+                }
+                else
+                {
+                    valor = 0;
+                }
+                conn.Close();
+                return valor;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public string GetQuotationNo(int id)
+        {
+            try
+            {
+                string str = string.Empty;
+                conn.Open();
+                string sql = $"SELECT QuotationNo FROM MA_CustQuotas WHERE CustQuotaId = { id }";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                var result = cmd.ExecuteScalar();
+                if(result != null)
+                {
+                    str = result.ToString();
+                }
+                conn.Close();
+                return str;
+            }
+            catch (Exception ex)
+            {
+                conn.Close();
+                throw ex;
             }
         }
     }

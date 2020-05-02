@@ -251,7 +251,8 @@ namespace BillsOfMaterial_App.View
                 {
                     if (txtTotalValue.Text != string.Empty)
                     {
-                        _window.txtResultValue.Text = txtTotalValue.Text;
+                        _window.txtResultValue.Text = Math.Round((Convert.ToDouble(txtTotalValue.Text) * Convert.ToDouble(_window.txtQty.Text)), 2).ToString();
+                        _window.txtStandardCost.Text = 0.ToString();
                         this.Close();
                     }
                     else

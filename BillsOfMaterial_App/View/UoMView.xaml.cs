@@ -24,11 +24,20 @@ namespace BillsOfMaterial_App.View
 
         private UoMService uomService;
         private RegisterItem _window;
+        private OperationView opWindow;
 
         public UoMView(RegisterItem window)
         {
             InitializeComponent();
             _window = window;
+            uomService = new UoMService();
+            LoadGrid();
+        }
+
+        public UoMView(OperationView window)
+        {
+            InitializeComponent();
+            opWindow = window;
             uomService = new UoMService();
             LoadGrid();
         }
@@ -56,8 +65,15 @@ namespace BillsOfMaterial_App.View
         {
             try
             {
-                _window.txtUoM.Text = txtUoM.Text;
-                this.Close();
+                if (_window != null && opWindow == null)
+                {
+                    _window.txtUoM.Text = txtUoM.Text;
+                }
+                else
+                {
+                    opWindow.txtUoM.Text = txtUoM.Text;
+                }
+                    this.Close();               
             }
             catch (Exception ex)
             {

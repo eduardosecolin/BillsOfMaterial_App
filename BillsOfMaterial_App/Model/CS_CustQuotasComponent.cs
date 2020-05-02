@@ -43,6 +43,11 @@ namespace BillsOfMaterial_App.Model
         [StringLength(21)]
         public string Drawing { get; set; }
 
+        [StringLength(21)]
+        public string DrawingComponent { get; set; }
+
+        public double? Costvalue { get; set; }
+
         public double? R1Costvalue { get; set; }
 
         [StringLength(1000)]

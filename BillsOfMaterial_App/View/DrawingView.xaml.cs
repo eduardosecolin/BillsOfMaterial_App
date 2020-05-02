@@ -23,13 +23,25 @@ namespace BillsOfMaterial_App.View
     public partial class DrawingView : Window
     {
         SimulationEDP _window;
+        ItemsView _windowItem;
         BOMService bomService;
+        DrawingService dwService;
 
         public DrawingView(SimulationEDP window)
         {
             InitializeComponent();
             _window = window;
             bomService = new BOMService();
+            dwService = new DrawingService();
+            LoadGrid();
+        }
+
+        public DrawingView(ItemsView window)
+        {
+            InitializeComponent();
+            _windowItem = window;
+            bomService = new BOMService();
+            dwService = new DrawingService();
             LoadGrid();
         }
 
@@ -37,7 +49,16 @@ namespace BillsOfMaterial_App.View
         {
             try
             {
-                dgDrawing.ItemsSource = bomService.GetAllDrawing(txtFilter.Text);
+                dgDrawing.ItemsSource = null;
+
+                if (txtFilter.Text != string.Empty)
+                {
+                    dgDrawing.ItemsSource = dwService.GetAll(txtFilter.Text);
+                }
+                else
+                {
+                    dgDrawing.ItemsSource = dwService.GetAll();
+                }
 
             }
             catch (Exception ex)
@@ -55,7 +76,7 @@ namespace BillsOfMaterial_App.View
         {
             if (dgDrawing.SelectedItems.Count > 0)
             {
-                var items = dgDrawing.SelectedItem as MA_BillOfMaterialsDrawings;
+                var items = dgDrawing.SelectedItem as MA_Drawings;
                 if (items != null)
                 {
                     txtDrawing.Text = items.Drawing;
@@ -67,8 +88,16 @@ namespace BillsOfMaterial_App.View
         {
             if (txtDrawing.Text != string.Empty)
             {
-                _window.txtDrawing.Text = txtDrawing.Text;
-                this.Close();
+                if (_window != null)
+                {
+                    _window.txtDrawing.Text = txtDrawing.Text;
+                    this.Close();
+                }
+                else if (_windowItem != null)
+                {
+                    _windowItem.txtDrawingComponent.Text = txtDrawing.Text;
+                    this.Close();
+                }
             }
             else
             {

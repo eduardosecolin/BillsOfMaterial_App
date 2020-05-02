@@ -26,6 +26,12 @@
                     <materialDesign:PackIcon Foreground="#FF00BCD4" Height="31" Width="66" Kind="FilterVariant"/>
                 </Button>
             </Border>
+            <Border Background="{x:Null}" BorderBrush="White" BorderThickness="0 0 1 0" Grid.Column="3" Margin="0,0,0,36">
+                <RadioButton x:Name="rbAnalize" Content="Mantendo Custos" Margin="10,0,161,0" Checked="rbAnalize_Checked"/>
+            </Border>
+            <Border BorderBrush="White" BorderThickness="0 0 1 0" Grid.Column="3">
+                <RadioButton x:Name="rbProduction" Content="Atualizando Custos" Margin="10,27,153,10" Checked="rbProduction_Checked"/>
+            </Border>
         </Grid>
         <Grid Height="60" Background="White" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="10,75,10,0">
             <Grid.ColumnDefinitions>
@@ -48,7 +54,7 @@
             VerticalAlignment="Top"
             IsReadOnly="True"
             TabIndex="1"
-            Width="210" Height="39" LostFocus="CbItemGrid_LostFocus" SelectionChanged="CbItemGrid_SelectionChanged"/>
+            Width="210" Height="39" SelectionChanged="CbItemGrid_SelectionChanged" DropDownClosed="cbItemGrid_DropDownClosed"/>
             </Border>
             <Border BorderBrush="White" BorderThickness="0 0 1 0" Grid.Column="1">
                 <Button x:Name="btnImport" 
@@ -215,7 +221,7 @@
                 </Button>
             </Border>
             <Border BorderBrush="White" BorderThickness="0 0 1 0" Grid.Column="2">
-               
+
             </Border>
             <Border BorderBrush="White" BorderThickness="0 0 1 0" Grid.Column="3">
                 <Button x:Name="btnSaveSimulation" Cursor="Hand" IsEnabled="False" VerticalAlignment="Top" Height="38" Click="BtnSaveSimulation_Click" Width="178" Margin="24,12,22,0">

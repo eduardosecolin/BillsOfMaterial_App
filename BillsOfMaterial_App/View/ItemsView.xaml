@@ -15,24 +15,24 @@
             TextWrapping="Wrap"
             VerticalAlignment="Top"
             Width="150"
-            materialDesign:HintAssist.Hint="Filtro" 
+            materialDesign:HintAssist.Hint="Filtro por item" 
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
-            MaxLength="10" TabIndex="0" Margin="10,22,0,0" LostFocus="TxtFilter_LostFocus"/>
-        <DataGrid x:Name="dgItems" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Left" Height="278" Margin="10,75,0,0" VerticalAlignment="Top" Width="920" MouseDoubleClick="DgItems_MouseDoubleClick">
+            MaxLength="21" TabIndex="0" Margin="10,22,0,0" LostFocus="TxtFilter_LostFocus"/>
+        <DataGrid x:Name="dgItems" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="278" Margin="10,75,0,0" VerticalAlignment="Top" Width="920" MouseDoubleClick="DgItems_MouseDoubleClick">
             <DataGrid.Columns>
-                <materialDesign:MaterialDataGridTextColumn Foreground="Gray" Header="Item" Binding="{Binding Item}"/>
-                <materialDesign:MaterialDataGridTextColumn Foreground="Gray" Header="Descrição" Binding="{Binding Description}"/>
-                <materialDesign:MaterialDataGridTextColumn Foreground="Gray" Header="U.de Medida" Binding="{Binding BaseUoM}"/>
-                <materialDesign:MaterialDataGridTextColumn Foreground="Gray" Header="Preço Base" Binding="{Binding BasePrice}"/>
-                <materialDesign:MaterialDataGridTextColumn Foreground="Gray" Header="Tipo do Item" Binding="{Binding ItemType}"/>
+                <materialDesign:MaterialDataGridTextColumn  IsReadOnly="True" Foreground="Gray" Header="Item" Binding="{Binding Item}"/>
+                <materialDesign:MaterialDataGridTextColumn  IsReadOnly="True" Foreground="Gray" Header="Descrição" Binding="{Binding Description}"/>
+                <materialDesign:MaterialDataGridTextColumn  IsReadOnly="True" Foreground="Gray" Header="U.de Medida" Binding="{Binding BaseUoM}"/>
+                <materialDesign:MaterialDataGridTextColumn  IsReadOnly="True" Foreground="Gray" Header="Custo Compra" Binding="{Binding BasePrice}"/>
+                <materialDesign:MaterialDataGridTextColumn  IsReadOnly="True" Foreground="Gray" Header="Tipo do Item" Binding="{Binding ItemType}"/>
             </DataGrid.Columns>
         </DataGrid>
         <TextBox 
             x:Name="txtObs" 
             HorizontalAlignment="Left"
-            Width="379" 
+            Width="317" 
             Height="86" 
             Margin="10,380,0,0" 
             TextWrapping="Wrap" 
@@ -67,7 +67,7 @@
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
             MaxLength="10" TabIndex="3" Margin="239,541,0,0" PreviewTextInput="TxtQty_PreviewTextInput"/>
-        <Button x:Name="btnAdd" Content="Adicionar" HorizontalAlignment="Left" Margin="810,556,0,0" VerticalAlignment="Top" Width="119" Click="BtnAdd_Click"/>
+        <Button x:Name="btnAdd" Content="Adicionar" HorizontalAlignment="Left" Margin="810,570,0,0" VerticalAlignment="Top" Width="119" Click="BtnAdd_Click"/>
         <TextBox 
             x:Name="txtDrawing"
             HorizontalAlignment="Left"
@@ -121,5 +121,72 @@
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
             MaxLength="10" TabIndex="15" Margin="777,426,0,0"/>
+        <TextBox 
+            x:Name="txtDrawingComponent"
+            Visibility="Visible"
+            HorizontalAlignment="Left"
+            Height="42"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            IsReadOnly="True"
+            Width="207"
+            materialDesign:HintAssist.Hint="Desenho" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            MaxLength="10" TabIndex="14" Margin="453,488,0,0" />
+        <Button 
+            x:Name="btnDrawingComponent" 
+            Visibility="Visible"
+            Cursor="Hand"  
+            TabIndex="2"
+            Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" Margin="634,488,216,79" Click="BtnDrawingComponent_Click">
+            <materialDesign:PackIcon Foreground="#FF00BCD4" Height="42" Width="75" Kind="DrawingBox"/>
+        </Button>
+        <TextBox 
+            x:Name="txtCostValue"
+            HorizontalAlignment="Left"
+            Height="42"
+            TextWrapping="Wrap"
+            Visibility="Hidden"
+            VerticalAlignment="Top"
+            IsReadOnly="True"
+            Width="150"
+            materialDesign:HintAssist.Hint="Valor de Custo" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            MaxLength="10" TabIndex="15" Margin="453,541,0,0"/>
+        <TextBox 
+            x:Name="txtStandardCost"
+            HorizontalAlignment="Left"
+            Height="42"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="150"
+            materialDesign:HintAssist.Hint="Cust Padrão R$" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            MaxLength="10" TabIndex="3" Margin="451,541,0,0" PreviewTextInput="TxtStandardCost_PreviewTextInput"/>
+        <TextBox 
+            x:Name="txtFilterDescription"
+            HorizontalAlignment="Left"
+            Height="42"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="447"
+            materialDesign:HintAssist.Hint="Filtro por descrição" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            MaxLength="128" TabIndex="50" Margin="187,22,0,0" LostFocus="txtFilterDescription_LostFocus"/>
+        <Button 
+            x:Name="btnDefaultOBS" 
+            Cursor="Hand" Margin="327,380,521,183" 
+            TabIndex="2"
+            Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" Click="btnDefaultOBS_Click">
+            <materialDesign:PackIcon Foreground="#FF00BCD4" Height="42" Width="75" Kind="TextShadow"/>
+        </Button>
     </Grid>
 </Window>

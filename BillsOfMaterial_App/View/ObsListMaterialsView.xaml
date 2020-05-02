@@ -1,0 +1,45 @@
+﻿<Window x:Class="BillsOfMaterial_App.View.ObsListMaterialsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BillsOfMaterial_App.View"
+        mc:Ignorable="d"
+        Title="Obs.Lista de Materiais" Height="450" Width="600" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid>
+        <TextBox 
+            x:Name="txtFilter"
+            HorizontalAlignment="Left"
+            Height="42"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="236"
+            materialDesign:HintAssist.Hint="Filtro" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            MaxLength="100" TabIndex="0" Margin="10,10,0,0" LostFocus="txtFilter_LostFocus"/>
+        <DataGrid x:Name="dgLMObs" HorizontalAlignment="Left" Height="285" Margin="10,57,0,0" VerticalAlignment="Top" Width="574" AutoGenerateColumns="False" MouseDoubleClick="dgLMObs_MouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding NoteCode}" ClipboardContentBinding="{x:Null}" Header="Titulo da Obs."/>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Description}" ClipboardContentBinding="{x:Null}" Header="Observação"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <TextBox 
+            x:Name="txtNoteCode"
+            HorizontalAlignment="Left"
+            Height="42"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            IsReadOnly="True"
+            Width="150"
+            materialDesign:HintAssist.Hint="Titulo da Obs." 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            MaxLength="10" TabIndex="15" Margin="10,360,0,0"/>
+        <Button x:Name="btnAdd" Content="Adicionar" HorizontalAlignment="Left" Margin="465,371,0,0" VerticalAlignment="Top" Width="119" Click="btnAdd_Click"/>
+
+    </Grid>
+</Window>

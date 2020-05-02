@@ -39,15 +39,15 @@
             FontFamily="champagne &amp; Limousines"
             FontSize="14" Foreground="#FF0A0A0A" 
             MaxLength="10" TabIndex="2" Margin="10,540,0,0"/>
-        <materialDesign:TimePicker 
+        <TextBox 
              x:Name="dpTimeProcess" 
             TabIndex="2"
             materialDesign:HintAssist.Hint="Tempo de Processamento" 
-            Style="{StaticResource ResourceKey=MaterialDesignFloatingHintTimePicker}" 
+            Style="{StaticResource  MaterialDesignFloatingHintTextBox}" 
             FontFamily="champagne &amp; Limousines" 
             FontSize="14" 
             Foreground="#FF0A0A0A" 
-            HorizontalAlignment="Left" Height="29" Margin="197,552,0,0" Width="192" Is24Hours="True"/>
+            HorizontalAlignment="Left" Margin="197,539,0,37" Width="192" PreviewTextInput="dpTimeProcess_PreviewTextInput"/>
         <TextBox 
             x:Name="txtObs" 
             HorizontalAlignment="Left"
@@ -63,5 +63,51 @@
             TabIndex="1" MaxLength="500" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" AcceptsReturn="True"/>
         <Button x:Name="btnAdd" Content="Adicionar" HorizontalAlignment="Left" Margin="755,553,0,0" VerticalAlignment="Top" Width="119" Click="BtnAdd_Click"/>
         <Button x:Name="btnAddOBS" Content="Padrões OBS" HorizontalAlignment="Left" Margin="755,421,0,0" VerticalAlignment="Top" Width="119" Click="BtnAddOBS_Click"/>
+        <TextBox 
+            x:Name="txtCostOperation"
+            HorizontalAlignment="Left"
+            Height="42"
+            IsReadOnly="True"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="150"
+            materialDesign:HintAssist.Hint="Cust Operação R$" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            MaxLength="10" TabIndex="2" Margin="442,540,0,0"/>
+        <TextBox 
+            x:Name="txtUoM"
+            HorizontalAlignment="Left"
+            Height="42"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            IsReadOnly="True"
+            Width="138"
+            materialDesign:HintAssist.Hint="Unidade de Medida" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            MaxLength="8" TabIndex="1" Margin="440,417,0,0"/>
+        <Button 
+            x:Name="btnSerchUoM" 
+            Cursor="Hand" Margin="551,413,247,149" 
+            TabIndex="2"
+            Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" Click="btnSerchUoM_Click">
+            <materialDesign:PackIcon Foreground="#FF00BCD4" Height="42" Width="75" Kind="Animation"/>
+        </Button>
+        <TextBox 
+            x:Name="txtQuantity"
+            HorizontalAlignment="Left"
+            Height="42"
+            IsReadOnly="False"
+            TextWrapping="Wrap"
+            VerticalAlignment="Top"
+            Width="150"
+            materialDesign:HintAssist.Hint="Quantidade" 
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            FontFamily="champagne &amp; Limousines"
+            FontSize="14" Foreground="#FF0A0A0A" 
+            MaxLength="10" TabIndex="2" Margin="442,474,0,0" PreviewTextInput="txtQuantity_PreviewTextInput"/>
     </Grid>
 </Window>

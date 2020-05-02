@@ -38,5 +38,26 @@ namespace BillsOfMaterial_App.Service
             }
         }
 
+        public int GetTypeUser(string user, string pwd)
+        {
+            try
+            {
+                var sql = _context.CS_UserManager.Where(x => x.UserName == user && x.Password == pwd).FirstOrDefault();
+                if(sql != null)
+                {
+                    return Convert.ToInt32(sql.UserManagerType);
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
     }
 }

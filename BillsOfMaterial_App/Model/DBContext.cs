@@ -59,9 +59,19 @@ namespace BillsOfMaterial_App.Model
         public virtual DbSet<MA_Company> MA_Company { get; set; }
         public virtual DbSet<CS_DBDefaultOBS> CS_DBDefaultOBS { get; set; }
         public virtual DbSet<CS_UserManager> CS_UserManager { get; set; }
+        public virtual DbSet<CS_TBCostFormation> CS_TBCostFormation { get; set; }
+        public virtual DbSet<CS_OnOffValidate> CS_OnOffValidate { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<CS_OnOffValidate>()
+                .Property(e => e.OfferNo)
+                .IsFixedLength();
+
+            modelBuilder.Entity<CS_OnOffValidate>()
+                .Property(e => e.Item)
+                .IsFixedLength();
+
             modelBuilder.Entity<CS_DBDefaultOBS>()
                 .Property(e => e.Title)
                 .IsFixedLength();
@@ -69,6 +79,18 @@ namespace BillsOfMaterial_App.Model
             modelBuilder.Entity<CS_DBDefaultOBS>()
                 .Property(e => e.Observation)
                 .IsFixedLength();
+
+            modelBuilder.Entity<CS_TBCostFormation>()
+               .Property(e => e.OfferNo)
+               .IsFixedLength();
+
+            modelBuilder.Entity<CS_TBCostFormation>()
+               .Property(e => e.SumIpiIcms)
+               .IsFixedLength();
+
+            modelBuilder.Entity<CS_TBCostFormation>()
+               .Property(e => e.Item)
+               .IsFixedLength();
 
             modelBuilder.Entity<MA_BillOfMaterials>()
                 .Property(e => e.UsePercQty)
@@ -132,6 +154,10 @@ namespace BillsOfMaterial_App.Model
             modelBuilder.Entity<MA_BillOfMaterialsComp>()
                .Property(e => e.TempDrawing)
                .IsFixedLength();
+
+            modelBuilder.Entity<MA_BillOfMaterialsComp>()
+              .Property(e => e.DrawingComp)
+              .IsFixedLength();
 
             modelBuilder.Entity<MA_BillOfMaterialsComp>()
                .Property(e => e.PathFile)
@@ -344,6 +370,10 @@ namespace BillsOfMaterial_App.Model
                 .IsFixedLength();
 
             modelBuilder.Entity<CS_CustQuotasComponent>()
+                .Property(e => e.DrawingComponent)
+                .IsFixedLength();
+
+            modelBuilder.Entity<CS_CustQuotasComponent>()
                 .Property(e => e.PathFile1)
                 .IsFixedLength();
 
@@ -364,7 +394,15 @@ namespace BillsOfMaterial_App.Model
                 .IsFixedLength();
 
             modelBuilder.Entity<CS_CustQuotasOperation>()
+               .Property(e => e.TimeProcessStr)
+               .IsFixedLength();
+
+            modelBuilder.Entity<CS_CustQuotasOperation>()
                 .Property(e => e.DescriptionOperation)
+                .IsFixedLength();
+
+            modelBuilder.Entity<CS_CustQuotasOperation>()
+                .Property(e => e.UoM)
                 .IsFixedLength();
 
             modelBuilder.Entity<CS_CustQuotasOperation>()

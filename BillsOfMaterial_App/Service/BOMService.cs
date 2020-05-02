@@ -12,11 +12,13 @@ namespace BillsOfMaterial_App.Service
     {
         private readonly DBContext _context;
         CustQuotaCompOpService serviceCompOp;
+        CustQuotasService cqService;
 
         public BOMService()
         {
             _context = new DBContext();
             serviceCompOp = new CustQuotaCompOpService();
+            cqService = new CustQuotasService();
         }
 
         public List<MA_BillOfMaterialsComp> GetComponentsBOM(string bom)
@@ -37,6 +39,11 @@ namespace BillsOfMaterial_App.Service
         public List<MA_BillOfMaterials> GetBOMByParams(string bom)
         {
             return _context.MA_BillOfMaterials.Where(x => x.BOM.Contains(bom) || x.Description.Contains(bom)).ToList();
+        }
+
+        public List<MA_BillOfMaterials> GetBOMByParams2(string bom)
+        {
+            return _context.MA_BillOfMaterials.Where(x => x.TecConclusion.Contains(bom)).ToList();
         }
 
         public List<MA_BillOfMaterialsDrawings> GetAllDrawing(string param)
@@ -80,17 +87,19 @@ namespace BillsOfMaterial_App.Service
         public List<MA_BillOfMaterials> GetBOMFromSImulation()
         {
             List<MA_BillOfMaterials> listBOM = new List<MA_BillOfMaterials>();
-            List<string> listStr = serviceCompOp.GetDistinctItemBOM();
+            var listStr = serviceCompOp.GetAllSimulations();
             if (listStr.Count > 0)
             {
                 foreach (var item in listStr)
                 {
                     MA_BillOfMaterials bom = new MA_BillOfMaterials();
-                    bom.BOM = item.Trim();
-                    bom.Description = GetDescriptionBOM(item.Trim());
-                    bom.UoM = GetUoMBOM(item.Trim());
-                    bom.LastModificationDate = serviceCompOp.GetTBModifiedFromSimulationCompBOM(item.Trim());
-                    bom.CreationDate = serviceCompOp.GetTBCreatedFromSimulationCompBOM(item.Trim());
+                    bom.BOM = item.BOM.Trim();
+                    bom.Description = GetDescriptionBOM(item.BOM.Trim());
+                    bom.UoM = GetUoMBOM(item.BOM.Trim());
+                    bom.LastModificationDate = serviceCompOp.GetTBModifiedFromSimulationCompBOM(item.BOM.Trim());
+                    bom.CreationDate = serviceCompOp.GetTBCreatedFromSimulationCompBOM(item.BOM.Trim());
+                    bom.LastSubId = item.Id;
+                    bom.TecConclusion = cqService.GetQuotationNo(item.Id);
                     listBOM.Add(bom);
                 }
             }
@@ -98,11 +107,19 @@ namespace BillsOfMaterial_App.Service
             return listBOM;
         }
 
-        public List<MA_BillOfMaterialsComp> GetComponentsBOMFromSimulation(string bom, string itemComp)
+        public List<MA_BillOfMaterialsComp> GetComponentsBOMFromSimulation(string bom, string itemComp, int? Id, bool isAnalize)
         {
-            int? id = serviceCompOp.GetIdFromSimulationCompBOM(bom);
+            int? id = Id;
             List<MA_BillOfMaterialsComp> listComp = new List<MA_BillOfMaterialsComp>();
-            List<CS_CustQuotasComponent> compList = serviceCompOp.GetSimulationComponents2(Convert.ToInt32(id), itemComp);
+            List<CS_CustQuotasComponent> compList = new List<CS_CustQuotasComponent>();
+            if (isAnalize)
+            {
+                compList = serviceCompOp.GetSimulationComponents2(Convert.ToInt32(id), itemComp);
+            }
+            else
+            {
+                compList = serviceCompOp.GetSimulationComponents2_2(Convert.ToInt32(id), itemComp);
+            }
             if(compList.Count > 0)
             {
                 foreach (var item in compList)
@@ -113,11 +130,14 @@ namespace BillsOfMaterial_App.Service
                     comp.Description = item.Description.Trim();
                     comp.UoM = item.UoM.Trim();
                     comp.Qty = item.Qty;
-                    comp.Drawing = item.PathFile1;
-                    comp.TempDrawing = item.Drawing;
-                    comp.PathFile = item.PathFile2;
-                    comp.CompTecConclusion = item.TecConclusion2;
-                    if(item.Obs == null)
+                    comp.ScrapQty = item.Costvalue == null ? 0 : item.Costvalue;
+                    comp.Drawing = item.PathFile1 == null ? string.Empty : item.PathFile1.Trim();
+                    comp.DrawingComp = item.DrawingComponent == null ? string.Empty : item.DrawingComponent.Trim();
+                    comp.TempDrawing = item.Drawing == null ? string.Empty : item.Drawing.Trim();
+                    comp.PathFile = item.PathFile2 == null ? string.Empty : item.PathFile2.Trim();
+                    comp.CompTecConclusion = item.TecConclusion2 == null ? string.Empty : item.TecConclusion2.Trim();
+                    comp.WastePerc = item.R1Costvalue;
+                    if (item.Obs == null)
                     {
                         comp.Notes = string.Empty;
                     }
@@ -132,36 +152,72 @@ namespace BillsOfMaterial_App.Service
             return listComp;
         }
 
-        public List<MA_BillOfMaterialsRouting> GetOperationsBOMFromSimulation(string bom, string itemOp)
+        public List<MA_BillOfMaterialsRouting> GetOperationsBOMFromSimulation(string bom, string itemOp, int? Id, bool isAnalize)
         {
-            int? id = serviceCompOp.GetIdFromSimulationOpBOM(bom);
-            List<MA_BillOfMaterialsRouting> listOp = new List<MA_BillOfMaterialsRouting>();
-            List<CS_CustQuotasOperation> opList = serviceCompOp.GetSimulationOperations2(Convert.ToInt32(id), itemOp);
-            if (opList.Count > 0)
+            try
             {
-                foreach (var item in opList)
+                int? id = Id;
+                List<MA_BillOfMaterialsRouting> listOp = new List<MA_BillOfMaterialsRouting>();
+                List<CS_CustQuotasOperation> opList = new List<CS_CustQuotasOperation>();
+                if (isAnalize)
                 {
-                    MA_BillOfMaterialsRouting op = new MA_BillOfMaterialsRouting();
-                    op.BOM = bom.Trim();
-                    op.Operation = item.Operation.Trim();
-                    string time = Convert.ToDateTime(item.TimeProcess).ToShortTimeString();
-                    string[] vTime = time.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
-                    TimeSpan ts = new TimeSpan(Convert.ToInt32(vTime[0]), Convert.ToInt32(vTime[1]), 0);
-                    double result = ts.TotalMilliseconds;
-                    op.ProcessingTime = Convert.ToInt32(result.ToString().Substring(0, result.ToString().Length - 3)); ;
-                    if (string.IsNullOrEmpty(item.Obs))
-                    {
-                        op.Notes = string.Empty;
-                    }
-                    else
-                    {
-                        op.Notes = item.Obs.Trim();
-                    }
-                    listOp.Add(op);
+                    opList = serviceCompOp.GetSimulationOperations2(Convert.ToInt32(id), itemOp);
                 }
-            }
+                else
+                {
+                    opList = serviceCompOp.GetSimulationOperations2_2(Convert.ToInt32(id), itemOp);
+                }
+                
+                if (opList.Count > 0)
+                {
+                    foreach (var item in opList)
+                    {
+                        MA_BillOfMaterialsRouting op = new MA_BillOfMaterialsRouting();
+                        op.BOM = bom.Trim();
+                        double result = 0;
+                        op.Operation = item.Operation.Trim();
+                        string time = item.TimeProcessStr;
+                        if (time != string.Empty)
+                        {
+                            string[] vTime = time.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+                            TimeSpan ts = new TimeSpan(Convert.ToInt32(vTime[0]), Convert.ToInt32(vTime[1]), 0);
+                            result = ts.TotalMilliseconds;
+                            if (result == 0)
+                            {
+                                op.ProcessingTime = 0;
+                            }
+                            else
+                            {
+                                op.ProcessingTime = Convert.ToInt32(result.ToString().Substring(0, result.ToString().Length - 3));
+                            }
+                        }
+                        else
+                        {
+                            result = 0;
+                            op.ProcessingTime = null;
+                        }
 
-            return listOp;
+                        if (string.IsNullOrEmpty(item.Obs))
+                        {
+                            op.Notes = string.Empty;
+                        }
+                        else
+                        {
+                            op.Notes = item.Obs.Trim();
+                        }
+                        op.SetupAttendancePerc = item.CostOperation;
+                        op.WC = item.UoM;
+                        op.Qty = item.Qty;
+                        listOp.Add(op);
+                    }
+                }
+
+                return listOp;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
 
