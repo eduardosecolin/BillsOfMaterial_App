@@ -26,16 +26,19 @@ namespace BillsOfMaterial_App.View
     /// </summary>
     public partial class ItemsView : Window
     {
-        SimulationEDP _mainWindow;
+        public SimulationEDP _mainWindow;
         ItemsService itemsService;
+        private CS_CustQuotasComponent componentObj;
         private string description = string.Empty;
         public bool isEditmode = false;
         private bool isException = false;
         public string longPath = string.Empty;
+        public static List<List<CS_ItemsAnalysisParameters>> itemsAnalysisParametersSuperList = new List<List<CS_ItemsAnalysisParameters>>();
 
         public ItemsView(SimulationEDP window)
         {
             InitializeComponent();
+            componentObj = new CS_CustQuotasComponent();
             _mainWindow = window;
             itemsService = new ItemsService();
             LoadGrid();
@@ -79,6 +82,8 @@ namespace BillsOfMaterial_App.View
                     {
                         NotVisibleIsSpecific();
                     }
+
+                    btnQualityControl.IsEnabled = true;
                 }
             }
         }
@@ -107,6 +112,7 @@ namespace BillsOfMaterial_App.View
                     txtCostValue.Text = CalculateCostValue().ToString();
                     if (txtItem.Text != string.Empty)
                     {
+                        GetThisComponent();
                         var treeview = _mainWindow.tvBOM.SelectedItem as TreeViewItem;
                         if (treeview != null)
                         {
@@ -114,11 +120,11 @@ namespace BillsOfMaterial_App.View
                             {
                                 if (txtObs.Text == string.Empty)
                                 {
-                                    treeview.Header = txtItem.Text.Replace("|", "") + " | " + itemsService.GetDescriptionItem(txtItem.Text).Replace("|", "") + "| Quantidade: " + txtQty.Text + " | Valor R$: " + txtCostValue.Text + " | Imagem= " + longPath.Replace("|", "") + " | Custo R1: " + txtResultValue.Text + " | Desenho: " + txtDrawingComponent.Text;
+                                    treeview.Header = componentObj.Component.Replace("|", "") + " | " + itemsService.GetDescriptionItem(componentObj.Component).Replace("|", "") + "| Quantidade: " + componentObj.Qty + " | Valor R$: " + componentObj.Costvalue + " | Imagem= " + componentObj.PathFile1.Replace("|", "") + " | Custo R1: " + componentObj.R1Costvalue + " | Desenho: " + componentObj.DrawingComponent;
                                 }
                                 else
                                 {
-                                    treeview.Header = txtItem.Text.Replace("|", "") + " | " + itemsService.GetDescriptionItem(txtItem.Text).Replace("|", "") + " | Quantidade: " + txtQty.Text + " | Valor R$: " + txtCostValue.Text + " | OBS: " + txtObs.Text.Replace("|", "") + " | Imagem= " + longPath.Replace("|", "") + " | Custo R1: " + txtResultValue.Text + " | Desenho: " + txtDrawingComponent.Text;
+                                    treeview.Header = componentObj.Component.Replace("|", "") + " | " + itemsService.GetDescriptionItem(componentObj.Component).Replace("|", "") + " | Quantidade: " + componentObj.Qty + " | Valor R$: " + componentObj.Costvalue + " | OBS: " + componentObj.Obs.Replace("|", "") + " | Imagem= " + componentObj.PathFile1.Replace("|", "") + " | Custo R1: " + componentObj.R1Costvalue + " | Desenho: " + componentObj.DrawingComponent;
                                 }
                                 this.Close();
                             }
@@ -140,7 +146,7 @@ namespace BillsOfMaterial_App.View
                                     {
                                         Orientation = Orientation.Horizontal,
                                         Children = {
-                                            new TextBlock { Text = txtItem.Text.Replace("|", "") + " | " + itemsService.GetDescriptionItem(txtItem.Text).Replace("|", "") + " | Quantidade: " + txtQty.Text + " | Valor R$: " + txtCostValue.Text + " | Imagem= " + longPath.Replace("|", "") + " | Custo R1: " + txtResultValue.Text + " | Desenho: " + txtDrawingComponent.Text },
+                                            new TextBlock { Text = componentObj.Component.Replace("|", "") + " | " + itemsService.GetDescriptionItem(componentObj.Component).Replace("|", "") + " | Quantidade: " + componentObj.Qty + " | Valor R$: " + componentObj.Costvalue + " | Imagem= " + componentObj.PathFile1.Replace("|", "") + " | Custo R1: " + componentObj.R1Costvalue + " | Desenho: " + componentObj.DrawingComponent },
                                             btn
                                         }
                                     };
@@ -151,7 +157,7 @@ namespace BillsOfMaterial_App.View
                                     {
                                         Orientation = Orientation.Horizontal,
                                         Children = {
-                                            new TextBlock { Text = txtItem.Text.Replace("|", "") + " | " + itemsService.GetDescriptionItem(txtItem.Text).Replace("|", "") + " | Quantidade: " + txtQty.Text + " | Valor R$: " + txtCostValue.Text + " | OBS: " + txtObs.Text.Replace("|", "") + " | Imagem= " + longPath.Replace("|", "") + " | Custo R1: " + txtResultValue.Text + " | Desenho: " + txtDrawingComponent.Text },
+                                            new TextBlock { Text = componentObj.Component.Replace("|", "") + " | " + itemsService.GetDescriptionItem(componentObj.Component).Replace("|", "") + " | Quantidade: " + componentObj.Qty + " | Valor R$: " + componentObj.Costvalue + " | OBS: " + componentObj.Obs.Replace("|", "") + " | Imagem= " + componentObj.PathFile1.Replace("|", "") + " | Custo R1: " + componentObj.R1Costvalue + " | Desenho: " + componentObj.DrawingComponent },
                                             btn
                                         }
                                     };
@@ -184,6 +190,7 @@ namespace BillsOfMaterial_App.View
                     if (txtItem.Text != string.Empty)
                     {
                         txtCostValue.Text = CalculateCostValue().ToString();
+                        GetThisComponent();
                         if (_mainWindow.level1 == true)
                         {
                             FillLevel1();
@@ -235,11 +242,11 @@ namespace BillsOfMaterial_App.View
                 chilItem.Name = "treeViewLv1";
                 if (txtObs.Text == string.Empty)
                 {
-                    chilItem.Header = txtItem.Text.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + txtQty.Text + " | Valor R$: " + txtCostValue.Text + " | Imagem= " + longPath.Replace("|", "") + " | Custo R1: " + txtResultValue.Text + " | Desenho: " + txtDrawingComponent.Text;
+                    chilItem.Header = componentObj.Component.Replace("|", "") + " | " + componentObj.Description.Replace("|", "") + " | Quantidade: " + componentObj.Qty + " | Valor R$: " + componentObj.Costvalue + " | Imagem= " + componentObj.PathFile1.Replace("|", "") + " | Custo R1: " + componentObj.R1Costvalue + " | Desenho: " + componentObj.DrawingComponent;
                 }
                 else
                 {
-                    chilItem.Header = txtItem.Text.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + txtQty.Text + " | Valor R$: " + txtCostValue.Text + " | OBS: " + txtObs.Text.Replace("|", "") + " | Imagem= " + longPath.Replace("|", "") + " | Custo R1: " + txtResultValue.Text + " | Desenho: " + txtDrawingComponent.Text;
+                    chilItem.Header = componentObj.Component.Replace("|", "") + " | " + componentObj.Description.Replace("|", "") + " | Quantidade: " + componentObj.Qty + " | Valor R$: " + componentObj.Costvalue + " | OBS: " + componentObj.Obs.Replace("|", "") + " | Imagem= " + componentObj.PathFile1.Replace("|", "") + " | Custo R1: " + componentObj.R1Costvalue + " | Desenho: " + componentObj.DrawingComponent;
                 }
                 _mainWindow.tvComponent.Items.Add(chilItem);
                 this.Close();
@@ -265,7 +272,7 @@ namespace BillsOfMaterial_App.View
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = txtItem.Text.Replace("|", "") + " | " + description.Replace("|","") + " | Quantidade: " + txtQty.Text + " | Valor R$: " + txtCostValue.Text + " | Imagem= " + longPath.Replace("|", "") + " | Custo R1: " + txtResultValue.Text + " | Desenho: " + txtDrawingComponent.Text },
+                                new TextBlock { Text = componentObj.Component.Replace("|", "") + " | " + componentObj.Description.Replace("|","") + " | Quantidade: " + componentObj.Qty + " | Valor R$: " + componentObj.Costvalue + " | Imagem= " + componentObj.PathFile1.Replace("|", "") + " | Custo R1: " + componentObj.R1Costvalue + " | Desenho: " + componentObj.DrawingComponent },
                                 btn
                             }
                         }
@@ -287,7 +294,7 @@ namespace BillsOfMaterial_App.View
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = txtItem.Text.Replace("|", "") + " | " + description.Replace("|","") + " | Quantidade: " + txtQty.Text + " | Valor R$: " + txtCostValue.Text + " | OBS: " + txtObs.Text.Replace("|", "") + " | Imagem= " + longPath.Replace("|", "") + " | Custo R1: " + txtResultValue.Text + " | Desenho: " + txtDrawingComponent.Text },
+                                new TextBlock { Text = componentObj.Component.Replace("|", "") + " | " + componentObj.Description.Replace("|","") + " | Quantidade: " + componentObj.Qty + " | Valor R$: " + componentObj.Costvalue + " | OBS: " + componentObj.Obs.Replace("|", "") + " | Imagem= " + componentObj.PathFile1.Replace("|", "") + " | Custo R1: " + componentObj.R1Costvalue + " | Desenho: " + componentObj.DrawingComponent },
                                 btn
                             }
                         }
@@ -308,11 +315,11 @@ namespace BillsOfMaterial_App.View
                 chilItem.Name = "treeViewLv1";
                 if (txtObs.Text == string.Empty)
                 {
-                    chilItem.Header = txtItem.Text.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + txtQty.Text + " | Valor R$: " + txtCostValue.Text + " | Imagem= " + longPath.Replace("|", "") + " | Custo R1: " + txtResultValue.Text + " | Desenho: " + txtDrawingComponent.Text;
+                    chilItem.Header = componentObj.Component.Replace("|", "") + " | " + componentObj.Description.Replace("|", "") + " | Quantidade: " + componentObj.Qty + " | Valor R$: " + componentObj.Costvalue + " | Imagem= " + componentObj.PathFile1.Replace("|", "") + " | Custo R1: " + componentObj.R1Costvalue + " | Desenho: " + componentObj.DrawingComponent;
                 }
                 else
                 {
-                    chilItem.Header = txtItem.Text.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + txtQty.Text + " | Valor R$: " + txtCostValue.Text + " | OBS: " + txtObs.Text.Replace("|", "") + " | Imagem= " + longPath.Replace("|", "") + " | Custo R1: " + txtResultValue.Text + " | Desenho: " + txtDrawingComponent.Text;
+                    chilItem.Header = componentObj.Component.Replace("|", "") + " | " + componentObj.Description.Replace("|", "") + " | Quantidade: " + componentObj.Qty + " | Valor R$: " + componentObj.Costvalue + " | OBS: " + componentObj.Obs.Replace("|", "") + " | Imagem= " + componentObj.PathFile1.Replace("|", "") + " | Custo R1: " + componentObj.R1Costvalue + " | Desenho: " + componentObj.DrawingComponent;
                 }
                 _mainWindow.tvComponent.Items.Add(chilItem);
                 this.Close();
@@ -328,11 +335,11 @@ namespace BillsOfMaterial_App.View
                 chilItem.Name = "tvLevel2";
                 if (txtObs.Text == string.Empty)
                 {
-                    chilItem.Header = txtItem.Text.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + txtQty.Text + " | Valor R$: " + txtCostValue.Text + " | Imagem= " + longPath.Replace("|", "") + " | Custo R1: " + txtResultValue.Text + " | Desenho: " + txtDrawingComponent.Text;
+                    chilItem.Header = componentObj.Component.Replace("|", "") + " | " + componentObj.Description.Replace("|", "") + " | Quantidade: " + componentObj.Qty + " | Valor R$: " + componentObj.Costvalue + " | Imagem= " + componentObj.PathFile1.Replace("|", "") + " | Custo R1: " + componentObj.R1Costvalue + " | Desenho: " + componentObj.DrawingComponent;
                 }
                 else
                 {
-                    chilItem.Header = txtItem.Text.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + txtQty.Text + " | Valor R$: " + txtCostValue.Text + " | OBS: " + txtObs.Text.Replace("|", "") + " | Imagem= " + longPath.Replace("|", "") + " | Custo R1: " + txtResultValue.Text + " | Desenho: " + txtDrawingComponent.Text;
+                    chilItem.Header = componentObj.Component.Replace("|", "") + " | " + componentObj.Description.Replace("|", "") + " | Quantidade: " + componentObj.Qty + " | Valor R$: " + componentObj.Costvalue + " | OBS: " + componentObj.Obs.Replace("|", "") + " | Imagem= " + componentObj.PathFile1.Replace("|", "") + " | Custo R1: " + componentObj.R1Costvalue + " | Desenho: " + componentObj.DrawingComponent;
                 }
                 viewItem.Items.Add(chilItem);
                 this.Close();
@@ -358,7 +365,7 @@ namespace BillsOfMaterial_App.View
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = txtItem.Text.Replace("|", "") + " | " + description.Replace("|","") + " | Quantidade: " + txtQty.Text + " | Valor R$: " + txtCostValue.Text + " | Imagem= " + longPath.Replace("|", "") + " | Custo R1: " + txtResultValue.Text + " | Desenho: " + txtDrawingComponent.Text },
+                                new TextBlock { Text = componentObj.Component.Replace("|", "") + " | " + componentObj.Description.Replace("|","") + " | Quantidade: " + componentObj.Qty + " | Valor R$: " + componentObj.Costvalue + " | Imagem= " + componentObj.PathFile1.Replace("|", "") + " | Custo R1: " + componentObj.R1Costvalue + " | Desenho: " + componentObj.DrawingComponent },
                                 btn
                             }
                         }
@@ -380,7 +387,7 @@ namespace BillsOfMaterial_App.View
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = txtItem.Text.Replace("|", "") + " | " + description.Replace("|","") + " | Quantidade: " + txtQty.Text + " | Valor R$: " + txtCostValue.Text + " | OBS: " + txtObs.Text.Replace("|", "") + " | Imagem= " + longPath.Replace("|", "") + " | Custo R1: " + txtResultValue.Text + " | Desenho: " + txtDrawingComponent.Text },
+                                new TextBlock { Text = componentObj.Component.Replace("|", "") + " | " + componentObj.Description.Replace("|","") + " | Quantidade: " + componentObj.Qty + " | Valor R$: " + componentObj.Costvalue + " | OBS: " + componentObj.Obs.Replace("|", "") + " | Imagem= " + componentObj.PathFile1.Replace("|", "") + " | Custo R1: " + componentObj.R1Costvalue + " | Desenho: " + componentObj.DrawingComponent },
                                 btn
                             }
                         }
@@ -402,11 +409,11 @@ namespace BillsOfMaterial_App.View
                 chilItem.Name = "tvLevel2";
                 if (txtObs.Text == string.Empty)
                 {
-                    chilItem.Header = txtItem.Text.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + txtQty.Text + " | Valor R$: " + txtCostValue.Text + " | Imagem= " + longPath.Replace("|", "") + " | Custo R1: " + txtResultValue.Text + " | Desenho: " + txtDrawingComponent.Text;
+                    chilItem.Header = componentObj.Component.Replace("|", "") + " | " + componentObj.Description.Replace("|", "") + " | Quantidade: " + componentObj.Qty + " | Valor R$: " + componentObj.Costvalue + " | Imagem= " + componentObj.PathFile1.Replace("|", "") + " | Custo R1: " + componentObj.R1Costvalue + " | Desenho: " + componentObj.DrawingComponent;
                 }
                 else
                 {
-                    chilItem.Header = txtItem.Text.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + txtQty.Text + " | Valor R$: " + txtCostValue.Text + " | OBS: " + txtObs.Text.Replace("|", "") + " | Imagem= " + longPath.Replace("|", "") + " | Custo R1: " + txtResultValue.Text + " | Desenho: " + txtDrawingComponent.Text;
+                    chilItem.Header = componentObj.Component.Replace("|", "") + " | " + componentObj.Description.Replace("|", "") + " | Quantidade: " + componentObj.Qty + " | Valor R$: " + componentObj.Costvalue + " | OBS: " + componentObj.Obs.Replace("|", "") + " | Imagem= " + componentObj.PathFile1.Replace("|", "") + " | Custo R1: " + componentObj.R1Costvalue + " | Desenho: " + componentObj.DrawingComponent;
                 }
                 viewItem.Items.Add(chilItem);
                 this.Close();
@@ -422,11 +429,11 @@ namespace BillsOfMaterial_App.View
                 chilItem.Name = "tvLevel3";
                 if (txtObs.Text == string.Empty)
                 {
-                    chilItem.Header = txtItem.Text.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + txtQty.Text + " | Valor R$: " + txtCostValue.Text + " | Imagem= " + longPath.Replace("|", "") + " | Custo R1: " + txtResultValue.Text + " | Desenho: " + txtDrawingComponent.Text;
+                    chilItem.Header = componentObj.Component.Replace("|", "") + " | " + componentObj.Description.Replace("|", "") + " | Quantidade: " + componentObj.Qty + " | Valor R$: " + componentObj.Costvalue + " | Imagem= " + componentObj.PathFile1.Replace("|", "") + " | Custo R1: " + componentObj.R1Costvalue + " | Desenho: " + componentObj.DrawingComponent;
                 }
                 else
                 {
-                    chilItem.Header = txtItem.Text.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + txtQty.Text + " | Valor R$: " + txtCostValue.Text + " | OBS: " + txtObs.Text.Replace("|", "") + " | Imagem= " + longPath.Replace("|", "") + " | Custo R1: " + txtResultValue.Text + " | Desenho: " + txtDrawingComponent.Text;
+                    chilItem.Header = componentObj.Component.Replace("|", "") + " | " + componentObj.Description.Replace("|", "") + " | Quantidade: " + componentObj.Qty + " | Valor R$: " + componentObj.Costvalue + " | OBS: " + componentObj.Obs.Replace("|", "") + " | Imagem= " + componentObj.PathFile1.Replace("|", "") + " | Custo R1: " + componentObj.R1Costvalue + " | Desenho: " + componentObj.DrawingComponent;
                 }
                 viewItem.Items.Add(chilItem);
                 this.Close();
@@ -452,7 +459,7 @@ namespace BillsOfMaterial_App.View
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = txtItem.Text.Replace("|", "") + " | " + description.Replace("|","") + " | Quantidade: " + txtQty.Text + " | Valor R$: " + txtCostValue.Text + " | Imagem= " + longPath.Replace("|", "") + " | Custo R1: " + txtResultValue.Text + " | Desenho: " + txtDrawingComponent.Text },
+                                new TextBlock { Text = componentObj.Component.Replace("|", "") + " | " + componentObj.Description.Replace("|","") + " | Quantidade: " + componentObj.Qty + " | Valor R$: " + componentObj.Costvalue + " | Imagem= " + componentObj.PathFile1.Replace("|", "") + " | Custo R1: " + componentObj.R1Costvalue + " | Desenho: " + componentObj.DrawingComponent },
                                 btn
                             }
                         }
@@ -471,7 +478,7 @@ namespace BillsOfMaterial_App.View
                         {
                             Orientation = Orientation.Horizontal,
                             Children = {
-                                new TextBlock { Text = txtItem.Text.Replace("|", "") + " | " + description.Replace("|","") + " | Quantidade: " + txtQty.Text + " | Valor R$: " + txtCostValue.Text + " | OBS: " + txtObs.Text.Replace("|", "") + " | Imagem= " + longPath.Replace("|", "") + " | Custo R1: " + txtResultValue.Text + " | Desenho: " + txtDrawingComponent.Text },
+                                new TextBlock { Text = componentObj.Component.Replace("|", "") + " | " + componentObj.Description.Replace("|","") + " | Quantidade: " + componentObj.Qty + " | Valor R$: " + componentObj.Costvalue + " | OBS: " + componentObj.Obs.Replace("|", "") + " | Imagem= " + componentObj.PathFile1.Replace("|", "") + " | Custo R1: " + componentObj.R1Costvalue + " | Desenho: " + componentObj.DrawingComponent },
                                 btn
                             }
                         }
@@ -490,11 +497,11 @@ namespace BillsOfMaterial_App.View
                 chilItem.Name = "tvLevel3";
                 if (txtObs.Text == string.Empty)
                 {
-                    chilItem.Header = txtItem.Text.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + txtQty.Text + " | Valor R$: " + txtCostValue.Text + " | Imagem= " + longPath.Replace("|", "") + " | Custo R1: " + txtResultValue.Text + " | Desenho: " + txtDrawingComponent.Text;
+                    chilItem.Header = componentObj.Component.Replace("|", "") + " | " + componentObj.Description.Replace("|", "") + " | Quantidade: " + componentObj.Qty + " | Valor R$: " + componentObj.Costvalue + " | Imagem= " + componentObj.PathFile1.Replace("|", "") + " | Custo R1: " + componentObj.R1Costvalue + " | Desenho: " + componentObj.DrawingComponent;
                 }
                 else
                 {
-                    chilItem.Header = txtItem.Text.Replace("|", "") + " | " + description.Replace("|", "") + " | Quantidade: " + txtQty.Text + " | Valor R$: " + txtCostValue.Text + " | OBS: " + txtObs.Text.Replace("|", "") + " | Imagem= " + longPath.Replace("|", "") + " | Custo R1: " + txtResultValue.Text + " | Desenho: " + txtDrawingComponent.Text;
+                    chilItem.Header = componentObj.Component.Replace("|", "") + " | " + componentObj.Description.Replace("|", "") + " | Quantidade: " + componentObj.Qty + " | Valor R$: " + componentObj.Costvalue + " | OBS: " + componentObj.Obs.Replace("|", "") + " | Imagem= " + componentObj.PathFile1.Replace("|", "") + " | Custo R1: " + componentObj.R1Costvalue + " | Desenho: " + componentObj.DrawingComponent;
                 }
                 viewItem.Items.Add(chilItem);
                 this.Close();
@@ -784,6 +791,37 @@ namespace BillsOfMaterial_App.View
         {
             ObsListMaterialsView window = new ObsListMaterialsView(this);
             window.ShowDialog();
+        }
+
+        private void btnQualityControl_Click(object sender, RoutedEventArgs e)
+        {
+            QualityControlView window = new QualityControlView(this);
+            window.ShowDialog();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (componentObj != null) componentObj = null;
+        }
+
+        private void GetThisComponent()
+        {
+            try
+            {
+                componentObj.Component = txtItem.Text;
+                componentObj.Description = description;
+                componentObj.Qty = string.IsNullOrEmpty(txtQty.Text) ? 0 : Convert.ToDouble(txtQty.Text);
+                componentObj.Costvalue = string.IsNullOrEmpty(txtCostValue.Text) ? 0 : Convert.ToDouble(txtCostValue.Text);
+                componentObj.Obs = txtObs.Text;
+                componentObj.DrawingComponent = txtDrawingComponent.Text;
+                componentObj.PathFile1 = longPath;
+                componentObj.R1Costvalue = string.IsNullOrEmpty(txtResultValue.Text) ? 0 : Convert.ToDouble(txtResultValue.Text);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
     }
 }

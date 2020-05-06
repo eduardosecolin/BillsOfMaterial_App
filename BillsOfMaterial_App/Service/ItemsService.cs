@@ -50,7 +50,7 @@ namespace BillsOfMaterial_App.Service
                     item.Description = reader["Description"].ToString();
                     item.BaseUoM = reader["BaseUoM"].ToString();
                     item.ItemType = reader["ItemType"].ToString();
-                    item.BasePrice = Convert.ToDouble(reader["StandardCost"]);
+                    item.BasePrice = Math.Round(Convert.ToDouble(reader["StandardCost"]), 2);
                     list.Add(item);
                 }
 

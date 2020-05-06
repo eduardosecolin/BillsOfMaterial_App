@@ -37,6 +37,7 @@ namespace BillsOfMaterial_App.AuxView
         private readonly ItemsService itemsService = new ItemsService();
         private readonly OperationService opService = new OperationService();
         private readonly OnOffService onoffService = new OnOffService();
+        private readonly QualityControlService serviceQA = new QualityControlService();
         private string longPath;
 
         public bool level1 = false;
@@ -1963,7 +1964,7 @@ namespace BillsOfMaterial_App.AuxView
                     {
                         if (AddComplevel3() && AddOplevel3())
                         {
-
+                            serviceQA.InsertAllDataWithList();
                             return true;
                         }
                         else
@@ -2156,6 +2157,7 @@ namespace BillsOfMaterial_App.AuxView
                                     {
                                         window.isEditmode = true;
                                         window.txtItem.Text = vet[0];
+                                        window.btnQualityControl.IsEnabled = true;
                                         window.txtStandardCost.Text = itemsService.GetStandardCost(vet[0]).ToString();
                                         if (vet.Length > 0)
                                         {
@@ -2226,6 +2228,7 @@ namespace BillsOfMaterial_App.AuxView
                         {
                             window.isEditmode = true;
                             window.txtItem.Text = vet[0];
+                            window.btnQualityControl.IsEnabled = true;
                             window.txtStandardCost.Text = itemsService.GetStandardCost(vet[0]).ToString();
                             if (vet.Length > 0)
                             {

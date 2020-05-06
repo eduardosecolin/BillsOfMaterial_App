@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BillsOfMaterial_App.View"
         mc:Ignorable="d"
-        Title="Itens" Height="650" Width="950" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="Itens" Height="650" Width="950" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Closed="Window_Closed">
     <Grid>
         <TextBox 
             x:Name="txtFilter"
@@ -187,6 +187,12 @@
             TabIndex="2"
             Height="Auto" Background="{x:Null}" BorderBrush="{x:Null}" Click="btnDefaultOBS_Click">
             <materialDesign:PackIcon Foreground="#FF00BCD4" Height="42" Width="75" Kind="TextShadow"/>
+        </Button>
+        <Button x:Name="btnQualityControl" IsEnabled="False" HorizontalAlignment="Left" Cursor="Hand" Margin="716,33,0,0" VerticalAlignment="Top" Width="211" Click="btnQualityControl_Click">
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="QualityHigh" />
+                <TextBlock Margin="8 0 0 0"><Run Text="Controle de Qualidade"/></TextBlock>
+            </StackPanel>
         </Button>
     </Grid>
 </Window>

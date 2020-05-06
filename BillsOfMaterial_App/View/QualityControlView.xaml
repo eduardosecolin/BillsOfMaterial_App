@@ -1,0 +1,55 @@
+﻿<Window x:Class="BillsOfMaterial_App.View.QualityControlView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BillsOfMaterial_App.View"
+        mc:Ignorable="d"
+        Title="Controle de qualidade" Height="550" Width="950" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid>
+        <DataGrid x:Name="dgQuality" HorizontalAlignment="Left" Height="389" Margin="34,10,0,0" VerticalAlignment="Top" Width="876" AutoGenerateColumns="False" RowEditEnding="dgQuality_RowEditEnding">
+            <DataGrid.Columns>
+                <DataGridComboBoxColumn x:Name="dgcParameter" Header="Parâmetro" SelectedValueBinding="{Binding Parameter}" SelectedItemBinding="{x:Null}" TextBinding="{x:Null}">
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <EventSetter Event="SelectionChanged" Handler="dgc_SelectionChanged"/>
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
+                <materialDesign:MaterialDataGridTextColumn Binding="{Binding UoM}" IsReadOnly="True" Header="UM"/>
+                <materialDesign:MaterialDataGridTextColumn Binding="{Binding ExpectedNumResult}" Header="Resultado Numérico"/>
+                <DataGridComboBoxColumn x:Name="dgcAnalisysMethod" Header="Método de Análise" SelectedValueBinding="{Binding AnalysisMethod}" SelectedItemBinding="{x:Null}" TextBinding="{x:Null}">
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <EventSetter Event="SelectionChanged" Handler="dgc_SelectionChanged2"/>
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
+                <materialDesign:MaterialDataGridTextColumn Binding="{x:Null}" Header="Descrição Método de Análise" IsReadOnly="True"/>
+                <materialDesign:MaterialDataGridTextColumn Binding="{Binding AnalysisArea}" Header="Area de Análise"/>
+                <materialDesign:MaterialDataGridTextColumn Binding="{Binding LowerBound}" Header="Limite Inferior"/>
+                <materialDesign:MaterialDataGridTextColumn Binding="{Binding UpperBound}" Header="Limite Superior"/>
+                <materialDesign:MaterialDataGridTextColumn Binding="{Binding DetectableBound}" Header="Limite Detectabilidade"/>
+                <materialDesign:MaterialDataGridTextColumn Binding="{Binding Revision}" Header="Revisão"/>
+                <!--DataGridTextColumn Binding="{Binding InsertionDate, ConverterCulture=pt-BR, StringFormat=\{0:d\}}" Header="Data Inserção"/-->
+                <DataGridTemplateColumn x:Name="dateInsertion" Header="Data de Inserção">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding InsertionDate, ConverterCulture=pt-BR, StringFormat=\{0:d\}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <DatePicker x:Name="dpInsertionDate" SelectedDate="{Binding InsertionDate}" DisplayDate=""/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <materialDesign:MaterialDataGridTextColumn Binding="{Binding IdSimulation}"  Header="Id Sumulação" Visibility="Visible" IsReadOnly="True"/>
+                <materialDesign:MaterialDataGridTextColumn Binding="{Binding Item}" Header="Componente" Visibility="Visible" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="btnAdd" Content="Adicionar" HorizontalAlignment="Left" Margin="779,429,0,0" VerticalAlignment="Top" Width="131" RenderTransformOrigin="1.6,0.5" Height="42" Click="btnAdd_Click"/>
+
+    </Grid>
+</Window>

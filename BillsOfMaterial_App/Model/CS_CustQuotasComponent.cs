@@ -10,6 +10,14 @@ namespace BillsOfMaterial_App.Model
 {
     public partial class CS_CustQuotasComponent
     {
+
+        public List<CS_ItemsAnalysisParameters> ItemsAnalysisParametersList;
+
+        public CS_CustQuotasComponent()
+        {
+            ItemsAnalysisParametersList = new List<CS_ItemsAnalysisParameters>();
+        }
+
         [Key]
         [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]

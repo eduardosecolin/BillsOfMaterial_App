@@ -61,9 +61,61 @@ namespace BillsOfMaterial_App.Model
         public virtual DbSet<CS_UserManager> CS_UserManager { get; set; }
         public virtual DbSet<CS_TBCostFormation> CS_TBCostFormation { get; set; }
         public virtual DbSet<CS_OnOffValidate> CS_OnOffValidate { get; set; }
+        public virtual DbSet<CS_ItemsAnalysisParameters> CS_ItemsAnalysisParameters { get; set; }
+        public virtual DbSet<MA_QltCtrlAnalMet> MA_QltCtrlAnalMet { get; set; }
+        public virtual DbSet<MA_QltCtrlParameters> MA_QltCtrlParameters { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<MA_QltCtrlParameters>()
+                .Property(e => e.Description)
+                .IsFixedLength();
+
+            modelBuilder.Entity<MA_QltCtrlParameters>()
+                .Property(e => e.UoM)
+                .IsFixedLength();
+
+            modelBuilder.Entity<MA_QltCtrlParameters>()
+                .Property(e => e.AnalysisMethod)
+                .IsFixedLength();
+
+            modelBuilder.Entity<MA_QltCtrlAnalMet>()
+                .Property(e => e.Description)
+                .IsFixedLength();
+
+            modelBuilder.Entity<CS_ItemsAnalysisParameters>()
+                .Property(e => e.UoM)
+                .IsFixedLength();
+
+
+            modelBuilder.Entity<CS_ItemsAnalysisParameters>()
+                .Property(e => e.AnalysisMethod)
+                .IsFixedLength();
+
+            modelBuilder.Entity<CS_ItemsAnalysisParameters>()
+                .Property(e => e.UpperBound)
+                .IsFixedLength();
+
+            modelBuilder.Entity<CS_ItemsAnalysisParameters>()
+                .Property(e => e.LowerBound)
+                .IsFixedLength();
+
+            modelBuilder.Entity<CS_ItemsAnalysisParameters>()
+                .Property(e => e.DetectableBound)
+                .IsFixedLength();
+
+            modelBuilder.Entity<CS_ItemsAnalysisParameters>()
+                .Property(e => e.ExpectedResult)
+                .IsFixedLength();
+
+            modelBuilder.Entity<CS_ItemsAnalysisParameters>()
+                .Property(e => e.Customer)
+                .IsFixedLength();
+
+            modelBuilder.Entity<CS_ItemsAnalysisParameters>()
+                .Property(e => e.Notes)
+                .IsFixedLength();
+
             modelBuilder.Entity<CS_OnOffValidate>()
                 .Property(e => e.OfferNo)
                 .IsFixedLength();

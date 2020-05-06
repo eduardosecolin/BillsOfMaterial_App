@@ -106,6 +106,7 @@
     <Compile Include="Model\MA_Drawings.cs" />
     <Compile Include="Model\MA_DrawingsDescription.cs" />
     <Compile Include="Model\MA_Items.cs" />
+    <Compile Include="Model\CS_ItemsAnalysisParameters.cs" />
     <Compile Include="Model\MA_ItemsBalances.cs" />
     <Compile Include="Model\MA_ItemsBRTaxes.cs" />
     <Compile Include="Model\MA_ItemsFiscalYearData.cs" />
@@ -115,6 +116,8 @@
     <Compile Include="Model\MA_OperationsLabour.cs" />
     <Compile Include="Model\MA_OperationsTools.cs" />
     <Compile Include="Model\MA_PriceLists.cs" />
+    <Compile Include="Model\MA_QltCtrlAnalMet.cs" />
+    <Compile Include="Model\MA_QltCtrlParameters.cs" />
     <Compile Include="Model\MA_UnitsOfMeasure.cs" />
     <Compile Include="Model\MA_WCFamilies.cs" />
     <Compile Include="Model\MA_WCFamiliesDetails.cs" />
@@ -137,6 +140,7 @@
     <Compile Include="Service\OnOffService.cs" />
     <Compile Include="Service\OperationService.cs" />
     <Compile Include="Service\OPFamilyService.cs" />
+    <Compile Include="Service\QualityControlService.cs" />
     <Compile Include="Service\TBCostFormationService.cs" />
     <Compile Include="Service\UoMService.cs" />
     <Compile Include="Service\UserManagerService.cs" />
@@ -186,6 +190,9 @@
     </Compile>
     <Compile Include="View\OperationView.xaml.cs">
       <DependentUpon>OperationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\QualityControlView.xaml.cs">
+      <DependentUpon>QualityControlView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\RegisterItem.xaml.cs">
       <DependentUpon>RegisterItem.xaml</DependentUpon>
@@ -274,6 +281,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\OperationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\QualityControlView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
