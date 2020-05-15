@@ -1,4 +1,5 @@
 ﻿using BillsOfMaterial_App.AuxView;
+using BillsOfMaterial_App.Model;
 using BillsOfMaterial_App.Service;
 using BillsOfMaterial_App.View;
 using System;
@@ -24,6 +25,7 @@ namespace BillsOfMaterial_App
     public partial class Menu : Window
     {
         bool MenuClosed = false;
+        public static CS_UserManager usermanager;
         UserManagerService userService;
 
         public Menu()
@@ -73,6 +75,10 @@ namespace BillsOfMaterial_App
                     window.ShowDialog();
                     window.Activate();
                     break;
+                case "TimeSheet":
+                    usc = new TimeSheetView();
+                    GridMain.Children.Add(usc);
+                    break;
                 case "Settings":
                     usc = new SettingsView();
                     GridMain.Children.Add(usc);
@@ -94,12 +100,19 @@ namespace BillsOfMaterial_App
         {
             try
             {
+                usermanager = userService.GetUserObj(LoginView.userLogon, LoginView.pwdLogon);
                 int typeUser = userService.GetTypeUser(LoginView.userLogon, LoginView.pwdLogon);
                 if(typeUser == 2057371649)
                 {
                     Settings.IsEnabled = false;
                     CostFormation.IsEnabled = false;
                     SimulationEDP.hasAccess = false;
+                }
+                else if (typeUser == 2057371650)
+                {
+                    Settings.IsEnabled = false;
+                    CostFormation.IsEnabled = false;
+                    EDPSimulation.IsEnabled = false;
                 }
             }
             catch (Exception ex)

@@ -59,5 +59,10 @@ namespace BillsOfMaterial_App.Service
             }
         }
 
+        public CS_UserManager GetUserObj(string user, string pwd)
+        {
+            return _context.CS_UserManager.Where(x => x.UserName == user && x.Password == pwd).FirstOrDefault();
+        }
+
     }
 }

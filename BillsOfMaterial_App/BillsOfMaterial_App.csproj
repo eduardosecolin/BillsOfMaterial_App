@@ -69,6 +69,9 @@
     <Compile Include="AuxView\SimulationEDP.xaml.cs">
       <DependentUpon>SimulationEDP.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AuxView\TimeSheetView.xaml.cs">
+      <DependentUpon>TimeSheetView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -82,6 +85,7 @@
     <Compile Include="Model\CS_DBDefaultOBS.cs" />
     <Compile Include="Model\CS_OnOffValidate.cs" />
     <Compile Include="Model\CS_TBCostFormation.cs" />
+    <Compile Include="Model\CS_TimeSheetPROD.cs" />
     <Compile Include="Model\CS_UserManager.cs" />
     <Compile Include="Model\DBContext.cs" />
     <Compile Include="Model\MA_BillOfMaterials.cs" />
@@ -142,6 +146,7 @@
     <Compile Include="Service\OPFamilyService.cs" />
     <Compile Include="Service\QualityControlService.cs" />
     <Compile Include="Service\TBCostFormationService.cs" />
+    <Compile Include="Service\TimeSheetService.cs" />
     <Compile Include="Service\UoMService.cs" />
     <Compile Include="Service\UserManagerService.cs" />
     <Compile Include="Service\WorkersService.cs" />
@@ -216,6 +221,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="AuxView\TimeSheetView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

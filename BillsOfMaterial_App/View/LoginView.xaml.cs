@@ -80,7 +80,7 @@ namespace BillsOfMaterial_App.View
                         pwdLogon = txtPassword.Password;
 
                         int typeUser = usService.GetTypeUser(txtUser.Text, txtPassword.Password);
-                        if (typeUser == 2057371649)
+                        if (typeUser == 2057371649 || typeUser == 2057371650)
                         {
                             Menu window = new Menu();
                             window.Show();

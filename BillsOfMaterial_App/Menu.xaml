@@ -62,6 +62,12 @@
                                 <TextBlock Text="Formação de Custo" VerticalAlignment="Center" Margin="20 10" Foreground="#FFF9FAFB"/>
                             </StackPanel>
                         </ListViewItem>
+                        <ListViewItem x:Name="TimeSheet" Height="60">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Timetable" Width="25" Height="25" Margin="10" VerticalAlignment="Center" Foreground="#FFF7FAFB"/>
+                                <TextBlock Text="Apontamento" VerticalAlignment="Center" Margin="20 10" Foreground="#FFF9FAFB"/>
+                            </StackPanel>
+                        </ListViewItem>
                         <ListViewItem x:Name="Settings" Height="60">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Settings" Width="25" Height="25" Margin="10" VerticalAlignment="Center" Foreground="#FFF7FAFB"/>

@@ -64,9 +64,18 @@ namespace BillsOfMaterial_App.Model
         public virtual DbSet<CS_ItemsAnalysisParameters> CS_ItemsAnalysisParameters { get; set; }
         public virtual DbSet<MA_QltCtrlAnalMet> MA_QltCtrlAnalMet { get; set; }
         public virtual DbSet<MA_QltCtrlParameters> MA_QltCtrlParameters { get; set; }
+        public virtual DbSet<CS_TimeSheetPROD> CS_TimeSheetPROD { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<CS_TimeSheetPROD>()
+                .Property(e => e.Phase)
+                .IsFixedLength();
+
+            modelBuilder.Entity<CS_TimeSheetPROD>()
+                .Property(e => e.IsFinalized)
+                .IsFixedLength();
+
             modelBuilder.Entity<MA_QltCtrlParameters>()
                 .Property(e => e.Description)
                 .IsFixedLength();
