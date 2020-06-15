@@ -23,13 +23,13 @@
             MaxLength="21" TabIndex="0" Margin="50,112,0,0" FontWeight="SemiBold" TextChanged="txtOdp_TextChanged"/>
         <materialDesign:TimePicker
             x:Name="dpStartDate" 
-            TabIndex="2"
+            TabIndex="2"           
             Is24Hours="True"
             materialDesign:HintAssist.Hint="Hora Inicio" 
             FontFamily="champagne &amp; Limousines" 
             FontSize="14" 
             Foreground="#FF0A0A0A" 
-            HorizontalAlignment="Left" Margin="50,250,0,0" Width="124"/>
+            HorizontalAlignment="Left" Margin="50,250,0,0" Width="124" Focusable="False" MouseEnter="dpStartDate_MouseEnter" GotFocus="dpStartDate_GotFocus"/>
         <materialDesign:TimePicker
             x:Name="dpEndDate" 
             TabIndex="3"
@@ -38,7 +38,7 @@
             FontFamily="champagne &amp; Limousines" 
             FontSize="14" 
             Foreground="#FF0A0A0A" 
-            HorizontalAlignment="Left" Margin="243,250,0,0" Width="124"/>
+            HorizontalAlignment="Left" Margin="243,250,0,0" Width="124" MouseEnter="dpEndDate_MouseEnter" GotFocus="dpEndDate_GotFocus"/>
         <CheckBox x:Name="chFinalized" TabIndex="4" Content="Fase finalizada" HorizontalAlignment="Left" Margin="50,287,0,0" VerticalAlignment="Top"/>
         <ListView x:Name="lsODP" HorizontalAlignment="Left" Height="113" Margin="449,23,0,0" VerticalAlignment="Top" Width="553" SelectionChanged="lsODP_SelectionChanged" Foreground="#FF303030">
             <ListView.View>

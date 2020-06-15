@@ -24,7 +24,6 @@ namespace BillsOfMaterial_App.AuxView
     {
         private readonly TimeSheetService sheetService;
         private CS_TimeSheetPROD tm = new CS_TimeSheetPROD();
-        public static bool blockListView = false;
 
         public TimeSheetView()
         {
@@ -38,7 +37,6 @@ namespace BillsOfMaterial_App.AuxView
             cView.Filter = CustomFilter;
             CollectionView cView2 = CollectionViewSource.GetDefaultView(lsODPdETAILS.ItemsSource) as CollectionView;
             cView2.Filter = CustomFilterDetails;
-            BlockListViews();
             dpEndDate.IsEnabled = false;
         }
 
@@ -105,6 +103,7 @@ namespace BillsOfMaterial_App.AuxView
                 {
                     dpEndDate.IsEnabled = false;
                     txtOdp.Text = obj.MONo;
+                    txtOdp.Focus();
                 }
             }
         }
@@ -171,7 +170,7 @@ namespace BillsOfMaterial_App.AuxView
                         return; 
                     }
                     sheetService.UpdateTMFinalDate(tm.Id, tm.Line, (DateTime)dpEndDate.SelectedTime);
-                    sheetService.UpdateTMFinalized(tm.Id, "1", 20578306);
+                    sheetService.UpdateTMFinalized(tm.Id, "1", 20578306, tm.Line);
                     sheetService.UpdateODPStausFinalized((int)tm.MOId, (int)tm.RtgStep, tm.Phase);
                     MessageBox.Show("Dados atualizados com sucesso!", "Informação", MessageBoxButton.OK, MessageBoxImage.Information);
                     Environment.Exit(0);
@@ -217,7 +216,9 @@ namespace BillsOfMaterial_App.AuxView
                 {
                     dpEndDate.IsEnabled = false;
                     txtPhase.Text = obj.Operation;
+                    txtOdp.Text = obj.MONo;
                     FillObject(obj);
+                    txtOdp.Focus();
                 }
             }
         }
@@ -278,11 +279,39 @@ namespace BillsOfMaterial_App.AuxView
             FillListViewTM();
         }
 
-        private void BlockListViews()
+        private void dpStartDate_MouseEnter(object sender, MouseEventArgs e)
         {
-            if (blockListView)
+            if (dpStartDate.IsEnabled == true)
             {
-                lsODP.IsEnabled = false;
+                dpStartDate.IsEnabled = false;
+                dpStartDate.SelectedTime = DateTime.Now;
+            }
+        }
+
+        private void dpEndDate_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (dpEndDate.IsEnabled == true)
+            {
+                dpEndDate.IsEnabled = false;
+                dpEndDate.SelectedTime = DateTime.Now;
+            }
+        }
+
+        private void dpStartDate_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (dpStartDate.IsEnabled == true)
+            {
+                dpStartDate.IsEnabled = false;
+                dpStartDate.SelectedTime = DateTime.Now;
+            }
+        }
+
+        private void dpEndDate_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (dpEndDate.IsEnabled == true)
+            {
+                dpEndDate.IsEnabled = false;
+                dpEndDate.SelectedTime = DateTime.Now;
             }
         }
     }

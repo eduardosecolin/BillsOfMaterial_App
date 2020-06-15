@@ -56,9 +56,9 @@ namespace BillsOfMaterial_App.Service
         {
             try
             {
-                conn.Open();
+                //conn.Open();
                 List<GenericObjectDetails> list = new List<GenericObjectDetails>();
-                string sql2 = @"SELECT TOP 1
+                /*string sql2 = @"SELECT TOP 1
 	                                Id
                                 FROM
 	                                CS_TimeSheetPROD
@@ -85,12 +85,11 @@ namespace BillsOfMaterial_App.Service
                                 WHERE
 	                                S.MOStatus IN (20578305)
                                     AND M.MOId = " + Convert.ToInt32(result.ToString());
-                    TimeSheetView.blockListView = true;
                 }
                 else
                 {
-                    conn.Close();
-                     sql = @"SELECT 
+                    conn.Close();*/
+                string sql = @"SELECT 
 	                                M.MOId,
 	                                M.MONo,
 	                                S.Operation,
@@ -102,9 +101,8 @@ namespace BillsOfMaterial_App.Service
 	                                LEFT OUTER JOIN MA_MOSteps S ON S.MOId = M.MOId
 	                                LEFT OUTER JOIN MA_Operations O ON O.Operation = S.Operation
                                 WHERE
-	                                S.MOStatus IN (20578307)";
-                    TimeSheetView.blockListView = false;
-                }
+	                                S.MOStatus IN (20578307, 20578305)";
+                //}
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -529,11 +527,11 @@ namespace BillsOfMaterial_App.Service
             }
         }
 
-        public void UpdateTMFinalized(int id, string isfinalized, int status)
+        public void UpdateTMFinalized(int id, string isfinalized, int status, int line)
         {
             try
             {
-                string sql = $"UPDATE CS_TimeSheetPROD SET IsFinalized = '{ isfinalized }', StatusODP = { status } WHERE Id = { id }";
+                string sql = $"UPDATE CS_TimeSheetPROD SET IsFinalized = '{ isfinalized }', StatusODP = { status } WHERE Id = { id } AND Line = { line }";
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.ExecuteNonQuery();

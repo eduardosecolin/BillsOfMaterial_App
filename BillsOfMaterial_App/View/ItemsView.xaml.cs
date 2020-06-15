@@ -28,6 +28,8 @@ namespace BillsOfMaterial_App.View
     {
         public SimulationEDP _mainWindow;
         ItemsService itemsService;
+        BOMService bomService;
+        OperationService opService;
         private CS_CustQuotasComponent componentObj;
         private string description = string.Empty;
         public bool isEditmode = false;
@@ -41,6 +43,8 @@ namespace BillsOfMaterial_App.View
             componentObj = new CS_CustQuotasComponent();
             _mainWindow = window;
             itemsService = new ItemsService();
+            opService = new OperationService();
+            bomService = new BOMService();
             LoadGrid();
             NotVisibleIsSpecific();
         }
@@ -279,8 +283,18 @@ namespace BillsOfMaterial_App.View
 
                     };
 
-                    chilItem.Items.Add(CompControls());
-                    chilItem.Items.Add(OpControls());
+                    foreach (var item in CompControlsList())
+                    {
+                        chilItem.Items.Add(item);
+                    }
+
+                    foreach (var item in OpControlsList())
+                    {
+                        chilItem.Items.Add(item);
+                    }
+
+                    //chilItem.Items.Add(CompControls());
+                    //chilItem.Items.Add(OpControls());
 
                     _mainWindow.tvComponent.Items.Add(chilItem);
                 }
@@ -300,9 +314,18 @@ namespace BillsOfMaterial_App.View
                         }
 
                     };
+                    foreach (var item in CompControlsList())
+                    {
+                        chilItem.Items.Add(item);
+                    }
 
-                    chilItem.Items.Add(CompControls());
-                    chilItem.Items.Add(OpControls());
+                    foreach (var item in OpControlsList())
+                    {
+                        chilItem.Items.Add(item);
+                    }
+
+                    //chilItem.Items.Add(CompControls());
+                    //chilItem.Items.Add(OpControls());
 
                     _mainWindow.tvComponent.Items.Add(chilItem);
                 }
@@ -371,9 +394,18 @@ namespace BillsOfMaterial_App.View
                         }
 
                     };
+                    foreach (var item in CompControlsList2())
+                    {
+                        chilItem.Items.Add(item);
+                    }
 
-                    chilItem.Items.Add(CompControls2());
-                    chilItem.Items.Add(OpControls2());
+                    foreach (var item in OpControlsList2())
+                    {
+                        chilItem.Items.Add(item);
+                    }
+
+                    //chilItem.Items.Add(CompControls2());
+                    //chilItem.Items.Add(OpControls2());
 
                     viewItem.Items.Add(chilItem);
                 }
@@ -393,9 +425,18 @@ namespace BillsOfMaterial_App.View
                         }
 
                     };
+                    foreach (var item in CompControlsList2())
+                    {
+                        chilItem.Items.Add(item);
+                    }
 
-                    chilItem.Items.Add(CompControls2());
-                    chilItem.Items.Add(OpControls2());
+                    foreach (var item in OpControlsList2())
+                    {
+                        chilItem.Items.Add(item);
+                    }
+
+                    //chilItem.Items.Add(CompControls2());
+                    //chilItem.Items.Add(OpControls2());
 
                     viewItem.Items.Add(chilItem);
                 }
@@ -538,6 +579,57 @@ namespace BillsOfMaterial_App.View
             return chilItemComp;
         }
 
+        private List<TreeViewItem> CompControlsList()
+        {
+            List<TreeViewItem> list = new List<TreeViewItem>();
+            Button btn = new Button
+            {
+                Name = "btnComponent2",
+                Cursor = Cursors.Arrow,
+                Background = null,
+                BorderBrush = null,
+                Content = new PackIcon { Kind = PackIconKind.Plus, Foreground = Brushes.DarkCyan },
+            };
+            //btn.Click += _mainWindow.btnComponent2_Click;
+            TreeViewItem chilItemCompbtn = new TreeViewItem
+            {
+                IsExpanded = true,
+                Header = new StackPanel
+                {
+                    Name = "StackPanelComp1",
+                    Orientation = Orientation.Horizontal,
+                    Children = {
+                                new Label { Content = "Componente nv.2", Foreground = Brushes.DarkCyan, FontWeight = FontWeights.Bold },
+                                btn
+                    }
+                }
+
+            };
+            list.Add(chilItemCompbtn);
+
+            foreach (var item in bomService.GetComponentsBOM(txtItem.Text))
+            {
+                TreeViewItem chilItemComp = new TreeViewItem
+                {
+                    Name = "tvLevel2",
+                    IsExpanded = true,
+                    Header = new StackPanel
+                    {
+                        Name = "StackPanelComp1",
+                        Orientation = Orientation.Horizontal,
+                        Children = {
+                        new TextBlock { Text = item.Component.Replace("|", "") + " | " + item.Description.Replace("|","") + " | Quantidade: " + item.Qty + " | Valor R$: " + itemsService.GetStandardCost(item.Component) + " | OBS: " + item.Notes.Replace("|", "") + " | Imagem= " + "" + " | Custo R1: " + "" + " | Desenho: " + item.Drawing }
+                    }
+                    }
+
+                };
+
+                chilItemCompbtn.Items.Add(chilItemComp);
+            }
+
+            return list;
+        }
+
         private TreeViewItem OpControls()
         {
             Button btn = new Button
@@ -565,6 +657,70 @@ namespace BillsOfMaterial_App.View
             };
 
             return chilItemOp;
+        }
+
+        private List<TreeViewItem> OpControlsList()
+        {
+            List<TreeViewItem> list = new List<TreeViewItem>();
+            Button btn = new Button
+            {
+                Name = "btnOperation2",
+                Cursor = Cursors.Arrow,
+                Background = null,
+                BorderBrush = null,
+                Content = new PackIcon { Kind = PackIconKind.Plus, Foreground = Brushes.DarkCyan },
+            };
+
+            TreeViewItem chilItemOp = new TreeViewItem
+            {
+                IsExpanded = true,
+                Header = new StackPanel
+                {
+                    Name = "StackPanelOp1",
+                    Orientation = Orientation.Horizontal,
+                    Children = {
+                                new Label { Content = "Operação nv.2", Width = 109, Foreground = Brushes.DarkCyan, FontWeight = FontWeights.Bold },
+                                btn
+                    }
+                }
+
+            };
+
+            list.Add(chilItemOp);
+
+            foreach (var item in bomService.GetOperationsBOM(txtItem.Text))
+            {
+                string timeString = item.ProcessingTime.ToString() + "000";
+                double timeDouble = Convert.ToDouble(timeString);
+                double time = TimeSpan.FromMilliseconds(timeDouble).TotalHours;
+                string timeStr = string.Empty;
+                string timeTemp = TimeSpan.FromHours(time).ToString("h\\:mm");
+                string[] vet2 = timeTemp.Split(':');
+                if (time.ToString().Contains(","))
+                {
+                    string[] vet = time.ToString().Split(',');
+                    timeStr = vet[0] + ":" + vet2[1];
+                }
+                else
+                {
+                    timeStr = time.ToString() + ":" + vet2[1];
+                }
+                if (timeStr.Length == 4) { timeStr = "0" + timeStr; }
+                TreeViewItem chilItem = new TreeViewItem();
+                chilItem.Name = "tvOpLevel1";
+                if (item.Notes == string.Empty)
+                {
+                    chilItem.Header = item.Operation.Replace("|", "") + " | " + opService.GetDescriptionOp(item.Operation).Replace("|", "") + "| " + "Tempo de Processamento = " + timeStr + " | U.Medida: " + "" + " | Quantidade: " + item.Qty;
+                }
+                else
+                {
+                    chilItem.Header = item.Operation.Replace("|", "") + " | " + opService.GetDescriptionOp(item.Operation).Replace("|", "") + "| " + "Tempo de Processamento = " + timeStr + " | OBS: " + item.Notes.Replace("|", "") + " | U.Medida: " + "" + " | Quantidade: " + item.Qty; ;
+                }
+
+                chilItemOp.Items.Add(chilItem);
+            }
+
+            return list;
         }
 
         private TreeViewItem CompControls2()
@@ -597,6 +753,57 @@ namespace BillsOfMaterial_App.View
             return chilItemComp;
         }
 
+        private List<TreeViewItem> CompControlsList2()
+        {
+            List<TreeViewItem> list = new List<TreeViewItem>();
+            Button btn = new Button
+            {
+                Name = "btnComponent2",
+                Cursor = Cursors.Arrow,
+                Background = null,
+                BorderBrush = null,
+                Content = new PackIcon { Kind = PackIconKind.Plus, Foreground = Brushes.DarkCyan },
+            };
+            //btn.Click += _mainWindow.btnComponent2_Click;
+            TreeViewItem chilItemCompbtn = new TreeViewItem
+            {
+                IsExpanded = true,
+                Header = new StackPanel
+                {
+                    Name = "StackPanelComp2",
+                    Orientation = Orientation.Horizontal,
+                    Children = {
+                                new Label { Content = "Componente nv.3", Foreground = Brushes.DarkCyan, FontWeight = FontWeights.Bold },
+                                btn
+                    }
+                }
+
+            };
+            list.Add(chilItemCompbtn);
+
+            foreach (var item in bomService.GetComponentsBOM(txtItem.Text))
+            {
+                TreeViewItem chilItemComp = new TreeViewItem
+                {
+                    Name = "tvLevel2",
+                    IsExpanded = true,
+                    Header = new StackPanel
+                    {
+                        Name = "StackPanelComp1",
+                        Orientation = Orientation.Horizontal,
+                        Children = {
+                        new TextBlock { Text = item.Component.Replace("|", "") + " | " + item.Description.Replace("|","") + " | Quantidade: " + item.Qty + " | Valor R$: " + itemsService.GetStandardCost(item.Component) + " | OBS: " + item.Notes.Replace("|", "") + " | Imagem= " + "" + " | Custo R1: " + "" + " | Desenho: " + item.Drawing }
+                    }
+                    }
+
+                };
+
+                chilItemCompbtn.Items.Add(chilItemComp);
+            }
+
+            return list;
+        }
+
         private TreeViewItem OpControls2()
         {
             Button btn = new Button
@@ -625,6 +832,70 @@ namespace BillsOfMaterial_App.View
             };
 
             return chilItemOp;
+        }
+
+        private List<TreeViewItem> OpControlsList2()
+        {
+            List<TreeViewItem> list = new List<TreeViewItem>();
+            Button btn = new Button
+            {
+                Name = "btnOperation2",
+                Cursor = Cursors.Arrow,
+                Background = null,
+                BorderBrush = null,
+                Content = new PackIcon { Kind = PackIconKind.Plus, Foreground = Brushes.DarkCyan },
+            };
+
+            TreeViewItem chilItemOp = new TreeViewItem
+            {
+                IsExpanded = true,
+                Header = new StackPanel
+                {
+                    Name = "StackPanelOp2",
+                    Orientation = Orientation.Horizontal,
+                    Children = {
+                                new Label { Content = "Operação nv.3", Width = 109, Foreground = Brushes.DarkCyan, FontWeight = FontWeights.Bold },
+                                btn
+                    }
+                }
+
+            };
+
+            list.Add(chilItemOp);
+
+            foreach (var item in bomService.GetOperationsBOM(txtItem.Text))
+            {
+                string timeString = item.ProcessingTime.ToString() + "000";
+                double timeDouble = Convert.ToDouble(timeString);
+                double time = TimeSpan.FromMilliseconds(timeDouble).TotalHours;
+                string timeStr = string.Empty;
+                string timeTemp = TimeSpan.FromHours(time).ToString("h\\:mm");
+                string[] vet2 = timeTemp.Split(':');
+                if (time.ToString().Contains(","))
+                {
+                    string[] vet = time.ToString().Split(',');
+                    timeStr = vet[0] + ":" + vet2[1];
+                }
+                else
+                {
+                    timeStr = time.ToString() + ":" + vet2[1];
+                }
+                if (timeStr.Length == 4) { timeStr = "0" + timeStr; }
+                TreeViewItem chilItem = new TreeViewItem();
+                chilItem.Name = "tvOpLevel1";
+                if (item.Notes == string.Empty)
+                {
+                    chilItem.Header = item.Operation.Replace("|", "") + " | " + opService.GetDescriptionOp(item.Operation).Replace("|", "") + "| " + "Tempo de Processamento = " + timeStr + " | U.Medida: " + "" + " | Quantidade: " + item.Qty;
+                }
+                else
+                {
+                    chilItem.Header = item.Operation.Replace("|", "") + " | " + opService.GetDescriptionOp(item.Operation).Replace("|", "") + "| " + "Tempo de Processamento = " + timeStr + " | OBS: " + item.Notes.Replace("|", "") + " | U.Medida: " + "" + " | Quantidade: " + item.Qty; ;
+                }
+
+                chilItemOp.Items.Add(chilItem);
+            }
+
+            return list;
         }
 
         private TreeViewItem CompControls3()
@@ -810,12 +1081,12 @@ namespace BillsOfMaterial_App.View
             {
                 componentObj.Component = txtItem.Text;
                 componentObj.Description = description;
-                componentObj.Qty = string.IsNullOrEmpty(txtQty.Text) ? 0 : Convert.ToDouble(txtQty.Text);
-                componentObj.Costvalue = string.IsNullOrEmpty(txtCostValue.Text) ? 0 : Convert.ToDouble(txtCostValue.Text);
+                componentObj.Qty = string.IsNullOrEmpty(txtQty.Text.Trim()) ? 0 : Convert.ToDouble(txtQty.Text.Trim());
+                componentObj.Costvalue = string.IsNullOrEmpty(txtCostValue.Text.Trim()) ? 0 : Convert.ToDouble(txtCostValue.Text.Trim());
                 componentObj.Obs = txtObs.Text;
                 componentObj.DrawingComponent = txtDrawingComponent.Text;
                 componentObj.PathFile1 = longPath;
-                componentObj.R1Costvalue = string.IsNullOrEmpty(txtResultValue.Text) ? 0 : Convert.ToDouble(txtResultValue.Text);
+                componentObj.R1Costvalue = string.IsNullOrEmpty(txtResultValue.Text.Trim()) ? 0 : Convert.ToDouble(txtResultValue.Text.Trim());
             }
             catch (Exception ex)
             {
@@ -823,5 +1094,6 @@ namespace BillsOfMaterial_App.View
                 throw ex;
             }
         }
+
     }
 }

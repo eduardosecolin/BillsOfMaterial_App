@@ -53,6 +53,7 @@ namespace BillsOfMaterial_App
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (CheckOpenSimulation()) return;
             //Limpando a view atual
             UserControl usc = null;
             GridMain.Children.Clear();
@@ -76,6 +77,11 @@ namespace BillsOfMaterial_App
                     window.Activate();
                     break;
                 case "TimeSheet":
+                    if (Menu.usermanager == null)
+                    {
+                        MessageBox.Show("Usuário não existe na base de dados atual!", "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
                     usc = new TimeSheetView();
                     GridMain.Children.Add(usc);
                     break;
@@ -143,6 +149,19 @@ namespace BillsOfMaterial_App
                 MessageBox.Show("Linpe a simulação para sair!", "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
                 e.Cancel = true;
                 return;
+            }
+        }
+
+        private bool CheckOpenSimulation()
+        {
+            if (SimulationEDP.isClear)
+            {
+                MessageBox.Show("Linpe a simulação para sair!", "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

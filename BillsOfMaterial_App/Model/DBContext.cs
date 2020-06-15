@@ -65,9 +65,14 @@ namespace BillsOfMaterial_App.Model
         public virtual DbSet<MA_QltCtrlAnalMet> MA_QltCtrlAnalMet { get; set; }
         public virtual DbSet<MA_QltCtrlParameters> MA_QltCtrlParameters { get; set; }
         public virtual DbSet<CS_TimeSheetPROD> CS_TimeSheetPROD { get; set; }
+        public virtual DbSet<CS_CustQuotasCompAttach> CS_CustQuotasCompAttach { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<CS_CustQuotasCompAttach>()
+                .Property(e => e.Attatchment)
+                .IsFixedLength();
+
             modelBuilder.Entity<CS_TimeSheetPROD>()
                 .Property(e => e.Phase)
                 .IsFixedLength();
@@ -400,6 +405,14 @@ namespace BillsOfMaterial_App.Model
 
             modelBuilder.Entity<CS_CustQuotasComponent>()
                 .Property(e => e.Item)
+                .IsFixedLength();
+
+            modelBuilder.Entity<CS_CustQuotasComponent>()
+                .Property(e => e.IsItemNew)
+                .IsFixedLength();
+
+            modelBuilder.Entity<CS_CustQuotasComponent>()
+                .Property(e => e.IsItemRetired)
                 .IsFixedLength();
 
             modelBuilder.Entity<CS_CustQuotasComponent>()

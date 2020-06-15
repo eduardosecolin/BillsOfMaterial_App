@@ -34,12 +34,12 @@ namespace BillsOfMaterial_App.Service
                 string sql = @"INSERT INTO CS_CustQuotasComponent (
                     Id, Line, BOM, Item, Component, Description, UoM, Qty, Obs, Drawing, 
                     R1CostValue, PathFile1, PathFile2, PathFile3, TBCreated, TBModified, 
-                    TBCreatedID, TecConclusion2, DrawingComponent, CostValue
+                    TBCreatedID, TecConclusion2, DrawingComponent, CostValue, IsItemNew, IsItemRetired
                 )" + $" VALUES ( {comp.Id}, {comp.Line}, '{comp.BOM}', '{comp.Item}', '{comp.Component}'," +
                 $"'{comp.Description}', '{comp.UoM}', {comp.Qty.ToString().Replace(",", ".")}, '{comp.Obs}'," +
                 $"'{comp.Drawing}', {comp.R1Costvalue.ToString().Replace(",", ".")}, '{comp.PathFile1}'," +
                 $"'{comp.PathFile2}', '{comp.PathFile3}', '{comp.TBCreated}', '{comp.TBModified}', {comp.TBCreatedID}," +
-                $"'{comp.TecConclusion2}', '{comp.DrawingComponent}', {comp.Costvalue.ToString().Replace(",", ".")})";
+                $"'{comp.TecConclusion2}', '{comp.DrawingComponent}', {comp.Costvalue.ToString().Replace(",", ".")}, '{ comp.IsItemNew }', '{ comp.IsItemRetired }')";
 
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(sql, conn);

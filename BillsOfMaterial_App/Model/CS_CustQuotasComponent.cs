@@ -73,6 +73,12 @@ namespace BillsOfMaterial_App.Model
         [StringLength(500)]
         public string TecConclusion2 { get; set; }
 
+        [StringLength(1)]
+        public string IsItemNew { get; set; }
+
+        [StringLength(1)]
+        public string IsItemRetired { get; set; }
+
         public DateTime TBCreated { get; set; }
 
         public DateTime TBModified { get; set; }

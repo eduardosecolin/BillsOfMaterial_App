@@ -37,7 +37,9 @@ namespace BillsOfMaterial_App.AuxView
         private readonly ItemsService itemsService = new ItemsService();
         private readonly OperationService opService = new OperationService();
         private readonly OnOffService onoffService = new OnOffService();
+        private readonly CustQuotasCompAttachService attachService = new CustQuotasCompAttachService();
         private readonly QualityControlService serviceQA = new QualityControlService();
+        public Dictionary<int, List<CS_CustQuotasCompAttach>> AttachMap = new Dictionary<int, List<CS_CustQuotasCompAttach>>();
         private string longPath;
 
         public bool level1 = false;
@@ -57,6 +59,7 @@ namespace BillsOfMaterial_App.AuxView
         {
             InitializeComponent();
             rbAnalize.IsChecked = true;
+            rbIsRetired.IsChecked = true;
         }
 
         public void LoadCbItemGrid()
@@ -793,6 +796,8 @@ namespace BillsOfMaterial_App.AuxView
                         FillLevel1(item.Operation, opService.GetDescriptionOp(item.Operation).Replace(",", ""), item.ProcessingTime, item.Notes, item.SetupAttendancePerc, item.WC, item.Qty);
                     }
                 }
+
+                LoadAttachments();
             }
             catch (Exception ex)
             {
@@ -849,6 +854,16 @@ namespace BillsOfMaterial_App.AuxView
                     comp.Item = cbItemGrid.Text;
                     comp.Drawing = txtDrawing.Text;
                     comp.TecConclusion2 = txtTecConclusion.Text;
+                    if(rbIsNew.IsChecked == true)
+                    {
+                        comp.IsItemNew = "1";
+                        comp.IsItemRetired = "0";
+                    }
+                    if(rbIsRetired.IsChecked == true)
+                    {
+                        comp.IsItemNew = "0";
+                        comp.IsItemRetired = "1";
+                    }
                     comp.PathFile2 = longPath;
                     if (selectedNode.Items.Count > 1)
                     {
@@ -1118,7 +1133,14 @@ namespace BillsOfMaterial_App.AuxView
                                 string[] vetCost = o.Split(':');
                                 if (vetCost.Length > 1)
                                 {
-                                    op.CostOperation = Convert.ToDouble(vetCost[1]);
+                                    if (string.IsNullOrEmpty(vetCost[1].Trim()))
+                                    {
+                                        op.CostOperation = 0;
+                                    }
+                                    else
+                                    {
+                                        op.CostOperation = Convert.ToDouble(vetCost[1]);
+                                    }
                                 }
                                 else
                                 {
@@ -1138,7 +1160,14 @@ namespace BillsOfMaterial_App.AuxView
                                 string[] vetQ = o.Split(':');
                                 if (vetQ.Length > 1)
                                 {
-                                    op.Qty = Convert.ToDouble(vetQ[1]);
+                                    if (string.IsNullOrEmpty(vetQ[1].Trim()))
+                                    {
+                                        op.Qty = 0;
+                                    }
+                                    else
+                                    {
+                                        op.Qty = Convert.ToDouble(vetQ[1]);
+                                    }
                                 }
                                 else
                                 {
@@ -1482,14 +1511,21 @@ namespace BillsOfMaterial_App.AuxView
                                                                         string[] vetCost = o.Split(':');
                                                                         if (vetCost.Length > 1)
                                                                         {
-                                                                            op.CostOperation = Convert.ToDouble(vetCost[1]);
+                                                                            if (string.IsNullOrEmpty(vetCost[1].Trim()))
+                                                                            {
+                                                                                op.CostOperation = 0;
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                op.CostOperation = Convert.ToDouble(vetCost[1]);
+                                                                            }
                                                                         }
                                                                         else
                                                                         {
                                                                             op.CostOperation = 0;
                                                                         }
                                                                     }
-                                                                    if (o.Contains("UoM:"))
+                                                                    if (o.Contains("U.Medida:"))
                                                                     {
                                                                         string[] vetUoM = o.Split(':');
                                                                         if (vetUoM.Length > 1)
@@ -1502,7 +1538,12 @@ namespace BillsOfMaterial_App.AuxView
                                                                         string[] vetQ = o.Split(':');
                                                                         if (vetQ.Length > 1)
                                                                         {
-                                                                            op.Qty = Convert.ToDouble(vetQ[1]);
+                                                                            if (string.IsNullOrEmpty(vetQ[1].Trim())){
+                                                                                op.Qty = 0;
+                                                                            }
+                                                                            else {
+                                                                                op.Qty = Convert.ToDouble(vetQ[1]);
+                                                                            }
                                                                         }
                                                                         else
                                                                         {
@@ -1879,14 +1920,21 @@ namespace BillsOfMaterial_App.AuxView
                                                             string[] vetCost = o.Split(':');
                                                             if (vetCost.Length > 1)
                                                             {
-                                                                op.CostOperation = Convert.ToDouble(vetCost[1]);
+                                                                if (string.IsNullOrEmpty(vetCost[1].Trim()))
+                                                                {
+                                                                    op.CostOperation = 0;
+                                                                }
+                                                                else
+                                                                {
+                                                                    op.CostOperation = Convert.ToDouble(vetCost[1]);
+                                                                }
                                                             }
                                                             else
                                                             {
                                                                 op.CostOperation = 0;
                                                             }
                                                         }
-                                                        if (o.Contains("UoM:"))
+                                                        if (o.Contains("U.Medida:"))
                                                         {
                                                             string[] vetUoM = o.Split(':');
                                                             if (vetUoM.Length > 1)
@@ -1899,7 +1947,14 @@ namespace BillsOfMaterial_App.AuxView
                                                             string[] vetQ = o.Split(':');
                                                             if (vetQ.Length > 1)
                                                             {
-                                                                op.Qty = Convert.ToDouble(vetQ[1]);
+                                                                if (string.IsNullOrEmpty(vetQ[1].Trim()))
+                                                                {
+                                                                    op.Qty = 0;
+                                                                }
+                                                                else
+                                                                {
+                                                                    op.Qty = Convert.ToDouble(vetQ[1]);
+                                                                }
                                                             }
                                                             else
                                                             {
@@ -1965,6 +2020,7 @@ namespace BillsOfMaterial_App.AuxView
                         if (AddComplevel3() && AddOplevel3())
                         {
                             serviceQA.InsertAllDataWithList();
+                            SaveAttachmentsOfSimulation();
                             return true;
                         }
                         else
@@ -2017,7 +2073,7 @@ namespace BillsOfMaterial_App.AuxView
         private void BtnSearchOffer_Click(object sender, RoutedEventArgs e)
         {
             OfferSearchView window = new OfferSearchView(this);
-            window.Show();
+            window.ShowDialog();
         }
 
         private void CbItemGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -2030,7 +2086,7 @@ namespace BillsOfMaterial_App.AuxView
             if (cbItemGrid.Text != string.Empty)
             {
                 ImportBOMView window = new ImportBOMView(this);
-                window.Show();
+                window.ShowDialog();
             }
             else
             {
@@ -2046,7 +2102,7 @@ namespace BillsOfMaterial_App.AuxView
                 return;
             }
             RegisterItem window = new RegisterItem();
-            window.Show();
+            window.ShowDialog();
         }
 
         private void TvBOM_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -2470,6 +2526,7 @@ namespace BillsOfMaterial_App.AuxView
                 btnImg.Visibility = Visibility.Hidden;
                 btnClear.IsEnabled = false;
                 btnSaveSimulation.IsEnabled = false;
+                btnAttatch.IsEnabled = false;
                 rbAnalize.IsChecked = true;
                 isClear = false;
 
@@ -2524,6 +2581,7 @@ namespace BillsOfMaterial_App.AuxView
             btnImg.Visibility = Visibility.Hidden;
             btnClear.IsEnabled = false;
             btnSaveSimulation.IsEnabled = false;
+            btnAttatch.IsEnabled = false;
             rbAnalize.IsChecked = true;
             isClear = false;
         }
@@ -2549,6 +2607,7 @@ namespace BillsOfMaterial_App.AuxView
                     btnImg.Visibility = Visibility.Visible;
                     btnSaveSimulation.IsEnabled = true;
                     btnClear.IsEnabled = true;
+                    btnAttatch.IsEnabled = true;
 
                     #region Verify Double Intance
 
@@ -2633,6 +2692,76 @@ namespace BillsOfMaterial_App.AuxView
             if (rbProduction.IsChecked == true)
             {
                 rbAnalize.IsChecked = !rbProduction.IsChecked;
+            }
+        }
+
+        private void btnAttatch_Click(object sender, RoutedEventArgs e)
+        {
+            ItemsAttachView window = new ItemsAttachView(this);
+            window.ShowDialog();
+        }
+
+        private void SaveAttachmentsOfSimulation()
+        {
+            try
+            {
+                if(AttachMap.Count > 0)
+                {
+                    List<CS_CustQuotasCompAttach> attachs = AttachMap[Convert.ToInt32(lblCustQuotaId.Content)];
+                    if(attachs.Count > 0 && attachs != null)
+                    {
+                        foreach (var item in attachs)
+                        {
+                            attachService.SaveOrUpdateAttachToSimulation(item);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(
+                    "Erro ao salvar anexos! descrição do erro: " + ex.Message,
+                    "Erro",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
+
+        private void LoadAttachments()
+        {
+            try
+            {
+                if (attachService.ExistAttachDataToLoad(Convert.ToInt32(lblCustQuotaId.Content)))
+                {
+                    List<CS_CustQuotasCompAttach> attachs = attachService.GetAttchById(Convert.ToInt32(lblCustQuotaId.Content));
+                    if(attachs.Count > 0 && attachs != null)
+                    {
+                        AttachMap = new Dictionary<int, List<CS_CustQuotasCompAttach>>();
+                        AttachMap.Add(Convert.ToInt32(lblCustQuotaId.Content), attachs);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        private void rbIsNew_Checked(object sender, RoutedEventArgs e)
+        {
+            if(rbIsNew.IsChecked == true)
+            {
+                rbIsRetired.IsChecked = !rbIsNew.IsChecked;
+            }
+        }
+
+        private void rbIsRetired_Checked(object sender, RoutedEventArgs e)
+        {
+            if (rbIsRetired.IsChecked == true)
+            {
+                rbIsNew.IsChecked = !rbIsRetired.IsChecked;
             }
         }
     }

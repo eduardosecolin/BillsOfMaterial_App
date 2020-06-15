@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="Model\CS_CQBOM.cs" />
     <Compile Include="Model\CS_CQSubBOM.cs" />
+    <Compile Include="Model\CS_CustQuotasCompAttach.cs" />
     <Compile Include="Model\CS_CustQuotasComponent.cs" />
     <Compile Include="Model\CS_CustQuotasOperation.cs" />
     <Compile Include="Model\CS_DBDefaultOBS.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Service\CompanyService.cs" />
     <Compile Include="Service\CQBOMService.cs" />
     <Compile Include="Service\CustQuotaCompOpService.cs" />
+    <Compile Include="Service\CustQuotasCompAttachService.cs" />
     <Compile Include="Service\CustQuotasService.cs" />
     <Compile Include="Service\DefaultObsService.cs" />
     <Compile Include="Service\DrawingService.cs" />
@@ -174,6 +176,9 @@
     </Compile>
     <Compile Include="View\ImportBOMView.xaml.cs">
       <DependentUpon>ImportBOMView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ItemsAttachView.xaml.cs">
+      <DependentUpon>ItemsAttachView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ItemsSelectedView.xaml.cs">
       <DependentUpon>ItemsSelectedView.xaml</DependentUpon>
@@ -262,6 +267,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ImportBOMView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ItemsAttachView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
